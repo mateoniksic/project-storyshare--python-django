@@ -3,8 +3,12 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
 		<title>{% block title %}{% endblock title %}</title>
 
 		<!-- BOOTSTRAP -->
@@ -26,14 +30,19 @@
 
 		<!-- EXTRA HEAD -->
 		{% block head %}{% endblock head %}
+
 	</head>
 	<body class="min-vh-100 d-flex flex-column justify-content-top">
+
 		<!-- HEADER -->
 		<header class="sticky-top bg-success mb-5">
-			<nav
-				class="container px-4 navbar navbar-expand-md navbar-dark bg-success">
+			<nav class="container px-4 navbar navbar-expand-md navbar-dark bg-success">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="{% url 'app:index' %}">StoryShare</a>
+					<a
+						class="navbar-brand"
+						href="{% url 'app:index' %}">
+						StoryShare
+					</a>
 					<button
 						class="navbar-toggler"
 						type="button"
@@ -51,40 +60,41 @@
 							<li class="nav-item">
 								<a
 									class="nav-link"
-									href="{% url 'app:post-list-view' %}"
-									>Stories</a
-								>
+									href="{% url 'app:post-list-view' %}">
+									Stories
+								</a>
 							</li>
 							<li class="nav-item">
 								<a
 									class="nav-link"
-									href="{% url 'app:creator-profile-list-view' %}"
-									>Creators</a
-								>
+									href="{% url 'app:creator-profile-list-view' %}">
+									Creators
+								</a>
 							</li>
 							<li class="nav-item">
 								<a
 									class="nav-link"
-									href="{% url 'app:tag-list-view' %}"
-									>Tags</a
-								>
+									href="{% url 'app:tag-list-view' %}">
+									Tags
+								</a>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</nav>
 		</header>
+
 		<!-- BODY CONTENT -->
 		{% block body %}{% endblock body %}
 
 		<!-- FOOTER -->
-		<footer class="bg-light" style="margin-top: auto !important">
-			<nav
-				class="container navbar navbar-fixed-bottom navbar-light bg-light">
-				<span class="navbar-text">
-					StoryShare. All Rights Reserved.
-				</span>
+		<footer
+			class="bg-light"
+			style="margin-top: auto !important">
+			<nav class="container navbar navbar-fixed-bottom navbar-light bg-light">
+				<span class="navbar-text">StoryShare. All Rights Reserved.</span>
 			</nav>
 		</footer>
+
 	</body>
 </html>

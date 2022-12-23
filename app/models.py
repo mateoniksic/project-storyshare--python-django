@@ -75,8 +75,7 @@ class Post(models.Model):
 		return reverse('app:post-detail-view', kwargs={'slug': self.slug})
 
 	def save(self, *args, **kwargs):
-		slug_str = f'{self.title}'
-		self.slug = slugify(slug_str)
+		self.slug = slugify(self.title)
 		super(Post, self).save(*args, **kwargs)
 
 	def __str__(self):

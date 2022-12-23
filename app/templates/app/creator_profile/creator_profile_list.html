@@ -1,13 +1,16 @@
-{% extends 'app/components/base.html' %} 
-{% block title%}Index{% endblock title%} 
+{% extends 'app/components/base.html' %}
+{% block title%}Index{% endblock title%}
 
 {% block body %}
 <section id="creators">
 	<div class="container">
 		<h1 class="text-center mb-4">Explore Creators</h1>
-    <p class="text-center mb-4">Enjoy the content of <b>{{creator_profiles.all | length}}</b> creators.</p>
-		<div
-			class="card-column d-flex flex-row flex-wrap justify-content-center align-items-top">
+		<p class="text-center mb-4">
+			Enjoy the content of
+			<b>{{creator_profiles.all | length}}</b>
+			creators.
+		</p>
+		<div class="card-column d-flex flex-row flex-wrap justify-content-center align-items-top">
 			{% for creator_profile in creator_profiles %}
 			<div
 				class="card m-4"
@@ -20,19 +23,13 @@
 					alt="{{creator_profile.profile_image}}" />
 
 				<div class="card-body">
-					<h5 class="card-title">
-						{{creator_profile.user.first_name}}
-						{{creator_profile.user.last_name}}
-					</h5>
+					<h5 class="card-title">{{creator_profile.user.first_name}} {{creator_profile.user.last_name}}</h5>
 
 					<p class="card-text">{{creator_profile.description}}</p>
 				</div>
 
 				<div class="card-footer">
-					<small class="text-muted"
-						>{{creator_profile.user.username}} joined
-						{{creator_profile.date_created}}</small
-					>
+					<small class="text-muted">{{creator_profile.user.username}} joined {{creator_profile.date_created}}</small>
 				</div>
 			</div>
 			{% endfor %}

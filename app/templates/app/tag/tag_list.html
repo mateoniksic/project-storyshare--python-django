@@ -6,16 +6,17 @@
 	<div class="container">
 		<h1 class="text-center mb-4">Explore Tags</h1>
 		<p class="text-center mb-4">
-			Explore more than <b>{{tags.all | length}}</b> tags.
+			Explore more than
+			<b>{{tags.all | length}}</b>
+			tags.
 		</p>
-		<div
-			class="card-column d-flex flex-row flex-wrap justify-content-center align-items-top">
+		<div class="card-column d-flex flex-row flex-wrap justify-content-center align-items-top">
 			{% for tag in tags %}
 			<a
 				href="{{tag.get_absolute_url}}"
-				class="badge text-bg-light border border-dark d-block p-4 m-2"
-				>#{{tag.name}}</a
-			>
+				class="badge text-bg-light border border-dark d-block p-4 m-2">
+				#{{tag.name}}
+			</a>
 			{% endfor %}
 		</div>
 	</div>
