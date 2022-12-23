@@ -3,44 +3,44 @@
 
 {% block body %}
 <section id="stories">
-	<div class="container">
-		<h1 class="text-center mb-4">Explore Stories</h1>
-		<p class="text-center mb-4">
-			Enjoy exploring
-			<b>{{posts.all | length}}</b>
-			stories.
-		</p>
-		<div class="card-column d-flex flex-row flex-wrap justify-content-center align-items-top">
-			{% for post in posts %}
-			<div
-				class="card m-4"
-				style="max-width: 23.75rem"
-				onclick="window.location='{{post.get_absolute_url}}'"
-				role="button">
-				<img
-					class="card-img-top"
-					src="{{post.featured_image}}"
-					alt="{{post.featured_image}}" />
+    <div class="container">
+        <h1 class="text-center mb-4">Explore Stories</h1>
+        <p class="text-center mb-4">
+            Enjoy exploring
+            <b>{{posts.all | length}}</b>
+            stories.
+        </p>
+        <div class="card-column d-flex flex-row flex-wrap justify-content-center align-items-top">
+            {% for post in posts %}
+            <div
+                class="card m-4"
+                style="max-width: 23.75rem"
+                onclick="window.location='{{post.get_absolute_url}}'"
+                role="button">
+                <img
+                    class="card-img-top"
+                    src="{{post.featured_image}}"
+                    alt="{{post.featured_image}}" />
 
-				<div class="card-body">
-					<h5 class="card-title">{{post.title}}</h5>
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
 
-					<p class="card-text">{{post.excerpt}}</p>
-				</div>
+                    <p class="card-text">{{post.excerpt}}</p>
+                </div>
 
-				<div class="card-footer">
-					<small class="text-muted d-block mb-2">{{post.creator_profile.user.username}} published on {{post.date_created}}</small>
-					{% for tag in post.tags.all %}
-					<a
-						class="badge text-bg-light border border-dark m-1"
-						href="{{tag.get_absolute_url}}">
-						#{{tag}}
-					</a>
-					{% endfor %}
-				</div>
-			</div>
-			{% endfor %}
-		</div>
-	</div>
+                <div class="card-footer">
+                    <small class="text-muted d-block mb-2">{{post.creator_profile.user.username}} published on {{post.date_created}}</small>
+                    {% for tag in post.tags.all %}
+                    <a
+                        class="badge text-bg-light border border-dark m-1"
+                        href="{{tag.get_absolute_url}}">
+                        #{{tag}}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </section>
 {% endblock body %}
