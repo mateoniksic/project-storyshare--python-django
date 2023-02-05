@@ -1,0 +1,79 @@
+/* HEADINGS */
+.heading-1 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 4.209rem;
+    line-height: 1em;
+}
+
+.heading-2 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 3.157rem;
+    line-height: 1.125em;
+}
+
+.heading-3 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 2.369rem;
+    line-height: 1.25em;
+}
+
+.heading-4 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 1.777rem;
+    line-height: 1.25em;
+}
+
+.heading-5 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 1.333rem;
+    line-height: 1.5em;
+}
+
+.heading-6 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.5em;
+}
+
+/* TEXT */
+.text-l {
+    font-size: 1.8rem;
+}
+
+.text-s {
+    font-size: 1.4rem;
+}
+
+.text-xs {
+    font-size: 1.2rem;
+}
+
+/* LINKS */
+a:link,
+a:visited {
+    display: inline-block;
+
+    padding: 0 0.4rem;
+
+    border-bottom: 0.2rem solid var(--color-primary);
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    color: var(--color-primary);
+}
+
+a:hover,
+a:active {
+    font-weight: bold;
+
+    color: var(--color-primary);
+    background-color: var(--color-accent-lighten-40);
+}

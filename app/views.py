@@ -10,9 +10,9 @@ class IndexTemplateView(TemplateView):
 
 class CreatorProfileListView(ListView):
     model = CreatorProfile
-    template_name = 'app/creator_profile/creator_profile_list.html'
     context_object_name = 'creator_profiles'
     queryset = CreatorProfile.objects.all()
+    template_name = 'app/creator_profile/creator_profile_list.html'
 
 
 class CreatorProfileDetailView(DetailView):
@@ -23,9 +23,9 @@ class CreatorProfileDetailView(DetailView):
 
 class PostListView(ListView):
     model = Post
-    template_name = 'app/post/post_list.html'
     context_object_name = 'posts'
     queryset = Post.objects.all()
+    template_name = 'app/post/post_list.html'
 
 
 class PostDetailView(DetailView):
@@ -36,9 +36,9 @@ class PostDetailView(DetailView):
 
 class TagListView(ListView):
     model = Tag
-    template_name = 'app/tag/tag_list.html'
     context_object_name = 'tags'
     queryset = Tag.objects.all()
+    template_name = 'app/tag/tag_list.html'
 
 
 class TagDetailView(DetailView):

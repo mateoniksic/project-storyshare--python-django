@@ -1,0 +1,25 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+*:focus-visible {
+    outline: 0.2rem solid var(--color-primary);
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    box-sizing: border-box;
+
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5em;
+    font-weight: 400;
+}

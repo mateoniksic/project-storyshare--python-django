@@ -1,13 +1,33 @@
-{% extends 'app/components/base.html' %}
-{% block title%}Index{% endblock title%}
+{% extends 'app/base/base.html' %}
+{% load static %}
+
+{% block title %}StoryShare • Sign in or sign up{% endblock title %}
+
+{% block head %}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'app/pages/index/index.css' %}" />
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'app/components/forms/forms.css' %}" />
+{% endblock head %}
 
 {% block body %}
-<section>
+<section class="section">
     <div class="container">
-        <h1>Welcome to StoryShare 👋</h1>
-        <h6>Author: Mateo Niksic</h6>
-        <p>Topic: Blog</p>
-        <p>TemplateView: Index</p>
+        <div class="container__item container__item-1">
+            <h1 class="heading-1 mb-16">StoryShare</h1>
+            <p class="text-l">Share your words of wisdom, lessons learned and advice with people around the world.</p>
+        </div>
+        <div class="container__item container__item-2">
+        {% include 'app/components/forms/form_sign_in.html' %}
+        </div>
     </div>
 </section>
+<template>
+    {% include 'app/components/forms/form_sign_up.html' %}
+</template>
+<script src="{% static 'app/pages/index/index.js' %}"></script>
 {% endblock body %}

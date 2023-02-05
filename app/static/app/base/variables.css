@@ -1,0 +1,11 @@
+:root {
+    --color-radial-gradient: radial-gradient(circle at top left, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+
+    --color-primary: #0f1825;
+    --color-primary-lighten-5: #162335;
+
+    --color-accent: #BEFA2E;
+    --color-accent-lighten-40: #d8fc82;
+
+    --border-radius: 0.8rem;
+}
