@@ -12,7 +12,7 @@ class CreatorProfile(models.Model):
         verbose_name_plural = "Creator Profiles"
 
     user = models.OneToOneField(
-        User, primary_key=True, on_delete=models.CASCADE)
+        User, related_name='CreatorProfile', primary_key=True, on_delete=models.CASCADE)
     slug = models.SlugField(
         max_length=1024, unique=True, blank=True, null=True)
     profile_image = models.URLField(max_length=2048, blank=True, null=True)
@@ -23,6 +23,12 @@ class CreatorProfile(models.Model):
 
     def get_absolute_url(self):
         return reverse('app:creator-profile-detail-view', kwargs={'slug': self.slug})
+
+    @receiver(post_save, sender=User)
+    def create_creator_profile(sender, instance, created, **kwargs):
+        if created:
+            creator_profile = CreatorProfile.objects.create(user=instance)
+            creator_profile.following.add(creator_profile)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)

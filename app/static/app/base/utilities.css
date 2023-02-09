@@ -1,7 +1,19 @@
+.my-32 {
+    margin: 3.2rem 0;
+}
+
+.mb-32 {
+    margin-bottom: 3.2rem;
+}
+
 .mb-16 {
     margin-bottom: 1.6rem;
 }
 
 .mb-8 {
     margin-bottom: 0.8rem;
+}
+
+.text-center {
+    text-align: center;
 }

@@ -1,16 +1,21 @@
-<div class="form__container" id="form-sign-in">
+<div
+    class="form__container"
+    id="form-sign-in">
     <span class="form__heading">Sign in</span>
     <form
-        action=""
+        method="POST"
         class="form">
+        {% csrf_token %}
         <div class="form__field">
             <label
-                for="email"
+                for="username"
                 class="form__label">
-                Email
+                Username
             </label>
             <input
-                type="email"
+                type="text"
+                name="username"
+                id="username"
                 class="form__input" />
         </div>
         <div class="form__field">
@@ -21,32 +26,35 @@
             </label>
             <input
                 type="password"
+                name="password"
+                id="password"
                 class="form__input" />
+        </div>
+        <div class="form__field">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
         <div class="form__field">
             <input
                 type="submit"
                 value="Sign in"
+                name="sign-in"
                 class="form__button" />
         </div>
     </form>
     <div class="form__content">
         <div class="form__content__container">
+            Don't remember password? 
             <a
                 href="#"
                 id="js-btn-forgot-password">
-                Forgot password?
+                Reset password
             </a>
-        </div>
-        <div class="form__content__container">
-            <span>
-                Don't have an account?
-                <a
-                    href="#"
-                    onclick="swapForms()">
-                    Sign up
-                </a>
-            </span>
         </div>
     </div>
 </div>

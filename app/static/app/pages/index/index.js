@@ -1,10 +1,24 @@
-function swapForms() {
-    const currentFormContainer = document.getElementsByClassName('container__item-2')[0];
-    const currentForm = currentFormContainer.getElementsByClassName('form__container')[0];
+const SECTION_HERO_HEIGHT = document.body.querySelector('.section__hero').offsetHeight;
+const HEADER_HEIGHT = document.body.querySelector('.header').offsetHeight;
 
-    const newFormContainer = document.getElementsByTagName('template')[0];
-    const newForm = newFormContainer.content.cloneNode(true);
-
-    newFormContainer.content.replaceChildren(currentForm);
-    currentFormContainer.append(newForm);
+function changeHeaderStyle(css) {
+    const headerEl = document.body.querySelector('.header');
+    headerEl.style.color = css.color;
+    headerEl.style.backgroundColor = css.backgroundColor;
 }
+
+window.addEventListener('scroll', () => {
+    let css = {};
+    if (window.pageYOffset <= SECTION_HERO_HEIGHT - HEADER_HEIGHT) {
+        css = {
+            color: 'var(--color-light)',
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+        };
+    } else {
+        css = {
+            color: 'var(--color-primary)',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        };
+    }
+    changeHeaderStyle(css);
+});

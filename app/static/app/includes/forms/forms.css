@@ -1,0 +1,137 @@
+/*
+************************************
+FORM
+************************************
+*/
+.form__container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 28rem;
+    width: 100%;
+}
+
+.form__heading {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 3.157rem;
+    line-height: 1.125em;
+}
+
+.form {
+    width: 100%;
+}
+
+.form__field {
+    margin: 1.6rem auto;
+}
+
+.form__field--text-center {
+    text-align: center;
+}
+
+.form__label {
+    display: inline-block;
+
+    width: 100%;
+
+    margin-bottom: 0.8rem;
+}
+
+.form__input {
+    width: 100%;
+
+    padding: 2rem 1.2rem;
+
+    border: 0.1rem solid var(--color-primary);
+    border-radius: var(--border-radius);
+
+    font-family: inherit;
+    font-size: 1.6rem;
+}
+
+.form__button {
+    width: 100%;
+
+    margin-top: 1.6rem;
+    padding: 2rem 1.2rem;
+
+    border: 0.1rem solid var(--color-accent);
+    border-radius: var(--border-radius);
+
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.form__button:hover {
+    background-color: var(--color-accent-lighten-40);
+}
+
+.form__content {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    align-content: center;
+    gap: 1.6rem;
+
+    margin-top: 2.4rem;
+
+    width: 100%;
+
+    text-align: center;
+}
+
+/*
+************************************
+ERRORS 
+************************************
+*/
+ul.errorlist,
+ul.messages {
+    list-style: none;
+}
+
+ul.errorlist > li,
+ul.messages > li {
+    color: #f05423;
+    
+    background-color: #fcddd3;
+
+    border: 0.1rem solid #f05423;
+    border-radius: var(--border-radius);
+
+    margin-top: 0.8rem;
+    padding: 0.8rem 0.8rem 0.8rem 4rem;
+
+    position: relative;
+}
+
+ul.errorlist > li::before,
+ul.messages > li::before {
+    content: '';
+    display: inline-block;
+
+    width: 2.4rem;
+    height: 2.4rem;
+
+    margin-right: 0.8rem;
+
+    -webkit-mask: url('../../assets/icons/icon-error.svg') no-repeat 50% 50%;
+    mask: url('../../assets/icons/icon-error.svg') no-repeat 50% 50%;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+
+    background-color: #f05423;
+
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+}

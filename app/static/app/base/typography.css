@@ -54,7 +54,7 @@
     font-size: 1.2rem;
 }
 
-/* LINKS */
+/* LINK INLINE */
 a:link,
 a:visited {
     display: inline-block;
@@ -72,8 +72,68 @@ a:visited {
 
 a:hover,
 a:active {
-    font-weight: bold;
-
     color: var(--color-primary);
     background-color: var(--color-accent-lighten-40);
+}
+
+/* LINK BRAND */
+.brand {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 2.369rem;
+    line-height: 1.25em;
+}
+
+a:link.brand,
+a:visited.brand {
+    color: inherit;
+    border-bottom: 0.2rem solid transparent;
+}
+
+a:hover.brand,
+a:active.brand {
+    color: var(--color-primary);
+    border-bottom: 0.2rem solid var(--color-primary);
+}
+
+/* BUTTON DEFAULT */
+a:link.btn,
+a:visited.btn {
+    padding: 1.6rem 2.4rem;
+
+    border: 0.1rem solid var(--color-primary);
+    border-radius: var(--border-radius);
+
+    background-color: var(--color-primary);
+    color: var(--color-light);
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+a.btn:hover,
+a.btn:active {
+    background-color: var(--color-primary-lighten-5);
+}
+
+/* BUTTON ACCENT */
+a:link.btn--accent,
+a:visited.btn--accent {
+    border: 0.1rem solid var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+}
+
+a:hover.btn--accent,
+a:active.btn--accent {
+    background-color: var(--color-accent-lighten-40);
+}
+
+/* BUTTON ROUND */
+a:link.btn--round,
+a:visited.btn--round {
+    border-radius: 4rem;
 }
