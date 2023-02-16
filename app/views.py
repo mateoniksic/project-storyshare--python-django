@@ -1,100 +1,114 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from .models import *
-from .forms import *
+
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
+from .models import *
+from .forms import *
 
-class IndexListView(ListView):
+
+class PublicIndexListView(ListView):
     model = Post
 
     context_object_name = 'posts'
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('date_created')[:18]
     extra_context = {'posts_count': len(Post.objects.all())}
 
-    paginate_by = 10
+    paginate_by = 6
 
-    template_name = 'app/pages/index/index.html'
+    template_name = 'app/pages/public/index.html'
 
-    # def dispatch(self, *args, **kwargs):
-    #     if not self.request.user.is_authenticated:
-    #         return redirect(reverse('app:sign-in'))
-    #     return super().dispatch(*args, **kwargs)
-
-
-def sign_up(request):
-    form = CreateUserForm()
-
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('app:sign-in'))
-
-    context = {'form': form}
-    return render(request, 'app/pages/account/sign_up.html', context=context)
+    def dispatch(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect(reverse('app:private-index'))
+        return super().dispatch(*args, **kwargs)
 
 
-def sign_in(request):
-    if request.method == 'POST':
+def public_account_sign_up(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('app:private-index'))
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('app:public-sign-in'))
+
+        context = {'form': form}
+        return render(request, 'app/pages/public/account/sign_up.html', context=context)
+
+
+def public_account_sign_in(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('app:private-index'))
+    elif request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect(reverse('app:index'))
+            next = request.GET.get('next')
+            if next:
+                return redirect(next)
+            else:
+                return redirect(reverse('app:private-index'))
         else:
             message = 'Your username or password was incorrect. Please, try again.'
             messages.error(request, message)
-            return render(request, 'app/pages/account/sign_in.html')
+            return render(request, 'app/pages/public/account/sign_in.html')
     else:
-        return render(request, 'app/pages/account/sign_in.html')
+        return render(request, 'app/pages/public/account/sign_in.html')
 
 
-def sign_out(request):
-    logout(request)
-    return redirect(reverse('app:sign-in'))
+def private_account_sign_out(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect(reverse('app:public-sign-in'))
+    else:
+        return redirect(reverse('app:public-sign-in'))
 
 
-class CreatorProfileListView(LoginRequiredMixin, ListView):
-    model = CreatorProfile
-    context_object_name = 'creator_profiles'
-    queryset = CreatorProfile.objects.all()
-    template_name = 'app/creator_profile/creator_profile_list.html'
-
-
-class CreatorProfileDetailView(DetailView):
-    model = CreatorProfile
-    context_object_name = 'creator_profile'
-    template_name = 'app/creator_profile/creator_profile_detail.html'
-
-
-class PostListView(ListView):
+class PrivateIndexListView(LoginRequiredMixin, ListView):
     model = Post
     context_object_name = 'posts'
-    queryset = Post.objects.all()
-    template_name = 'app/post/post_list.html'
+
+    def get_queryset(self):
+        following = CreatorProfile.objects.filter(
+            user=self.request.user.id).values_list('following', flat=True).all()
+        queryset = Post.objects.filter(creator_profile__in=following).order_by(
+            'date_created').all()
+        return queryset
+
+    paginate_by = 6
+
+    template_name = 'app/pages/private/index.html'
 
 
-class PostDetailView(DetailView):
+class PrivatePostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     context_object_name = 'post'
-    template_name = 'app/post/post_detail.html'
+    template_name = 'app/pages/private/post/single_post.html'
 
 
-class TagListView(ListView):
-    model = Tag
-    context_object_name = 'tags'
-    queryset = Tag.objects.all()
-    template_name = 'app/tag/tag_list.html'
+class PrivateExploreListView(LoginRequiredMixin, ListView):
+    model = Post
+    context_object_name = 'posts'
 
+    def get_queryset(self):
+        following = CreatorProfile.objects.filter(
+            user=self.request.user.id).values_list('following', flat=True).all()
+        queryset = Post.objects.exclude(creator_profile__in=following).order_by(
+            'date_created').all()
+        return queryset
 
-class TagDetailView(DetailView):
-    model = Tag
-    context_object_name = 'tag'
-    template_name = 'app/tag/tag_detail.html'
+    paginate_by = 6
+
+    template_name = 'app/pages/private/explore.html'

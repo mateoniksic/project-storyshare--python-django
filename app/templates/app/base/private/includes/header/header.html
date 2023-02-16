@@ -1,0 +1,91 @@
+{% load static %}
+<header class="header">
+    <div class="header__top">
+        <a
+            href="{% url 'app:private-index' %}"
+            class="brand mb-24">
+            StoryShare
+        </a>
+        <ul class="link-list">
+            <li class="link-list__item">
+                <a
+                    href="{% url 'app:private-index' %}"
+                    class="link-list__link">
+                    <svg class="icon icon-24 icon-text-right">
+                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-home"></use>
+                    </svg>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="link-list__item">
+                <a
+                    href="/"
+                    class="link-list__link">
+                    <svg class="icon icon-24 icon-text-right">
+                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-search"></use>
+                    </svg>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li class="link-list__item">
+                <a
+                    href="{% url 'app:private-explore' %}"
+                    class="link-list__link">
+                    <svg class="icon icon-24 icon-text-right">
+                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-compass"></use>
+                    </svg>
+                    <span>Explore</span>
+                </a>
+            </li>
+            <li class="link-list__item">
+                <a
+                    href="/"
+                    class="link-list__link">
+                    <svg class="icon icon-24 icon-text-right">
+                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-plus-circle"></use>
+                    </svg>
+                    <span>Create</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="header__bottom">
+        <ul class="link-list">
+            <li class="link-list__item link-list__item--profile">
+                <a
+                    href="/"
+                    class="link-list__link">
+                    <div class="author__profile-img">
+                        <img
+                            class="img"
+                            src="{{user.CreatorProfile.profile_image}}"
+                            alt="{{user.first_name}} {{user.last_name}}" />
+                    </div>
+                    <span>{{user.first_name}} {{user.last_name}}</span>
+                </a>
+            </li>
+            <li class="link-list__item">
+                <a
+                    href="/"
+                    class="link-list__link">
+                    <svg class="icon icon-24 icon-text-right">
+                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-settings"></use>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </li>
+
+            <li class="link-list__item">
+                <a
+                    href="{% url 'app:private-sign-out' %}"
+                    class="link-list__link">
+                    <svg class="icon icon-24 icon-text-right">
+                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-sign-out"></use>
+                    </svg>
+                    <span>Sign out</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>

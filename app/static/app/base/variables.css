@@ -1,13 +1,27 @@
 :root {
-    --color-radial-gradient: radial-gradient(circle at top left, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
-
+    /* COLORS */
     --color-primary: #0f1825;
     --color-primary-lighten-5: #162335;
 
-    --color-accent: #BEFA2E;
+    --color-accent: #befa2e;
     --color-accent-lighten-40: #d8fc82;
     --color-light: #fff;
 
-    --border-radius: 0.8rem;
+    --color-red: #f05423;
+    --color-red-lighten-85: #fde5de;
 
+    --color-green: #76874d;
+    --color-green-lighten-85: #f1f3eb;
+
+    --color-blue: #354588;
+    --color-blue-lighten-85: #dce0f1;
+
+    --color-yellow: #a48303;
+    --color-yellow-lighten-85: #fbfbd9;
+
+    /* GRADIENTS */
+    --color-radial-gradient: radial-gradient(circle at top left, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+
+    /* BORDER */
+    --border-radius: 0.8rem;
 }

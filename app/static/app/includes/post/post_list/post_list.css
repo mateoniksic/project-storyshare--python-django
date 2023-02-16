@@ -1,0 +1,74 @@
+/*
+************************************
+POSTS LIST
+************************************
+*/
+.article-card {
+    display: flex;
+    flex-flow: row wrap-reverse;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2%;
+
+    margin-inline: auto;
+
+    min-width: min-content;
+    width: 100%;
+    max-width: 96rem;
+
+    background-color: var(--color-light);
+
+    border: 0.1rem solid var(--color-primary);
+    border-radius: var(--border-radius);
+}
+
+.article-card__content {
+    flex: 1;
+
+    min-width: 30rem;
+    width: 49%;
+
+    padding: 4.8rem 3.2rem;
+
+    text-overflow: ellipsis;
+}
+
+.article-card__author a:is(:link, :visited) {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.8rem;
+
+    width: max-content;
+
+    padding: 0.8rem 0;
+
+    border-bottom: 0.2rem solid transparent;
+}
+
+.article-card__author a:is(:hover, :active, :focus) {
+    border-bottom: 0.2rem solid var(--color-primary);
+}
+
+.article-card__author__profile-img {
+    width: 3.2rem;
+    height: 3.2rem;
+
+    border-radius: 100%;
+
+    overflow: hidden;
+}
+
+.article-card__date-created {
+    color: rgba(15, 24, 37, 0.5);
+}
+
+.article-card__featured-image {
+    flex: 1;
+
+    min-width: 30rem;
+    width: 49%;
+
+    overflow: hidden;
+}

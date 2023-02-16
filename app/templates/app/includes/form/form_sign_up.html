@@ -1,0 +1,43 @@
+{% load static %}
+<div
+    class="form__container"
+    id="form-sign-up">
+    <form
+        method="POST"
+        class="form">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form__field">
+
+            <label
+                class="form__label"
+                for="{{ field.auto_id }}">
+                {{ field.label }}
+            </label>
+
+            {{ field }}
+
+            {% include 'app/includes/form/form_feedback/form_field_errors.html' %}
+
+        </div>
+        {% endfor %}
+
+        <div class="form__field form__field--text-center">
+            By signing up, you agree to our
+            <a href="">Terms</a>
+            . Learn how we collect, use and share your data in our
+            <a href="">Privacy Policy</a>
+            and how we use cookies and similar technology in our
+            <a href="">Cookies Policy</a>
+            .
+        </div>
+        <div class="form__field">
+            <input
+                type="submit"
+                value="Sign up"
+                name="sign-up"
+                class="form__button" />
+        </div>
+    </form>
+</div>

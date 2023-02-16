@@ -1,0 +1,31 @@
+{% load static %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.tags == 'error' %}
+                <svg class="icon icon-24"> 
+                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle-filled"></use>
+                </svg>
+                <b>ERROR:</b>
+                {% elif message.tags == 'info' %}
+                <svg class="icon icon-24"> 
+                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-warning-circle-filled"></use>
+                </svg>
+                <b>INFO:</b>
+                {% elif message.tags == 'warning' %}
+                <svg class="icon icon-24"> 
+                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-warning-circle-filled"></use>
+                </svg>
+                <b>WARNING:</b>
+                {% elif message.tags == 'success'%}
+                <svg class="icon icon-24"> 
+                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-check-circle-filled"></use>
+                </svg>
+                <b>SUCCESS:</b>
+            {% endif %}
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}

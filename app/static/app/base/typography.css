@@ -1,4 +1,8 @@
-/* HEADINGS */
+/*
+************************************
+HEADINGS 
+************************************
+*/
 .heading-1 {
     font-family: 'Space Grotesk', serif;
     font-weight: 700;
@@ -41,7 +45,11 @@
     line-height: 1.5em;
 }
 
-/* TEXT */
+/*
+************************************
+BODY TEXT
+************************************
+*/
 .text-l {
     font-size: 1.8rem;
 }
@@ -54,51 +62,37 @@
     font-size: 1.2rem;
 }
 
-/* LINK INLINE */
-a:link,
-a:visited {
+/*
+************************************
+LINKS
+************************************
+*/
+a:is(:link, :visited) {
     display: inline-block;
 
     padding: 0 0.4rem;
 
-    border-bottom: 0.2rem solid var(--color-primary);
+    border-bottom: 0.1rem solid var(--color-primary);
 
     font-weight: bold;
 
     text-decoration: none;
 
-    color: var(--color-primary);
+    color: inherit;
 }
 
-a:hover,
-a:active {
+a:is(:hover, :active, :focus) {
     color: var(--color-primary);
+
     background-color: var(--color-accent-lighten-40);
 }
 
-/* LINK BRAND */
-.brand {
-    font-family: 'Space Grotesk', serif;
-    font-weight: 700;
-    font-size: 2.369rem;
-    line-height: 1.25em;
-}
-
-a:link.brand,
-a:visited.brand {
-    color: inherit;
-    border-bottom: 0.2rem solid transparent;
-}
-
-a:hover.brand,
-a:active.brand {
-    color: var(--color-primary);
-    border-bottom: 0.2rem solid var(--color-primary);
-}
-
-/* BUTTON DEFAULT */
-a:link.btn,
-a:visited.btn {
+/*
+************************************
+BUTTONS
+************************************
+*/
+a:is(:link, :visited).btn {
     padding: 1.6rem 2.4rem;
 
     border: 0.1rem solid var(--color-primary);
@@ -114,26 +108,65 @@ a:visited.btn {
     font-weight: bold;
 }
 
-a.btn:hover,
-a.btn:active {
+a:is(:hover, :active).btn {
     background-color: var(--color-primary-lighten-5);
 }
 
 /* BUTTON ACCENT */
-a:link.btn--accent,
-a:visited.btn--accent {
+a:is(:link, :visited).btn--accent {
     border: 0.1rem solid var(--color-accent);
     background-color: var(--color-accent);
     color: var(--color-primary);
 }
 
-a:hover.btn--accent,
-a:active.btn--accent {
+a:is(:hover, :active).btn--accent {
     background-color: var(--color-accent-lighten-40);
 }
 
 /* BUTTON ROUND */
-a:link.btn--round,
-a:visited.btn--round {
+a:is(:link, :visited).btn--round {
     border-radius: 4rem;
+}
+
+/*
+************************************
+BRAND
+************************************
+*/
+.brand {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 2.369rem;
+    line-height: 1.25em;
+}
+
+a:is(:link, :visited).brand {
+    border-bottom: 0.1rem solid transparent;
+}
+
+a:is(:hover, :active).brand {
+    color: var(--color-primary);
+    border-bottom: 0.1rem solid var(--color-primary);
+}
+
+/*
+************************************
+ICONS
+************************************
+*/
+.icon {
+    display: inline-block;
+
+    vertical-align: top;
+
+    fill: currentColor;
+}
+
+.icon-24 {
+    width: 2.4rem;
+    height: 2.4rem;
+}
+
+.icon-text-right {
+    margin-right: 0.8rem;
 }
