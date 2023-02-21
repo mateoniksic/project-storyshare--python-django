@@ -1,0 +1,22 @@
+.m-container-page {
+    min-width: min-content;
+    width: 100%;
+    max-width: var(--max-width-120);
+
+    background-color: var(--color-light);
+
+    border: var(--border-1--color-primary);
+}
+
+.m-container-page__header {
+    width: 100%;
+
+    padding: 1.6rem 3.2rem;
+
+    background-color: var(--color-light);
+
+    border-bottom: var(--border-1--color-primary);
+
+    position: sticky;
+    top: -4.8rem;
+}

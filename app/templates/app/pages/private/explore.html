@@ -7,16 +7,29 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/index/index.css' %}" />
+        href="{% static 'app/includes/post/post_list/post_list.css' %}" />
 
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/post/post_list/post_list.css' %}" />
+        href="{% static 'app/pages/private/explore/explore.css' %}" />
+
 {% endblock head %}
 
 {% block body %}
 
-    {% include 'app/includes/post/post_list.html' %}
+    {% block main_header %}
+
+            {% include 'app/includes/component/icon-title.html' with title="Explore" icon="compass" %}
+
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        <div class="post-list">
+            {% include 'app/includes/post/post_list.html' %}
+        </div>
+
+    {% endblock main_content %}
 
 {% endblock body %}

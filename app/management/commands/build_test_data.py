@@ -7,8 +7,8 @@ from ...tests.factories import *
 
 
 NUM_CREATOR_PROFILES = 50
-NUM_POSTS = 100
-NUM_TAGS = 100
+NUM_POSTS = 250
+NUM_TAGS = 50
 
 
 class Command(BaseCommand):
@@ -30,7 +30,7 @@ class Command(BaseCommand):
             _creator_profiles = random.choices(
                 all_creator_profile, k=random_number)
             _creator_profiles.append(creator_profile)
-            creator_profile.following.add(*_creator_profiles)
+            creator_profile.followers.add(*_creator_profiles)
 
         for _ in range(NUM_TAGS):
             tags = TagFactory()

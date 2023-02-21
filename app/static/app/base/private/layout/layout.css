@@ -14,7 +14,7 @@ body {
 LAYOUT
 ************************************
 */
-.container-page {
+.app {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -25,7 +25,7 @@ LAYOUT
     overflow: hidden;
 }
 
-.container-content {
+.app__content {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -47,10 +47,40 @@ LAYOUT
 SECTION MAIN
 ************************************
 */
-.main {
+.main__page {
+    min-width: min-content;
+    width: 100%;
+    max-width: var(--max-width);
+
+    margin-inline: auto;
+
+    background-color: var(--color-light);
+
+    border-radius: var(--border-radius);
+}
+
+.main__header {
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2.4rem;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-content: center;
+
+    width: 100%;
+
+    padding: 1.6rem 3.2rem;
+
+    color: var(--color-primary);
+
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(2rem);
+
+    border-bottom: var(--border-1-color-primary);
+
+    position: sticky;
+    top: -4.8rem;
+}
+
+.main__header--border-radius {
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
 }

@@ -25,7 +25,7 @@ class CreatorProfileFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory(UserFactory)
     slug = factory.LazyAttribute(lambda o: fake.unique.slug())
-    profile_image = factory.LazyAttribute(lambda o: fake.image_url(170, 170))
+    profile_image = factory.LazyAttribute(lambda o: fake.image_url(170,170))
     description = factory.LazyAttribute(lambda o: fake.text())
     date_created = factory.LazyAttribute(lambda o: fake.date_time())
 

@@ -44,7 +44,7 @@
     <!--    SECTION ARTICLES    -->
     <section class="section">
         <div class="container">
-            <h2 class="heading-2 my-32">{{posts_count}}+ personal success stories to get inspired.</h2>
+            <h2 class="heading-2 my-32">{{ post_count }}+ personal success stories to get inspired.</h2>
             {% include 'app/includes/post/post_list.html' %}
         </div>
     </section>
@@ -55,8 +55,8 @@
     </footer>
 
     <!--    SCRIPTS   -->
+    <script src="{% static 'app/pages/public/index/index.js' %}"></script>
     {% block script %}
-        <script src="{% static 'app/pages/index/index.js' %}"></script>
     {% endblock script %}
 
 {% endblock body %}

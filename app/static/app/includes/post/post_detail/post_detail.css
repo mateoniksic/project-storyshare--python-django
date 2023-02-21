@@ -1,95 +1,53 @@
-.post-card {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-
-    margin-inline: auto;
-
+.card-post {
     min-width: min-content;
     width: 100%;
-    max-width: 96rem;
-
-    background-color: var(--color-light);
-
-    border: 0.1rem solid var(--color-primary);
-    
-
-    isolation: isolate;
 }
 
-.post-card__header {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.6rem;
-
+.card-post__featured-image {
     width: 100%;
 
-    padding: 1.6rem 3.2rem;
+    height: 100%;
+    max-height: 60rem;
 
-    color: var(--color-primary);
-
-    background-color: var(--color-light);
-
-    border-bottom: 0.1rem solid var(--color-primary);
-
-    position: sticky;
-
-    top: -4.8rem;
-    left: 0;
-}
-
-.post-card__author a:is(:link, :visited),
-.post-card__header a:is(:link, :visited) {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 0.8rem;
-
-    width: max-content;
-
-    padding: 0.8rem 0;
-
-    border-bottom: 0.2rem solid transparent;
-}
-
-.post-card__author a:is(:hover, :active, :focus),
-.post-card__header a:is(:hover, :active, :focus) {
-    border-bottom: 0.2rem solid var(--color-primary);
-}
-
-.post-card__author__profile-img {
-    width: 3.2rem;
-    height: 3.2rem;
-
-    border-radius: 100%;
+    border-bottom: var(--border-1-color-primary);
 
     overflow: hidden;
 }
 
-.post-card__featured-image {
+.card-post__content {
+    min-width: min-content;
     width: 100%;
+    max-width: var(--max-content-width);
 
-    height: 100%;
-    max-height: 40rem;
+    padding: 7.2rem 3.2rem;
 
-    border-bottom: 0.1rem solid var(--color-primary);
+    margin-inline: auto;
 }
 
-.post-card__container-content {
-    padding: 4rem 3.2rem;
-
-    border-bottom: 0.1rem solid var(--color-primary);
+.card-post__title {
+    margin-bottom: 0.8rem;
 }
 
-.post-card__date {
+.card-post__date {
     display: inline-block;
 
-    color: rgba(15, 24, 37, 0.5);
+    margin-bottom: 2.4rem;
+
+    color: var(--color-dark-a-75);
 }
 
-.post-card__tags {
-    padding: 4rem 3.2rem;
+.card-post__post-content {
+    margin-bottom: 7.2rem;
+}
+
+.card-post__tags {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.8rem;
+
+    padding: 3.2rem;
+
+    border-top: var(--border-1-color-primary);
 }

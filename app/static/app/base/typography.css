@@ -52,14 +52,17 @@ BODY TEXT
 */
 .text-l {
     font-size: 1.8rem;
+    line-height: 1.75;
 }
 
 .text-s {
     font-size: 1.4rem;
+    line-height: 1.5;
 }
 
 .text-xs {
     font-size: 1.2rem;
+    line-height: 1.5;
 }
 
 /*
@@ -78,11 +81,13 @@ a:is(:link, :visited) {
 
     text-decoration: none;
 
+    white-space: nowrap;
+
     color: inherit;
 }
 
 a:is(:hover, :active, :focus) {
-    color: var(--color-primary);
+    color: inherit;
 
     background-color: var(--color-accent-lighten-40);
 }
@@ -108,7 +113,7 @@ a:is(:link, :visited).btn {
     font-weight: bold;
 }
 
-a:is(:hover, :active).btn {
+a:is(:hover, :active, :focus).btn {
     background-color: var(--color-primary-lighten-5);
 }
 
@@ -119,7 +124,7 @@ a:is(:link, :visited).btn--accent {
     color: var(--color-primary);
 }
 
-a:is(:hover, :active).btn--accent {
+a:is(:hover, :active, :focus).btn--accent {
     background-color: var(--color-accent-lighten-40);
 }
 
@@ -144,7 +149,7 @@ a:is(:link, :visited).brand {
     border-bottom: 0.1rem solid transparent;
 }
 
-a:is(:hover, :active).brand {
+a:is(:hover, :active, :focus).brand {
     color: var(--color-primary);
     border-bottom: 0.1rem solid var(--color-primary);
 }
@@ -165,6 +170,11 @@ ICONS
 .icon-24 {
     width: 2.4rem;
     height: 2.4rem;
+}
+
+.icon-32 {
+    width: 3.2rem;
+    height: 3.2rem;
 }
 
 .icon-text-right {

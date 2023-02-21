@@ -1,12 +1,14 @@
 {% load static %}
 <header class="header">
-    <div class="header__top">
-        <a
-            href="{% url 'app:private-index' %}"
-            class="brand mb-24">
-            StoryShare
-        </a>
+    <div class="header__content">
         <ul class="link-list">
+            <li class="link-list__item">
+                <a
+                    href="{% url 'app:private-index' %}"
+                    class="brand mb-24">
+                    StoryShare
+                </a>
+            </li>
             <li class="link-list__item">
                 <a
                     href="{% url 'app:private-index' %}"
@@ -50,20 +52,10 @@
         </ul>
     </div>
 
-    <div class="header__bottom">
+    <div class="header__content">
         <ul class="link-list">
             <li class="link-list__item link-list__item--profile">
-                <a
-                    href="/"
-                    class="link-list__link">
-                    <div class="author__profile-img">
-                        <img
-                            class="img"
-                            src="{{user.CreatorProfile.profile_image}}"
-                            alt="{{user.first_name}} {{user.last_name}}" />
-                    </div>
-                    <span>{{user.first_name}} {{user.last_name}}</span>
-                </a>
+                {% include 'app/includes/profile/card-user.html' with User=user%}
             </li>
             <li class="link-list__item">
                 <a

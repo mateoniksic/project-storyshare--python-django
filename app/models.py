@@ -22,7 +22,7 @@ class CreatorProfile(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('app:creator-profile-detail-view', kwargs={'slug': self.slug})
+        return reverse('app:private-profile-detail-view', kwargs={'slug': self.slug})
 
     @receiver(post_save, sender=User)
     def create_creator_profile(sender, instance, created, **kwargs):
@@ -35,7 +35,7 @@ class CreatorProfile(models.Model):
         super(CreatorProfile, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name} ({self.user.email})'
+        return f'{self.user.first_name} {self.user.last_name} ({self.user.username})'
 
 
 class Tag(models.Model):
@@ -75,7 +75,7 @@ class Post(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('app:post-detail-view', kwargs={'slug': self.slug})
+        return reverse('app:private-post-detail-view', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

@@ -5,7 +5,12 @@
 
     --color-accent: #befa2e;
     --color-accent-lighten-40: #d8fc82;
+
+    --color-dark: #000;
+    --color-dark-a-75: rgba(0, 0, 0, 0.75);
+
     --color-light: #fff;
+    --color-light-a-75: rgba(255, 255, 255, 0.75);
 
     --color-red: #f05423;
     --color-red-lighten-85: #fde5de;
@@ -24,4 +29,10 @@
 
     /* BORDER */
     --border-radius: 0.8rem;
+    --border-1-color-primary: 0.1rem solid var(--color-primary);
+    --border-1-color-light: 0.1rem solid var(--color-light);
+
+    /* WIDTH */
+    --max-content-width: 96rem;
+    --max-width: 120rem;
 }

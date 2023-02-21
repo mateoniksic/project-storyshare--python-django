@@ -1,0 +1,37 @@
+{% extends 'app/base/private/base.html' %}
+{% load static %}
+
+{% block title %}
+Story • 
+{{ post.creator_profile.user.first_name }}
+{{ post.creator_profile.user.last_name }} 
+(@{{ post.creator_profile.user.username }})
+{% endblock title %}
+
+{% block head %}
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/post/post_detail/post_detail.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/pages/private/post/post.css' %}" />
+{% endblock head %}
+
+{% block body %}
+
+    {% block main_header %}
+
+        {% include 'app/includes/profile/card-user-action-follow.html' with user_creator=post.creator_profile.user followers=post.creator_profile.followers.all %}
+
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        {% include 'app/includes/post/post_detail.html' %}
+
+    {% endblock main_content %}
+
+{% endblock body %}

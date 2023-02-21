@@ -41,8 +41,7 @@ SECTION HEADER
     background: var(--color-primary-lighten-5);
 }
 
-.header__top,
-.header__bottom {
+.header__content {
     width: 100%;
 }
 
@@ -63,7 +62,7 @@ LINK LIST
     margin-bottom: 0.4rem;
 }
 
-a:is(:link, :visited).link-list__link {
+.link-list__item {
     width: 100%;
 
     padding: 1.2rem 0.8rem;
@@ -72,7 +71,7 @@ a:is(:link, :visited).link-list__link {
     border-radius: var(--border-radius);
 }
 
-a:is(:link, :visited).link-list__link--active {
+.link-list__item--active {
     color: var(--color-light);
 
     background-color: var(--color-primary-lighten-5);
@@ -80,7 +79,7 @@ a:is(:link, :visited).link-list__link--active {
     border: 0.1rem solid transparent;
 }
 
-a:is(:hover, :active, :focus).link-list__link {
+.link-list__item:hover:not(:has(a.brand)) {
     color: var(--color-light);
 
     background-color: var(--color-primary-lighten-5);
@@ -88,17 +87,12 @@ a:is(:hover, :active, :focus).link-list__link {
     border: 0.1rem solid var(--color-light);
 }
 
-.author__profile-img {
-    display: inline-block;
+a:is(:link, :visited).link-list__link {
+    width: 100%;
 
-    width: 2.4rem;
-    height: 2.4rem;
+    border: 0.1rem solid transparent;
+}
 
-    margin-right: 0.8rem;
-
-    border-radius: 100%;
-
-    vertical-align: middle;
-
-    overflow: hidden;
+a:is(:hover, :active, :focus).link-list__link {
+    background-color: transparent;
 }

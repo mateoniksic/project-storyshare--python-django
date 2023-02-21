@@ -1,11 +1,11 @@
 /*
 ************************************
-POSTS LIST
+POST LIST
 ************************************
 */
-.article-card {
+.card-post {
     display: flex;
-    flex-flow: row wrap-reverse;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: stretch;
     gap: 2%;
@@ -14,15 +14,26 @@ POSTS LIST
 
     min-width: min-content;
     width: 100%;
-    max-width: 96rem;
+    max-width: var(--max-content-width);
 
     background-color: var(--color-light);
 
-    border: 0.1rem solid var(--color-primary);
+    border: var(--border-1-color-primary);
     border-radius: var(--border-radius);
+
+    overflow: hidden;
 }
 
-.article-card__content {
+.card-post__featured-image {
+    flex: 1;
+
+    min-width: 30rem;
+    width: 49%;
+
+    overflow: hidden;
+}
+
+.card-post__content {
     flex: 1;
 
     min-width: 30rem;
@@ -33,42 +44,26 @@ POSTS LIST
     text-overflow: ellipsis;
 }
 
-.article-card__author a:is(:link, :visited) {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 0.8rem;
-
-    width: max-content;
-
-    padding: 0.8rem 0;
-
-    border-bottom: 0.2rem solid transparent;
+.card-post__user {
+    margin-bottom: 1.6rem;
 }
 
-.article-card__author a:is(:hover, :active, :focus) {
-    border-bottom: 0.2rem solid var(--color-primary);
+.card-post__title {
+    margin-bottom: .8rem;
 }
 
-.article-card__author__profile-img {
-    width: 3.2rem;
-    height: 3.2rem;
+.card-post__date-created {
+    display: inline-block;
 
-    border-radius: 100%;
+    margin-bottom: 1.6rem;
 
-    overflow: hidden;
+    color: var(--color-dark-a-75);
 }
 
-.article-card__date-created {
-    color: rgba(15, 24, 37, 0.5);
+.card-post__excerpt {
+    margin-bottom: 1.6rem;
 }
 
-.article-card__featured-image {
-    flex: 1;
-
-    min-width: 30rem;
-    width: 49%;
-
-    overflow: hidden;
+.card-post__tags {
+    margin-bottom: 3.2rem;
 }

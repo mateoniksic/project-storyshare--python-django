@@ -47,3 +47,35 @@ IMAGE
     object-fit: cover;
     object-position: center;
 }
+
+/*
+************************************
+BORDERS
+************************************
+*/
+
+.border-b1 {
+    border-bottom: 0.1rem solid var(--color-primary);
+}
+
+.border-t1 {
+    border-top: 0.1rem solid var(--color-primary);
+}
+
+.border-r1 {
+    border-right: 0.1rem solid var(--color-primary);
+}
+
+.border-l1 {
+    border-left: 0.1rem solid var(--color-primary);
+}
+
+/*
+************************************
+LAYOUT
+************************************
+*/
+
+.display-ib {
+    display: inline-block;
+}

@@ -1,0 +1,35 @@
+a:is(:link, :visited).card-user {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.8rem;
+
+    border-bottom: 0.1rem solid transparent;
+}
+
+a:is(:hover, :active, :focus).card-user {
+    background-color: transparent;
+}
+
+.card-user__img-container {
+    width: 3.2rem;
+    height: 3.2rem;
+
+    border-radius: 100%;
+
+    overflow: hidden;
+
+    transition: border-radius 200ms ease-in-out;
+}
+
+a:is(:hover, :active, :focus).card-user .card-user__img-container{
+    border-radius: 10%;
+}
+
+.card-user__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
