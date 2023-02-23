@@ -7,20 +7,19 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/user/post/post_list/post_list.css' %}" />
+        href="{% static 'app/pages/private/home/home.css' %}" />
 
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/explore/explore.css' %}" />
-
+        href="{% static 'app/includes/user/post/post_list/post_list.css' %}" />
 {% endblock head %}
 
 {% block body %}
 
     {% block main_header %}
 
-            {% include 'app/includes/misc/title/title_with_icon.html' with title="Explore" icon="compass" %}
+        {% include 'app/includes/misc/title/title_with_icon.html' with title="Home" icon="home" %}
 
     {% endblock main_header %}
 

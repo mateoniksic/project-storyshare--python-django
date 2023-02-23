@@ -1,0 +1,7 @@
+{% load static %}
+<div class="main__header__title">
+    <svg class="icon icon-32 icon-text-right">
+        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-{{ icon }}-filled"></use>
+    </svg>
+    <h1 class="heading-2 display-ib">{{ title }}</h1>
+</div>

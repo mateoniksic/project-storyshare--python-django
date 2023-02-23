@@ -4,8 +4,8 @@ from django.contrib.auth.admin import UserAdmin
 from .models import *
 
 
-class CreatorProfileInline(admin.StackedInline):
-    model = CreatorProfile
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
     readonly_fields = ('slug',)
     can_delete = False
 
@@ -16,7 +16,7 @@ class AccountsUserAdmin(UserAdmin):
         return super(UserAdmin, self).add_view(*arg, **kwargs)
 
     def change_view(self, *arg, **kwargs):
-        self.inlines = [CreatorProfileInline]
+        self.inlines = [UserProfileInline]
         return super(UserAdmin, self).change_view(*arg, **kwargs)
 
 

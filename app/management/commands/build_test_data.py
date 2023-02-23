@@ -17,20 +17,20 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **kwargs):
         self.stdout.write("Deleting old data...")
-        models = [User, CreatorProfile, Post, Tag]
+        models = [User, UserProfile, Post, Tag]
         for m in models:
             m.objects.all().delete()
 
         self.stdout.write("Creating new data...")
 
         for _ in range(NUM_CREATOR_PROFILES):
-            creator_profile = CreatorProfileFactory()
-            all_creator_profile = CreatorProfile.objects.all()
-            random_number = random.randint(0, len(all_creator_profile))
-            _creator_profiles = random.choices(
-                all_creator_profile, k=random_number)
-            _creator_profiles.append(creator_profile)
-            creator_profile.followers.add(*_creator_profiles)
+            creator_profile = UserProfileFactory()
+            user_profiles_all = UserProfile.objects.all()
+            random_number = random.randint(0, len(user_profiles_all))
+            _user_profiles = random.choices(
+                user_profiles_all, k=random_number)
+            _user_profiles.append(creator_profile)
+            creator_profile.followers.add(*_user_profiles)
 
         for _ in range(NUM_TAGS):
             tags = TagFactory()

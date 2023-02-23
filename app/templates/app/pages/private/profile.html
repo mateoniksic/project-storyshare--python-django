@@ -2,25 +2,59 @@
 {% load static %}
 
 {% block title %}
-{{ CreatorProfileDetail.user.first_name }} 
-{{ CreatorProfileDetail.user.last_name }}
-({{ CreatorProfileDetail.user.username }})
+    Story • {{ member.first_name }} {{ member.last_name }} (@{{ member.username }})
 {% endblock title %}
 
 {% block head %}
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/profile/profile_detail.css' %}" />
+        href="{% static 'app/pages/private/profile/profile.css' %}" />
 
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/post/post_list/post_list.css' %}" />
+        href="{% static 'app/includes/user/profile/profile_detail.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/user/post/post_list/post_list.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/misc/modal/modal_actions/modal_actions.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/misc/modal/modal_window/modal_window.css' %}" />
 {% endblock head %}
 
 {% block body %}
 
-    {% include 'app/includes/profile/profile_detail.html' %}
+    {% block main_header %}
+
+        {% include 'app/includes/user/actions/action_follow.html' %}
+
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        <div class="profile-detail">
+            {% include 'app/includes/user/profile/profile_detail.html' with user=member %}
+        </div>
+
+        <div class="post-list">
+            {% include 'app/includes/user/post/post_list.html' %}
+        </div>
+
+    {% endblock main_content %}
+
+    {% block script %}
+        <script src="{% static 'app/includes/misc/modal/modal_actions/modal_actions.js' %}"></script>
+        <script src="{% static 'app/includes/misc/modal/modal_window/modal_window.js' %}"></script>
+    {% endblock script %}
 
 {% endblock body %}

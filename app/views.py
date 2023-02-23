@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.views import generic
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -10,34 +10,35 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
+from django.contrib.auth.models import User
 from .models import *
 from .forms import *
 
 
-class PublicIndexPostListView(ListView):
-    model = Post
+class IndexTemplateView(generic.TemplateView):
+    # model = Post
 
-    context_object_name = 'Post'
-    queryset = Post.objects.all().order_by('date_created')[:100]
+    # context_object_name = 'Post'
+    # queryset = Post.objects.all().order_by('date_created')[:100]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['post_count'] = len(Post.objects.all())
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['post_count'] = len(Post.objects.all())
+    #     return context
 
     template_name = 'app/pages/public/index.html'
-    paginate_by = 6
+    # paginate_by = 6
 
-    def dispatch(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect(reverse('app:private-index'))
+    # def dispatch(self, *args, **kwargs):
+    #     if self.request.user.is_authenticated:
+    #         return redirect(reverse('app:private-index'))
 
-        return super().dispatch(*args, **kwargs)
+    #     return super().dispatch(*args, **kwargs)
 
 
-def public_account_sign_up(request):
+def user_sign_up(request):
     if request.user.is_authenticated:
-        return redirect(reverse('app:private-index'))
+        return redirect(reverse('app:home'))
 
     else:
         form = CreateUserForm()
@@ -47,15 +48,15 @@ def public_account_sign_up(request):
 
             if form.is_valid():
                 form.save()
-                return redirect(reverse('app:public-sign-in'))
+                return redirect(reverse('app:sign-in'))
 
         context = {'form': form}
         return render(request, 'app/pages/public/account/sign_up.html', context=context)
 
 
-def public_account_sign_in(request):
+def user_sign_in(request):
     if request.user.is_authenticated:
-        return redirect(reverse('app:private-index'))
+        return redirect(reverse('app:home'))
 
     elif request.method == 'POST':
         username = request.POST.get('username')
@@ -69,7 +70,7 @@ def public_account_sign_in(request):
             if next:
                 return redirect(next)
             else:
-                return redirect(reverse('app:private-index'))
+                return redirect(reverse('app:home'))
 
         else:
             message = 'Your username or password was incorrect. Please, try again.'
@@ -80,65 +81,114 @@ def public_account_sign_in(request):
         return render(request, 'app/pages/public/account/sign_in.html')
 
 
-def private_account_sign_out(request):
+def user_sign_out(request):
     if request.user.is_authenticated:
         logout(request)
-        return redirect(reverse('app:public-sign-in'))
+        return redirect(reverse('app:sign-in'))
 
     else:
-        return redirect(reverse('app:public-sign-in'))
+        return redirect(reverse('app:sign-in'))
 
 
-class PrivateIndexPostListView(LoginRequiredMixin, ListView):
+class HomePostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     context_object_name = 'posts'
 
-    def get_queryset(self):
-        following = CreatorProfile.objects.filter(
-            user=self.request.user.id).values_list('following', flat=True).all()
-        queryset = Post.objects.filter(creator_profile__in=following).order_by(
-            'date_created').all()
-        return queryset
-
-    template_name = 'app/pages/private/index.html'
+    template_name = 'app/pages/private/home.html'
     paginate_by = 6
 
-
-class PrivatePostDetailView(LoginRequiredMixin, DetailView):
-    model = Post
-    context_object_name = 'post'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        user_active__creator_profile = self.request.user.CreatorProfile
-        user__creator_profile__followers = self.object.creator_profile.followers.all()
-        context['following'] = user_active__creator_profile in user__creator_profile__followers
-        
-        user__creator_profile = self.object.creator_profile.user
-        context['user__creator_profile'] = user__creator_profile
-
-        return context
-
-    template_name = 'app/pages/private/post.html'
-
-
-class PrivateExplorePostListView(LoginRequiredMixin, ListView):
-    model = Post
-    context_object_name = 'posts'
-
     def get_queryset(self):
-        following = CreatorProfile.objects.filter(
+        following = UserProfile.objects.filter(
             user=self.request.user.id).values_list('following', flat=True).all()
-        queryset = Post.objects.exclude(creator_profile__in=following).order_by(
+        queryset = Post.objects.filter(user_profile__in=following).order_by(
             'date_created').all()
         return queryset
+
+
+class ExplorePostListView(LoginRequiredMixin, generic.ListView):
+    model = Post
+    context_object_name = 'posts'
 
     template_name = 'app/pages/private/explore.html'
     paginate_by = 6
 
+    def get_queryset(self):
+        following = UserProfile.objects.filter(
+            user=self.request.user.id).values_list('following', flat=True).all()
+        queryset = Post.objects.exclude(user_profile__in=following).order_by(
+            'date_created').all()
+        return queryset
 
-class PrivateProfileDetailView(LoginRequiredMixin, DetailView):
-    model = CreatorProfile
-    context_object_name = 'CreatorProfileDetail'
+
+class PostDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Post
+    context_object_name = 'post'
+
+    template_name = 'app/pages/private/post.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+
+        member = self.object.user_profile.user
+        context['member'] = member
+
+        user_following = user.profile.following.all()
+        context['user_following'] = user_following
+
+        return context
+
+
+class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
+    model = UserProfile
+    context_object_name = 'user_profile'
+
     template_name = 'app/pages/private/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+
+        member = self.object.user
+        context['member'] = member
+
+        user_following = user.profile.following.all()
+        context['user_following'] = user_following
+
+        posts = member.profile.posts.all()
+        context['posts'] = posts
+
+        context['isProfileDetailView'] = True
+
+        return context
+
+
+class TagDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Tag
+    context_object_name = 'tag'
+
+    template_name = 'app/pages/private/tag.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        posts = self.object.posts.all()
+        context['posts'] = posts
+
+        return context
+
+class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = UserProfile
+    fields = ['profile_image', 'description']
+    template_name = 'app/pages/private/profile_update.html'
+    
+    def get_success_url(self):
+        return reverse('app:profile-detail-view', kwargs={'slug': self.object.slug})
+
+# class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
+#     model = User
+#     fields = ['username', 'first_name', 'last_name', 'email']
+#     template_name = 'app/pages/private/settings.html'
+#     success_url = reverse_lazy('app:user-update-view')

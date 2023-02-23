@@ -8,8 +8,11 @@
 
     --color-dark: #000;
     --color-dark-a-75: rgba(0, 0, 0, 0.75);
+    --color-dark-a-25: rgba(0, 0, 0, 0.25);
+    --color-dark-a-10: rgba(0, 0, 0, 0.1);
 
     --color-light: #fff;
+    --color-light-a-25: rgba(255, 255, 255, 0.25);
     --color-light-a-75: rgba(255, 255, 255, 0.75);
 
     --color-red: #f05423;
@@ -31,6 +34,7 @@
     --border-radius: 0.8rem;
     --border-1-color-primary: 0.1rem solid var(--color-primary);
     --border-1-color-light: 0.1rem solid var(--color-light);
+    --border-1-color-red: 0.1rem solid var(--color-red);
 
     /* WIDTH */
     --max-content-width: 96rem;

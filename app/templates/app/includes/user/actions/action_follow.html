@@ -1,0 +1,13 @@
+{% include 'app/includes/user/components/card_user.html' with user=member %}
+
+<div class="action-follow">
+
+    <button type="button" class="btn btn--accent" {% if user == member %}disabled{% endif %}>
+        {% if member.profile in user_following %}
+        Unfollow
+        {% else %}
+        Follow
+        {% endif %}
+    </button>
+
+</div>

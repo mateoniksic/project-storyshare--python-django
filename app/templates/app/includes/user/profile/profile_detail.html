@@ -1,0 +1,103 @@
+{% load static %}
+
+<div class="card-profile-detail">
+    <figure class="card-profile-detail__img-container">
+        <img
+            class="img"
+            src="{{ user.profile.profile_image }}"
+            alt="{{ user.first_name }} {{ user.last_name }}" />
+    </figure>
+    <div class="card-profile-detail__content">
+        <div class="card-profile-detail__user">
+            <div class="card-profile-detail__user-name-container">
+
+                <a href="{{ user.profile.get_absolute_url }}" class="card-profile-detail__user-name">
+                    <h1 class="heading-3">{{ user.first_name }} {{ user.last_name }}</h1>
+                </a>
+                {% if request.user == member %}
+                    <a href="{% url 'app:profile-update-view' slug=request.user.profile.slug %}" class="btn">Edit</a>
+                {% endif %}
+
+            </div>
+            <p class="card-profile-detail__user-description text-l">{{ user.profile.description }}</p>
+        </div>
+        <div class="card-profile-detail__stats">
+            <span class="text-chip">{{ user.profile.posts.all | length }} Posts</span>
+            <button
+                type="button"
+                class="btn-chip btn-chip--neutral"
+                data-modal-window-target="#followers">
+                {{ user.profile.followers.all | length }} Followers
+            </button>
+            <button
+                type="button"
+                class="btn-chip btn-chip--neutral"
+                data-modal-window-target="#following">
+                {{ user.profile.following.all | length }} Following
+            </button>
+
+            <div class="modal-window" id="followers">
+
+                <div class="modal-window__header">
+
+                    <span class="heading-3">Followers</span>
+
+                    <button type="button" class="btn-chip btn-chip--danger" data-button-close>
+                        <svg class="icon icon-24">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
+                        </svg>
+                        <span>Close</span>
+                    </button>
+
+                </div>
+                
+                <div class="list-card-action-follow">
+
+                    {% for follower in user.profile.followers.all %}
+
+                        <div class="card-action-follow">
+                            {% include 'app/includes/user/actions/action_follow.html' with user=request.user member=follower.user %}
+                        </div>
+
+                    {% endfor %}
+                    
+                </div>
+
+            </div>
+
+            <div class="modal-window" id="following">
+
+                <div class="modal-window__header">
+
+                    <span class="heading-3">Following</span>
+
+                    <button type="button" class="btn-chip btn-chip--danger" data-button-close>
+                        <svg class="icon icon-24">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
+                        </svg>
+                        <span>Close</span>
+                    </button>
+
+                </div>
+                
+                <div class="list-card-action-follow">
+
+                    {% for following in user.profile.following.all %}
+
+                        <div class="card-action-follow">
+                            {% include 'app/includes/user/actions/action_follow.html' with user=request.user member=following.user %}
+                        </div>
+
+                    {% endfor %}
+                    
+                </div>
+
+            </div>
+
+            <div id="modal-overlay" class="modal-overlay"></div>
+
+        </div>
+
+    </div>
+
+</div>

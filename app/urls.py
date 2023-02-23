@@ -4,15 +4,19 @@ from . import views
 app_name = 'app'
 
 urlpatterns = [
-    path('', views.PublicIndexPostListView.as_view(), name='public-index'),
-    path('sign-up/', views.public_account_sign_up, name='public-sign-up'),
-    path('sign-in/', views.public_account_sign_in, name='public-sign-in'),
-    path('sign-out/', views.private_account_sign_out, name='private-sign-out'),
-    path('home/', views.PrivateIndexPostListView.as_view(), name='private-index'),
-    path('explore/', views.PrivateExplorePostListView.as_view(),
-         name='private-explore'),
-    path('post/<slug:slug>', views.PrivatePostDetailView.as_view(),
-         name='private-post-detail-view'),
-    path('profile/<slug:slug>', views.PrivateProfileDetailView.as_view(),
-         name='private-profile-detail-view'),
+    path('', views.IndexTemplateView.as_view(), name='index'),
+
+    path('sign-up/', views.user_sign_up, name='sign-up'),
+    path('sign-in/', views.user_sign_in, name='sign-in'),
+    path('sign-out/', views.user_sign_out, name='sign-out'),
+
+    path('home/', views.HomePostListView.as_view(), name='home'),
+    path('explore/', views.ExplorePostListView.as_view(), name='explore'),
+
+    path('post/<slug:slug>/', views.PostDetailView.as_view(), name='post-detail-view'),
+
+    path('<slug:slug>/', views.ProfileDetailView.as_view(), name='profile-detail-view'),
+    path('<slug:slug>/update/profile/', views.ProfileUpdateView.as_view(), name='profile-update-view'),
+
+    path('tag/<slug:slug>/', views.TagDetailView.as_view(), name='tag-detail-view'),
 ]

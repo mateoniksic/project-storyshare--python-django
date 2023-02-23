@@ -6,13 +6,14 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 
 
-class CreatorProfile(models.Model):
+class UserProfile(models.Model):
     class Meta:
-        verbose_name = "Creator Profile"
-        verbose_name_plural = "Creator Profiles"
+        verbose_name = "User Profile"
+        verbose_name_plural = "User Profiles"
 
     user = models.OneToOneField(
-        User, related_name='CreatorProfile', primary_key=True, on_delete=models.CASCADE)
+        User, related_name='profile', primary_key=True, on_delete=models.CASCADE)
+
     slug = models.SlugField(
         max_length=1024, unique=True, blank=True, null=True)
     profile_image = models.URLField(max_length=2048, blank=True, null=True)
@@ -21,18 +22,18 @@ class CreatorProfile(models.Model):
         'self', symmetrical=False, related_name='followers', blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
-    def get_absolute_url(self):
-        return reverse('app:private-profile-detail-view', kwargs={'slug': self.slug})
-
     @receiver(post_save, sender=User)
-    def create_creator_profile(sender, instance, created, **kwargs):
+    def create_user_profile(sender, instance, created, **kwargs):
         if created:
-            creator_profile = CreatorProfile.objects.create(user=instance)
-            creator_profile.following.add(creator_profile)
+            user_profile = UserProfile.objects.create(user=instance)
+            user_profile.following.add(user_profile)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)
-        super(CreatorProfile, self).save(*args, **kwargs)
+        super(UserProfile, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('app:profile-detail-view', kwargs={'slug': self.slug})
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name} ({self.user.username})'
@@ -63,8 +64,8 @@ class Post(models.Model):
         verbose_name = "Post"
         verbose_name_plural = "Posts"
 
-    creator_profile = models.ForeignKey(
-        CreatorProfile, related_name='posts', null=True, on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(
+        UserProfile, related_name='posts', null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=148, null=True)
     slug = models.SlugField(max_length=1024, blank=True,
                             unique=True, null=True)
@@ -75,11 +76,11 @@ class Post(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('app:private-post-detail-view', kwargs={'slug': self.slug})
+        return reverse('app:post-detail-view', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.creator_profile}: {self.title} ({self.slug})'
+        return f'{self.user_profile}: {self.title} ({self.slug})'

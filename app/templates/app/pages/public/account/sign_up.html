@@ -11,7 +11,7 @@
 <link
     rel="stylesheet"
     type="text/css"
-    href="{% static 'app/includes/form/form.css' %}" />
+    href="{% static 'app/includes/user/form/form.css' %}" />
 {% endblock head %}
 
 {% block body %}
@@ -19,10 +19,10 @@
     <div class="container">
         <div class="container__form">
             <div class="container__form__box bg--flash">
-                <a href="{% url 'app:public-index' %}" class="brand mb-16">StoryShare</a>
+                <a href="{% url 'app:index' %}" class="brand mb-16">StoryShare</a>
                 <p class="text-l">Sign up to share your words of wisdom, lessons learned and advice with people around the world.</p>
                 <hr>
-                {% include 'app/includes/form/form_sign_up.html' %}
+                {% include 'app/includes/user/form/form_sign_up.html' %}
                 {% if messages %}
                     <ul class="messages">
                         {% for message in messages %}
@@ -34,7 +34,7 @@
             <div class="container__form__box bg--flash">
                 <span>
                     Already have an account?
-                    <a href="{% url 'app:public-sign-in' %}">Sign in</a>
+                    <a href="{% url 'app:sign-in' %}">Sign in</a>
                 </span>
             </div>
         </div>

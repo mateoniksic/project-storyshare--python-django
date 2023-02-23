@@ -79,3 +79,7 @@ LAYOUT
 .display-ib {
     display: inline-block;
 }
+
+.display-none {
+    display: none;
+}

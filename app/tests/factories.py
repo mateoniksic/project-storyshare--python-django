@@ -18,9 +18,9 @@ class UserFactory(factory.django.DjangoModelFactory):
     last_name = factory.LazyAttribute(lambda o: fake.last_name())
 
 
-class CreatorProfileFactory(factory.django.DjangoModelFactory):
+class UserProfileFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = models.CreatorProfile
+        model = models.UserProfile
         django_get_or_create = ('user',)
 
     user = factory.SubFactory(UserFactory)
@@ -42,7 +42,7 @@ class PostFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Post
 
-    creator_profile = factory.Iterator(models.CreatorProfile.objects.all())
+    user_profile = factory.Iterator(models.UserProfile.objects.all())
     title = factory.LazyAttribute(lambda o: fake.unique.sentence())
     slug = factory.LazyAttribute(lambda o: fake.slug())
     featured_image = factory.LazyAttribute(

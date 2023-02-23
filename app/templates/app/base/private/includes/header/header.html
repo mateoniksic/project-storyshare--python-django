@@ -4,14 +4,14 @@
         <ul class="link-list">
             <li class="link-list__item">
                 <a
-                    href="{% url 'app:private-index' %}"
+                    href="{% url 'app:home' %}"
                     class="brand mb-24">
                     StoryShare
                 </a>
             </li>
             <li class="link-list__item">
                 <a
-                    href="{% url 'app:private-index' %}"
+                    href="{% url 'app:home' %}"
                     class="link-list__link">
                     <svg class="icon icon-24 icon-text-right">
                         <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-home"></use>
@@ -31,7 +31,7 @@
             </li>
             <li class="link-list__item">
                 <a
-                    href="{% url 'app:private-explore' %}"
+                    href="{% url 'app:explore' %}"
                     class="link-list__link">
                     <svg class="icon icon-24 icon-text-right">
                         <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-compass"></use>
@@ -55,11 +55,11 @@
     <div class="header__content">
         <ul class="link-list">
             <li class="link-list__item link-list__item--profile">
-                {% include 'app/includes/profile/card-user.html' with User=user%}
+                {% include 'app/includes/user/components/card_user.html' with User=user%}
             </li>
             <li class="link-list__item">
                 <a
-                    href="/"
+                    href="{% url 'app:profile-update-view' slug=request.user.profile.slug %}"
                     class="link-list__link">
                     <svg class="icon icon-24 icon-text-right">
                         <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-settings"></use>
@@ -70,7 +70,7 @@
 
             <li class="link-list__item">
                 <a
-                    href="{% url 'app:private-sign-out' %}"
+                    href="{% url 'app:sign-out' %}"
                     class="link-list__link">
                     <svg class="icon icon-24 icon-text-right">
                         <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-sign-out"></use>

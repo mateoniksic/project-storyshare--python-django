@@ -97,7 +97,9 @@ a:is(:hover, :active, :focus) {
 BUTTONS
 ************************************
 */
-a:is(:link, :visited).btn {
+/* BUTTON DEFAULT */
+a:is(:link, :visited).btn,
+button.btn {
     padding: 1.6rem 2.4rem;
 
     border: 0.1rem solid var(--color-primary);
@@ -113,24 +115,87 @@ a:is(:link, :visited).btn {
     font-weight: bold;
 }
 
-a:is(:hover, :active, :focus).btn {
+a:is(:hover, :active, :focus).btn,
+button:is(:hover, :active, :focus).btn {
     background-color: var(--color-primary-lighten-5);
 }
 
 /* BUTTON ACCENT */
-a:is(:link, :visited).btn--accent {
+a:is(:link, :visited).btn--accent,
+button.btn--accent {
     border: 0.1rem solid var(--color-accent);
     background-color: var(--color-accent);
     color: var(--color-primary);
 }
 
-a:is(:hover, :active, :focus).btn--accent {
+a:is(:hover, :active, :focus).btn--accent,
+button:is(:hover, :active, :focus).btn--accent {
     background-color: var(--color-accent-lighten-40);
 }
 
 /* BUTTON ROUND */
-a:is(:link, :visited).btn--round {
+a:is(:link, :visited).btn--round,
+button.btn--round {
     border-radius: 4rem;
+}
+
+button:disabled.btn,
+button:disabled:is(:hover, :active, :focus).btn {
+    color: var(--color-dark);
+
+    background-color: var(--color-dark-a-10);
+
+    border: 0.1rem solid var(--color-dark);
+
+    cursor: not-allowed;
+}
+
+/* TEXT CHIP */
+.text-chip {
+    display: inline-block;
+
+    padding: 0.8rem 1.2rem;
+
+    background-color: var(--color-dark-a-10);
+
+    border: 0.1rem solid var(--color-dark);
+    border-radius: var(--border-radius);
+}
+
+/* BUTTON CHIP */
+
+button.btn-chip {
+    font-size: inherit;
+    line-height: inherit;
+
+    padding: 0.8rem 1.2rem;
+
+    border-radius: var(--border-radius);
+    
+    cursor: pointer;
+}
+
+
+button.btn-chip--neutral {
+    color: var(--color-dark);
+    background-color: var(--color-dark-a-10);
+    border: var(--border-1-color-primary);
+}
+
+button:is(:hover, :active, :focus).btn-chip--neutral {
+    color: var(--color-light);
+    background-color: var(--color-primary);
+}
+
+button.btn-chip--danger {
+    color: var(--color-red);
+    background-color: var(--color-red-lighten-85);
+    border: var(--border-1-color-red);
+}
+
+button:is(:hover, :active, :focus).btn-chip--danger {
+    color: var(--color-light);
+    background-color: var(--color-red);
 }
 
 /*
@@ -162,7 +227,7 @@ ICONS
 .icon {
     display: inline-block;
 
-    vertical-align: top;
+    vertical-align: bottom;
 
     fill: currentColor;
 }

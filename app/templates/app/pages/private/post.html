@@ -2,36 +2,57 @@
 {% load static %}
 
 {% block title %}
-Story • 
-{{ post.creator_profile.user.first_name }}
-{{ post.creator_profile.user.last_name }} 
-(@{{ post.creator_profile.user.username }})
+Story • {{ member.first_name }} {{ member.last_name }} (@{{ member.username }})
 {% endblock title %}
 
 {% block head %}
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/post/post_detail/post_detail.css' %}" />
+        href="{% static 'app/pages/private/post/post.css' %}" />
 
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/post/post.css' %}" />
+        href="{% static 'app/includes/user/post/post_detail/post_detail.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/user/profile/profile_detail.css' %}" />
+
+        <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/misc/modal/modal_actions/modal_actions.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/misc/modal/modal_window/modal_window.css' %}" />
 {% endblock head %}
 
 {% block body %}
 
     {% block main_header %}
 
-        {% include 'app/includes/profile/card-user-action-follow.html' with user_creator=post.creator_profile.user followers=post.creator_profile.followers.all %}
+        {% include 'app/includes/user/actions/action_follow.html' %}
 
     {% endblock main_header %}
 
     {% block main_content %}
 
-        {% include 'app/includes/post/post_detail.html' %}
+        <div class="profile-detail">
+            {% include 'app/includes/user/profile/profile_detail.html' with user=member %}
+        </div>
+
+        {% include 'app/includes/user/post/post_detail.html' %}
 
     {% endblock main_content %}
+
+    {% block script %}
+        <script src="{% static 'app/includes/misc/modal/modal_actions/modal_actions.js' %}"></script>
+        <script src="{% static 'app/includes/misc/modal/modal_window/modal_window.js' %}"></script>
+    {% endblock script %}
 
 {% endblock body %}

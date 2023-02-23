@@ -1,0 +1,37 @@
+.modal-actions {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    gap: 0.8rem;
+
+    min-width: min-content;
+    width: 100%;
+    max-width: 16rem;
+
+    padding: 1.6rem 0.8rem;
+
+    background-color: var(--color-light-a-75);
+    backdrop-filter: blur(2rem);
+
+
+    border: var(--border-1-color-primary);
+    border-radius: var(--border-radius);
+
+    position: absolute;
+    inset: 4.8rem 0 auto auto;
+
+    overflow: hidden;
+
+    transform: translateY(-50%) scale(0);
+    transform-origin: right;
+
+    transition: transform 200ms ease-in-out;
+}
+
+.modal-actions--active {
+    transform: translateY(0%) scale(1);
+}
+
+.modal-actions button {
+    text-align: left;
+}

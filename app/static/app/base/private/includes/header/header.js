@@ -15,6 +15,8 @@ function setActiveLink() {
                 const linkIconFilled = hasIcon.attributes['xlink:href'].value.concat('-filled');
                 hasIcon.setAttribute('xlink:href', linkIconFilled);
             }
+
+            break;
         }
     }
 }
