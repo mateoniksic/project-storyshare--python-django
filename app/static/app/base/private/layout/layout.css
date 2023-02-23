@@ -25,7 +25,7 @@ LAYOUT
     overflow: hidden;
 }
 
-.app__content {
+.app__container-content{
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -47,7 +47,7 @@ LAYOUT
 SECTION MAIN
 ************************************
 */
-.main__page {
+.container-main{
     min-width: min-content;
     width: 100%;
     max-width: var(--max-width);
@@ -61,7 +61,7 @@ SECTION MAIN
     isolation: isolate;
 }
 
-.main__header {
+.main__container-header-main {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -77,6 +77,8 @@ SECTION MAIN
     backdrop-filter: blur(2rem);
 
     border-bottom: var(--border-1-color-primary);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
 
     position: sticky;
     top: -4.8rem;
@@ -84,12 +86,7 @@ SECTION MAIN
     z-index: 9000;
 }
 
-.main__header--border-radius {
-    border-top-left-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
-}
-
-.main__header__title {
+.main__header-title {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;

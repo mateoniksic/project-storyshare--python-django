@@ -1,15 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
+
         <meta charset="UTF-8" />
+        
         <meta
             http-equiv="X-UA-Compatible"
             content="IE=edge" />
-        <meta
+        
+            <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0" />
-        <title>StoryShare • {% block title %}{% endblock title %}</title>
+        
+            <title>
+                StoryShare • 
+                {% block title %}{% endblock title %}
+            </title>
 
         <!-- FONTS -->
         <link
@@ -27,22 +35,22 @@
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/variables.css' %}" />
+            href="{% static 'app/base/public/variables.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/base.css' %}" />
+            href="{% static 'app/base/public/base.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/typography.css' %}" />
+            href="{% static 'app/base/public/typography.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/utilities.css' %}" />
+            href="{% static 'app/base/public/utilities.css' %}" />
 
         <link
             rel="stylesheet"
@@ -52,51 +60,58 @@
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/private/includes/header/header.css' %}" />
+            href="{% static 'app/base/private/includes/header/style.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/private/includes/footer/footer.css' %}" />
+            href="{% static 'app/base/private/includes/footer/style.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/includes/user/components/card_user.css' %}" />
+            href="{% static 'app/includes/member/profile/misc/card_member/style.css' %}" />
 
         <!-- EXTRA HEAD -->
         {% block head %}{% endblock head %}
+
     </head>
+
     <body>
         <div class="app">
-            {% include 'app/base/private/includes/header/header.html' %}
 
-            <div class="app__content">
-                <main class="main">
-                    
-                    <div class="main__page">
+            {% include 'app/base/private/includes/header.html' %}
 
-                        <div class="main__header main__header--border-radius">
-                            {% block main_header %}{% endblock main_header %}
-                        </div>
+            <div class="app__container-content">
 
-                        <div class="main__content">
-                            {% block main_content %}{% endblock main_content %}
-                        </div>
+                <main class="container-main">
+
+                    <header class="main__container-header-main">
+
+                        {% block main_header %}{% endblock main_header %}
+
+                    </header>
+
+                    <div class="main__container-content">
+
+                        {% block main_content %}{% endblock main_content %}
 
                     </div>
                     
                 </main>
 
-                {% include 'app/base/private/includes/footer/footer.html' %}
+                {% include 'app/base/private/includes/footer.html' %}
+
             </div>
+
         </div>
 
         <!-- JAVASCRIPT -->
-        <script src="{% static 'app/base/private/includes/header/header.js' %}"></script>
-        <script src="{% static 'app/base/private/includes/header/main-header.js' %}"></script>
+        <script src="{% static 'app/base/private/includes/header/index.js' %}"></script>
+        <script src="{% static 'app/base/private/includes/main_header/index.js' %}"></script>
 
         <!-- EXTRA JAVASCRIPT -->
         {% block script %}{% endblock script %}
+
     </body>
 </html>

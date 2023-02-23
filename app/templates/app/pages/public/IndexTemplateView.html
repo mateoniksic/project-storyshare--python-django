@@ -1,0 +1,62 @@
+{% extends 'app/base/public/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block head %}
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/pages/public/IndexTemplateView/style.css' %}" />
+
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'app/includes/member/post/post_list/style.css' %}" />
+{% endblock head %}
+
+{% block body %}
+
+    <!--    HEADER    -->
+    <header class="header">
+        <div class="header__container">
+            <a href="{% url 'app:public-index' %}" class="brand">StoryShare</a>
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href=" {% url 'app:public-sign-in' %} " class="btn btn--round">Sign in</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href=" {% url 'app:public-sign-up' %} " class="btn btn--accent">Get started</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!--    SECTION HERO    -->
+    <section class="section section__hero">
+        <div class="container">
+            <h1 class="heading-1 hero-title">Share your words of wisdom, lessons learned and advice with people around the world.</h1>
+        </div>
+    </section>
+
+    <!--    SECTION ARTICLES    -->
+    <section class="section">
+        <div class="container">
+            <h2 class="heading-2 my-32">{{ post_count }}+ personal success stories to get inspired.</h2>
+            {% include 'app/includes/post/post_list.html' %}
+        </div>
+    </section>
+
+    <!--    FOOTER    -->
+    <footer class="footer">
+        <span>&copy; 2023 StoryShare. All Rights Reserved.</span>
+    </footer>
+
+    <!--    SCRIPTS   -->
+    <script src="{% static 'app/pages/public/index/index.js' %}"></script>
+    {% block script %}
+    {% endblock script %}
+
+{% endblock body %}

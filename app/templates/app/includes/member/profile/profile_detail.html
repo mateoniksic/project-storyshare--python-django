@@ -1,0 +1,140 @@
+{% load static %}
+
+<div class="container-profile-detail">
+
+    <figure class="profile-detail__image-wrapper">
+
+        <img
+            class="img"
+            src="{{ member.profile.profile_image }}"
+            alt="{{ member.first_name }} {{ member.last_name }}" />
+
+    </figure>
+
+    <div class="profile-detail__container">
+    
+        <div class="profile-detail__container-member-name">
+
+            <a
+                href="{{ member.profile.get_absolute_url }}" 
+                class="profile-detail__member-name__link link link--text">
+        
+                <span class="heading-3">{{ member.first_name }} {{ member.last_name }}</span>
+
+            </a>
+
+            {% if user == member %}
+    
+                <a
+                    href="{% url 'app:profile-update-view' slug=request.user.profile.slug %}" 
+                    class="link link--small link--button-primary">
+                    Edit
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        <p class="profile-detail__member-description text-large">
+            {{ member.profile.description }}
+        </p>
+
+
+        <div class="profile-detail__member-details">
+
+            <span class="text-chip">
+                {{ member.profile.posts.all | length }} Posts
+            </span>
+
+            <button
+                type="button"
+                class="button button--neutral button--small"
+                data-modal-window-target="#followers">
+                {{ member.profile.followers.all | length }} Followers
+            </button>
+
+            <button
+                type="button"
+                class="button button--neutral button--small"
+                data-modal-window-target="#following">
+                {{ member.profile.following.all | length }} Following
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+            <div class="modal-window" id="followers">
+
+                <div class="modal-window__header">
+
+                    <span class="heading-3">Followers</span>
+
+                    <button type="button" class="button button--small button--danger" data-button-close>
+                        <svg class="icon icon-24">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
+                        </svg>
+                        <span>Close</span>
+                    </button>
+
+                </div>
+                
+                <div class="container-action-follow-list">
+
+                    {% for follower in member.profile.followers.all %}
+
+                        {% include 'app/includes/member/profile/misc/container_action_follow.html' with member=follower.user %}
+
+                    {% endfor %}
+                    
+                </div>
+
+            </div>
+
+    
+
+            <div class="modal-window" id="following">
+
+                <div class="modal-window__header">
+
+                    <span class="heading-3">Following</span>
+
+                    <button type="button" class="button button--small button--danger" data-button-close>
+                        <svg class="icon icon-24">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
+                        </svg>
+                        <span>Close</span>
+                    </button>
+
+                </div>
+                
+                <div class="container-action-follow-list">
+
+                    {% for following in member.profile.following.all %}
+
+                        {% include 'app/includes/member/profile/misc/container_action_follow.html' with member=following.user %}
+
+                    {% endfor %}
+                    
+                </div>
+
+            </div>
+    
+
+            <div id="modal-overlay" class="modal-overlay"></div>
+
+
+
+
+
+
+
+
+
+</div>

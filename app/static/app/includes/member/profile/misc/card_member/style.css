@@ -1,0 +1,23 @@
+a:is(:link, :visited).card-member__link {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.card-member__image-wrapper {
+    width: 3.2rem;
+    height: 3.2rem;
+
+    border: var(--border-1-color-primary);
+    border-radius: 100%;
+
+    overflow: hidden;
+
+    transition: border-radius 200ms ease-in-out;
+}
+
+a:is(:hover, :active, :focus).card-member__link .card-member__image-wrapper {
+    border-radius: var(--border-radius);
+}

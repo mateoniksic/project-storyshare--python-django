@@ -1,0 +1,20 @@
+.header-main-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-content: center;
+
+    width: 100%;
+
+    color: var(--color-primary);
+}
+
+.section-profile-detail {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-content: center;
+
+    padding: 4.8rem 3.2rem;
+    border-bottom: var(--border-1-color-primary);
+}

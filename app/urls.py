@@ -4,14 +4,14 @@ from . import views
 app_name = 'app'
 
 urlpatterns = [
-    path('', views.IndexTemplateView.as_view(), name='index'),
+    path('', views.IndexTemplateView.as_view(), name='index-template-view'),
 
-    path('sign-up/', views.user_sign_up, name='sign-up'),
-    path('sign-in/', views.user_sign_in, name='sign-in'),
-    path('sign-out/', views.user_sign_out, name='sign-out'),
+    path('sign-up/', views.sign_up, name='sign-up'),
+    path('sign-in/', views.sign_in, name='sign-in'),
+    path('sign-out/', views.sign_out, name='sign-out'),
 
-    path('home/', views.HomePostListView.as_view(), name='home'),
-    path('explore/', views.ExplorePostListView.as_view(), name='explore'),
+    path('home/', views.HomePostListView.as_view(), name='home-post-list-view'),
+    path('explore/', views.ExplorePostListView.as_view(), name='explore-post-list-view'),
 
     path('post/<slug:slug>/', views.PostDetailView.as_view(), name='post-detail-view'),
 

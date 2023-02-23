@@ -1,0 +1,278 @@
+/*
+************************************
+HEADINGS 
+************************************
+*/
+.heading-1 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 4.209rem;
+    line-height: 1em;
+}
+
+.heading-2 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 3.157rem;
+    line-height: 1.125em;
+}
+
+.heading-3 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 2.369rem;
+    line-height: 1.25em;
+}
+
+.heading-4 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 1.777rem;
+    line-height: 1.25em;
+}
+
+.heading-5 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 1.333rem;
+    line-height: 1.5em;
+}
+
+.heading-6 {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.5em;
+}
+
+/*
+************************************
+BODY TEXT
+************************************
+*/
+.text-large {
+    font-size: 1.8rem;
+    line-height: 1.75;
+}
+
+.text-small {
+    font-size: 1.4rem;
+    line-height: 1.5;
+}
+
+.text-xsmall {
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+/*
+************************************
+LINKS
+************************************
+*/
+a:is(:link, :visited).link {
+    display: inline-block;
+
+    font-family: inherit;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+    color: inherit;
+
+    cursor: pointer;
+}
+
+/* LINK SIZE */
+a:is(:link, :visited).link--small {
+    font-size: 1.6rem;
+
+    padding: 0.8rem 1.6rem;
+}
+
+a:is(:link, :visited).link--large {
+    font-size: 1.6rem;
+
+    padding: 1.6rem 2.4rem;
+}
+
+/* LINK TEXT */
+a:is(:link, :visited).link--text {
+    border-bottom: 0.1rem solid var(--color-primary);
+    padding: 0.4rem;
+}
+
+a:is(:hover, :active, :focus).link--text {
+    background-color: var(--color-accent-lighten-40);
+}
+
+/* LINK BUTTON PRIMARY */
+a:is(:link, :visited).link--button-primary {
+    border: 0.1rem solid var(--color-primary);
+    border-radius: var(--border-radius);
+
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+
+a:is(:hover, :active, :focus).link--button-primary {
+    background-color: var(--color-primary-lighten-5);
+}
+
+/* LINK BUTTON ACCENT */
+a:is(:link, :visited).link--button--accent {
+    border: 0.1rem solid var(--color-accent);
+    border-radius: var(--border-radius);
+
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+}
+
+a:is(:hover, :active, :focus).link--button--accent {
+    background-color: var(--color-accent-lighten-40);
+}
+
+/*
+************************************
+BUTTONS
+************************************
+*/
+button.button {
+    font-family: inherit;
+    font-size: 1.6rem;
+    line-height: unset;
+    font-weight: bold;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+button:disabled.button,
+button:disabled:is(:hover, :active, :focus).button {
+    cursor: not-allowed;
+}
+
+/* BUTTON SIZE */
+button.button--large {
+    padding: 1.6rem 2.4rem;
+}
+
+button.button--small {
+    padding: 0.8rem 1.6rem;
+}
+
+/* BUTTON NEUTRAL */
+button.button--neutral {
+    border: 0.1rem solid var(--color-primary);
+    border-radius: var(--border-radius);
+
+    background-color: var(--color-dark-a-10);
+    color: var(--color-primary);
+}
+
+button:is(:hover, :active, :focus).button--neutral {
+    background-color: var(--color-dark-a-25);
+}
+
+/* BUTTON DANGER */
+button.button--danger {
+    border: var(--border-1-color-red);
+    border-radius: var(--border-radius);
+
+    color: var(--color-red);
+    background-color: var(--color-red-lighten-85);
+}
+
+button:is(:hover, :active, :focus).button--danger {
+    color: var(--color-light);
+    background-color: var(--color-red);
+}
+
+/* BUTTON PRIMARY */
+button.button--primary {
+    border: 0.1rem solid var(--color-primary);
+    border-radius: var(--border-radius);
+
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+
+button:is(:hover, :active, :focus).button--primary {
+    background-color: var(--color-primary-lighten-5);
+}
+
+/* BUTTON ACCENT */
+button.button--accent {
+    border: 0.1rem solid var(--color-accent);
+    border-radius: var(--border-radius);
+
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+}
+
+button:is(:hover, :active, :focus).button--accent {
+    background-color: var(--color-accent-lighten-40);
+}
+
+/*
+************************************
+TEXT CHIP
+************************************
+*/
+
+.text-chip {
+    padding: 0.8rem 1.2rem;
+
+    background-color: var(--color-dark-a-10);
+
+    border: 0.1rem solid var(--color-dark);
+    border-radius: var(--border-radius);
+}
+
+/*
+************************************
+BRAND
+************************************
+*/
+.container__brand {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 2.369rem;
+    line-height: 1.25em;
+}
+
+a:is(:link, :visited).brand__link {
+    border-bottom: 0.1rem solid transparent;
+}
+
+a:is(:hover, :active, :focus).brand__link {
+    color: inherit;
+    border-bottom: 0.1rem solid var(--color-primary);
+}
+
+/*
+************************************
+ICONS
+************************************
+*/
+.icon {
+    display: inline-block;
+
+    vertical-align: bottom;
+
+    fill: currentColor;
+}
+
+.icon-24 {
+    width: 2.4rem;
+    height: 2.4rem;
+}
+
+.icon-32 {
+    width: 3.2rem;
+    height: 3.2rem;
+}
+
+.icon-text-right {
+    margin-right: 0.8rem;
+}

@@ -3,7 +3,7 @@
 
     <a
         href="?page=1"
-        class="pagination__page-link">
+        class="pagination__page-link link link--text">
         First
     </a>
 
@@ -11,7 +11,7 @@
 
     <a
         href="?page{{ page_obj.previous_page_number }}"
-        class="pagination__page-link">
+        class="pagination__page-link link link--text">
         {{ page_obj.previous_page_number }}
     </a>
 
@@ -23,12 +23,12 @@
 
     <a
         href="?page={{ page_obj.next_page_number }}"
-        class="pagination__page-link">
+        class="pagination__page-link link link--text">
         {{ page_obj.next_page_number }}
     </a>
     <a
         href="?page={{ page_obj.paginator.num_pages }}"
-        class="pagination__page-link">
+        class="pagination__page-link link link--text">
         Last
     </a>
 

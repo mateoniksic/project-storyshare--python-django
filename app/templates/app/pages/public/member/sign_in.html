@@ -1,0 +1,37 @@
+{% extends 'app/base/public/base.html' %}
+{% load static %}
+
+{% block title %}Sign in{% endblock title %}
+
+{% block head %}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'app/pages/public/member/sign_in/style.css' %}" />
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'app/includes/member/form/style.css' %}" />
+{% endblock head %}
+
+{% block body %}
+<section class="section">
+    <div class="container">
+        <div class="container__hero">
+            <a href="{% url 'app:index-template-view' %}" class="brand mb-16">StoryShare</a>
+            <p class="text-l">Share your words of wisdom, lessons learned and advice with people around the world.</p>
+        </div>
+        <div class="container__form">
+            <div class="container__form__box bg--flash">
+                {% include 'app/includes/member/form/form_sign_in.html' %}
+            </div>
+            <div class="container__form__box bg--flash">
+                <span>
+                    Don't have an account?
+                    <a href="{% url 'app:sign-up' %}">Sign up</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

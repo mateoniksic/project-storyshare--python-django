@@ -1,0 +1,83 @@
+.container-profile-detail {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    gap: 2.4rem;
+
+    width: 100%;
+    max-width: var(--max-content-width);
+}
+
+.profile-detail__image-wrapper {
+    flex-shrink: 0 17rem 0;
+    width: 17rem;
+    height: 17rem;
+
+    border: var(--border-1-color-primary);
+    border-radius: var(--border-radius);
+
+    overflow: hidden;
+}
+
+.profile-detail__container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+}
+
+.profile-detail__container-member-name {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    gap: 1.6rem;
+
+    margin-bottom: 0.8rem;
+}
+
+a.profile-detail__edit-link {
+    margin-left: 1.6rem;
+}
+
+.profile-detail__member-description {
+    width: 100%;
+    max-width: 52ch;
+
+    margin-bottom: 2.4rem;
+}
+
+.profile-detail__member-details {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.card-profile-detail__stats-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-content: center;
+    gap: 1.6rem;
+
+    width: 100%;
+    max-width: 32rem;
+}
+
+.container-action-follow-list {
+    width: 48rem;
+
+    min-height: max-content;
+    height: 100%;
+    max-height: 70rem;
+
+    overflow-y: auto;
+}
+
+.container-action-follow-list .container-action-follow {
+    padding: 1.6rem;
+    border-bottom: var(--border-1-color-primary);
+}

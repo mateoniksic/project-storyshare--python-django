@@ -1,0 +1,78 @@
+{% extends 'app/base/private/base.html' %}
+{% load static %}
+
+{% block title %}
+
+    Story • 
+    {{ member.first_name }} 
+    {{ member.last_name }} 
+    (@{{ member.username }})
+
+{% endblock title %}
+
+{% block head %}
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/pages/private/ProfileDetailView/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/member/profile/profile_detail/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/member/profile/misc/container_action_follow/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/member/post/post_list/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/misc/modal/modal_actions/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/misc/modal/modal_window/style.css' %}" />
+
+{% endblock head %}
+
+{% block body %}
+
+    {% block main_header %}
+
+        {% include 'app/includes/member/profile/misc/container_action_follow.html' %}
+
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        <section class="section-profile-detail">
+
+            {% include 'app/includes/member/profile/profile_detail.html' %}
+
+        </section>
+
+        <section class="section-post-list">
+
+            {% include 'app/includes/member/post/post_list.html' %}
+
+        </section>
+
+    {% endblock main_content %}
+
+    {% block script %}
+
+        <script src="{% static 'app/includes/misc/modal/modal_actions/index.js' %}"></script>
+        <script src="{% static 'app/includes/misc/modal/modal_window/index.js' %}"></script>
+
+    {% endblock script %}
+
+{% endblock body %}

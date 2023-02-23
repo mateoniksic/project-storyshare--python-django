@@ -36,7 +36,7 @@ class IndexTemplateView(generic.TemplateView):
     #     return super().dispatch(*args, **kwargs)
 
 
-def user_sign_up(request):
+def sign_up(request):
     if request.user.is_authenticated:
         return redirect(reverse('app:home'))
 
@@ -51,10 +51,10 @@ def user_sign_up(request):
                 return redirect(reverse('app:sign-in'))
 
         context = {'form': form}
-        return render(request, 'app/pages/public/account/sign_up.html', context=context)
+        return render(request, 'app/pages/public/member/sign_up.html', context=context)
 
 
-def user_sign_in(request):
+def sign_in(request):
     if request.user.is_authenticated:
         return redirect(reverse('app:home'))
 
@@ -75,13 +75,13 @@ def user_sign_in(request):
         else:
             message = 'Your username or password was incorrect. Please, try again.'
             messages.error(request, message)
-            return render(request, 'app/pages/public/account/sign_in.html')
+            return render(request, 'app/pages/public/member/sign_in.html')
 
     else:
-        return render(request, 'app/pages/public/account/sign_in.html')
+        return render(request, 'app/pages/public/member/sign_in.html')
 
 
-def user_sign_out(request):
+def sign_out(request):
     if request.user.is_authenticated:
         logout(request)
         return redirect(reverse('app:sign-in'))
@@ -94,14 +94,16 @@ class HomePostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     context_object_name = 'posts'
 
-    template_name = 'app/pages/private/home.html'
+    template_name = 'app/pages/private/HomePostListView.html'
     paginate_by = 6
 
     def get_queryset(self):
         following = UserProfile.objects.filter(
             user=self.request.user.id).values_list('following', flat=True).all()
+
         queryset = Post.objects.filter(user_profile__in=following).order_by(
             'date_created').all()
+
         return queryset
 
 
@@ -109,14 +111,16 @@ class ExplorePostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     context_object_name = 'posts'
 
-    template_name = 'app/pages/private/explore.html'
+    template_name = 'app/pages/private/ExplorePostListView.html'
     paginate_by = 6
 
     def get_queryset(self):
         following = UserProfile.objects.filter(
             user=self.request.user.id).values_list('following', flat=True).all()
+
         queryset = Post.objects.exclude(user_profile__in=following).order_by(
             'date_created').all()
+
         return queryset
 
 
@@ -124,18 +128,13 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
     context_object_name = 'post'
 
-    template_name = 'app/pages/private/post.html'
+    template_name = 'app/pages/private/PostDetailView.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        user = self.request.user
-
         member = self.object.user_profile.user
         context['member'] = member
-
-        user_following = user.profile.following.all()
-        context['user_following'] = user_following
 
         return context
 
@@ -144,18 +143,13 @@ class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
     model = UserProfile
     context_object_name = 'user_profile'
 
-    template_name = 'app/pages/private/profile.html'
+    template_name = 'app/pages/private/ProfileDetailView.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        user = self.request.user
-
         member = self.object.user
         context['member'] = member
-
-        user_following = user.profile.following.all()
-        context['user_following'] = user_following
 
         posts = member.profile.posts.all()
         context['posts'] = posts
@@ -169,7 +163,7 @@ class TagDetailView(LoginRequiredMixin, generic.DetailView):
     model = Tag
     context_object_name = 'tag'
 
-    template_name = 'app/pages/private/tag.html'
+    template_name = 'app/pages/private/TagDetailView.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -179,16 +173,11 @@ class TagDetailView(LoginRequiredMixin, generic.DetailView):
 
         return context
 
+
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = UserProfile
     fields = ['profile_image', 'description']
-    template_name = 'app/pages/private/profile_update.html'
-    
+    template_name = 'app/pages/private/ProfileUpdateView.html'
+
     def get_success_url(self):
         return reverse('app:profile-detail-view', kwargs={'slug': self.object.slug})
-
-# class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
-#     model = User
-#     fields = ['username', 'first_name', 'last_name', 'email']
-#     template_name = 'app/pages/private/settings.html'
-#     success_url = reverse_lazy('app:user-update-view')
