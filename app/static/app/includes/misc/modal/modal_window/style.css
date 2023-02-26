@@ -42,7 +42,7 @@
     inset: 0;
     z-index: 9001;
 
-    background-color: var(--color-light-a-25);
+    background-color: var(--color-dark-a-25);
     backdrop-filter: blur(0.2rem);
 
     opacity: 0;

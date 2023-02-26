@@ -37,11 +37,11 @@ POST LIST
     height: 100%;
 }
 
-.card-post__featured-image .img {
+.card-post__wrapper-featured-image .img {
     transition: filter 200ms ease-in-out;
 }
 
-.card-post:hover .card-post__featured-image .img {
+.card-post:hover .card-post__wrapper-featured-image .img {
     filter: brightness(120%);
 }
 
@@ -64,7 +64,7 @@ POST LIST
 }
 
 .card-post__title {
-    margin: 1.6rem 0  0.8rem 0;
+    margin: 1.6rem 0 0.8rem 0;
 }
 
 .card-post__date-created {

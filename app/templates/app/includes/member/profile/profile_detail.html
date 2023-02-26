@@ -76,20 +76,19 @@
 
                     <span class="heading-3">Followers</span>
 
-                    <button type="button" class="button button--small button--danger" data-button-close>
+                    <button type="button" class="button button--small button--invisible" data-button-close>
                         <svg class="icon icon-24">
                             <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
                         </svg>
-                        <span>Close</span>
                     </button>
 
                 </div>
                 
-                <div class="container-action-follow-list">
+                <div class="container-list-member-follow">
 
                     {% for follower in member.profile.followers.all %}
 
-                        {% include 'app/includes/member/profile/misc/container_action_follow.html' with member=follower.user %}
+                        {% include 'app/includes/member/profile/misc/container_member_follow.html' with member=follower.user %}
 
                     {% endfor %}
                     
@@ -105,20 +104,19 @@
 
                     <span class="heading-3">Following</span>
 
-                    <button type="button" class="button button--small button--danger" data-button-close>
+                    <button type="button" class="button button--small button--invisible" data-button-close>
                         <svg class="icon icon-24">
                             <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
                         </svg>
-                        <span>Close</span>
                     </button>
 
                 </div>
                 
-                <div class="container-action-follow-list">
+                <div class="container-list-member-follow">
 
                     {% for following in member.profile.following.all %}
 
-                        {% include 'app/includes/member/profile/misc/container_action_follow.html' with member=following.user %}
+                        {% include 'app/includes/member/profile/misc/container_member_follow.html' with member=following.user %}
 
                     {% endfor %}
                     

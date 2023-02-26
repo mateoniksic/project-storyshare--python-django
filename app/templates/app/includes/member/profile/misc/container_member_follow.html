@@ -1,9 +1,9 @@
-<div class="container-action-follow">
+<div class="container-member-follow">
 
     {% include 'app/includes/member/profile/misc/card_member.html' %}
 
     {% if member.profile in user.profile.following.all %}
-        <button type="button" class="button button--danger button--small" {% if user == member %}disabled{% endif %}>
+        <button type="button" class="button button--accent-inverted button--small" {% if user == member %}disabled{% endif %}>
             Unfollow
         </button>
     {% else %}

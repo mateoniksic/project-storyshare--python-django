@@ -1,4 +1,4 @@
-.card-post {
+.section-card-post {
     min-width: min-content;
     width: 100%;
 }
@@ -27,7 +27,7 @@
     font-weight: 700;
 }
 
-.card-post__content {
+.card-post__container-content {
     min-width: min-content;
     width: 100%;
     max-width: var(--max-content-width);

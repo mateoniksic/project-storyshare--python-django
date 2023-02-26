@@ -67,7 +67,7 @@ a.profile-detail__edit-link {
     max-width: 32rem;
 }
 
-.container-action-follow-list {
+.container-list-member-follow {
     width: 48rem;
 
     min-height: max-content;
@@ -77,7 +77,7 @@ a.profile-detail__edit-link {
     overflow-y: auto;
 }
 
-.container-action-follow-list .container-action-follow {
+.container-list-member-follow .container-member-follow {
     padding: 1.6rem;
     border-bottom: var(--border-1-color-primary);
 }

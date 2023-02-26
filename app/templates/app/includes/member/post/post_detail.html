@@ -1,5 +1,5 @@
 {% load static %}
-<section class="card-post">
+<section class="section-card-post">
     <figure class="card-post__container-featured-image">
         <div class="card-post__wrapper-featured-image">
             <img
@@ -10,7 +10,7 @@
         <figcaption class="featured-image__figcaption text-small">"{{ post.title }}"</figcaption>
     </figure>
 
-    <div class="card-post__content">
+    <div class="card-post__container-content">
         <h1 class="card-post__title heading-1">{{ post.title }}</h1>
 
         <span class="card-post__date">Published on {{ post.date_created | date }}</span>

@@ -56,7 +56,7 @@ def sign_up(request):
 
 def sign_in(request):
     if request.user.is_authenticated:
-        return redirect(reverse('app:home'))
+        return redirect(reverse('app:home-post-list-view'))
 
     elif request.method == 'POST':
         username = request.POST.get('username')
@@ -70,7 +70,7 @@ def sign_in(request):
             if next:
                 return redirect(next)
             else:
-                return redirect(reverse('app:home'))
+                return redirect(reverse('app:home-post-list-view'))
 
         else:
             message = 'Your username or password was incorrect. Please, try again.'
