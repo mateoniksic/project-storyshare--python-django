@@ -25,7 +25,7 @@ LAYOUT
     overflow: hidden;
 }
 
-.app__container-content {
+.app__container {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -47,7 +47,7 @@ LAYOUT
 SECTION MAIN
 ************************************
 */
-.container-main {
+.main {
     min-width: min-content;
     width: 100%;
     max-width: var(--max-width);
@@ -61,7 +61,7 @@ SECTION MAIN
     isolation: isolate;
 }
 
-.main__wrapper-header-main {
+.main__header {
     width: 100%;
 
     margin-top: 0.8rem;

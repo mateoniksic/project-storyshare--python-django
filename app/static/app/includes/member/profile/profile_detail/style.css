@@ -1,4 +1,4 @@
-.container-profile-detail {
+.profile-detail {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -8,7 +8,7 @@
     max-width: var(--max-content-width);
 }
 
-.profile-detail__image-wrapper {
+.profile-detail__profile-image {
     flex-shrink: 0 17rem 0;
     width: 17rem;
     height: 17rem;
@@ -19,13 +19,13 @@
     overflow: hidden;
 }
 
-.profile-detail__container {
+.profile-detail__profile-details {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
 }
 
-.profile-detail__container-member-name {
+.profile-detail__member-name {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -36,9 +36,7 @@
     margin-bottom: 0.8rem;
 }
 
-a.profile-detail__edit-link {
-    margin-left: 1.6rem;
-}
+
 
 .profile-detail__member-description {
     width: 100%;
@@ -47,7 +45,7 @@ a.profile-detail__edit-link {
     margin-bottom: 2.4rem;
 }
 
-.profile-detail__member-details {
+.profile-detail__member-stats {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -56,18 +54,9 @@ a.profile-detail__edit-link {
     gap: 0.8rem;
 }
 
-.card-profile-detail__stats-container {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-content: center;
-    gap: 1.6rem;
 
-    width: 100%;
-    max-width: 32rem;
-}
 
-.container-list-member-follow {
+.member-follow-list {
     width: 48rem;
 
     min-height: max-content;
@@ -77,7 +66,7 @@ a.profile-detail__edit-link {
     overflow-y: auto;
 }
 
-.container-list-member-follow .container-member-follow {
+.member-follow-list .member-follow {
     padding: 1.6rem;
     border-bottom: var(--border-1-color-primary);
 }

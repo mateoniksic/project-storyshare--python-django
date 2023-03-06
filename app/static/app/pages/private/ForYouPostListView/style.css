@@ -1,15 +1,4 @@
-.header-main-container {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-
-    width: 100%;
-
-    color: var(--color-primary);
-}
-
-.section-post-list {
+.posts {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;

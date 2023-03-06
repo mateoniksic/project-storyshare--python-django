@@ -1,18 +1,6 @@
-.modal-actions {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    gap: 0.8rem;
-
-    min-width: min-content;
-    width: 100%;
-    max-width: 16rem;
-
-    padding: 1.6rem 0.8rem;
-
+.context-menu {
     background-color: var(--color-light-a-75);
     backdrop-filter: blur(2rem);
-
 
     border: var(--border-1-color-primary);
     border-radius: var(--border-radius);
@@ -28,10 +16,26 @@
     transition: transform 200ms ease-in-out;
 }
 
-.modal-actions--active {
+.context-menu__list {
+    list-style: none;
+}
+
+.context-menu__item:not(:last-child) {
+    border-bottom: var(--border-1-color-primary);
+}
+
+.context-menu__item button {
+    width: 100%;
+
+    padding: 1.2rem 3.2rem;
+
+    border-radius: 0;
+}
+
+.context-menu--isActive {
     transform: translateY(0%) scale(1);
 }
 
-.modal-actions button {
+.context-menu button {
     text-align: left;
 }

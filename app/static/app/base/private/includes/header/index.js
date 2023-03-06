@@ -1,24 +1,15 @@
-function setActiveLink() {
-    const links = document.querySelectorAll('.link-list__item > a');
-    const current_link_href = window.location.href.split(/[/?#]/)[3];
+(function setLinkIsActive() {
+    const links = Array.from(document.querySelectorAll('header .nav__item a')).slice(1);
 
-    for (let i = 1; i < links.length; i++) {
-        const link = links[i];
-        const link_href = link.href.split(/[/?#]/)[3];
-        
-        if (link_href === current_link_href) {         
-            link.parentElement.classList.toggle('link-list__item--active');
+    links.forEach((link) => {
+        if (link.pathname === window.location.pathname) {
+            link.closest('.nav__item').classList.add('nav__item--isActive');
 
-            const hasIcon = link.querySelector('.icon use');
-
+            const hasIcon = link.querySelector('.icon > use');
             if (hasIcon) {
-                const linkIconFilled = hasIcon.attributes['xlink:href'].value.concat('-filled');
-                hasIcon.setAttribute('xlink:href', linkIconFilled);
+                iconFilledPath = hasIcon.attributes['xlink:href'].value.concat('-filled');
+                hasIcon.setAttribute('xlink:href', iconFilledPath);
             }
-
-            break;
         }
-    }
-}
-
-setActiveLink();
+    });
+})();

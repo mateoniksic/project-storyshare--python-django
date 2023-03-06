@@ -25,7 +25,7 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/member/profile/misc/container_member_follow/style.css' %}" />
+        href="{% static 'app/includes/member/profile/misc/member_follow/style.css' %}" />
 
     <link
         rel="stylesheet"
@@ -35,7 +35,7 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/misc/modal/modal_actions/style.css' %}" />
+        href="{% static 'app/includes/misc/modal/context_menu/style.css' %}" />
 
     <link
         rel="stylesheet"
@@ -48,19 +48,21 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/member/profile/misc/container_member_follow.html' %}
+        {% include 'app/includes/member/profile/misc/member_follow.html' %}
 
     {% endblock main_header %}
 
     {% block main_content %}
 
-        <section class="section-profile-detail">
+        <section class="profile">
 
             {% include 'app/includes/member/profile/profile_detail.html' %}
 
         </section>
 
-        <section class="section-post-list">
+        <section class="posts">
+
+            {% if request.GET.status %}Post deleted.{% endif %}
 
             {% include 'app/includes/member/post/post_list.html' %}
 
@@ -70,7 +72,7 @@
 
     {% block script %}
 
-        <script src="{% static 'app/includes/misc/modal/modal_actions/index.js' %}"></script>
+        <script src="{% static 'app/includes/misc/modal/context_menu/index.js' %}"></script>
         <script src="{% static 'app/includes/misc/modal/modal_window/index.js' %}"></script>
 
     {% endblock script %}

@@ -1,4 +1,4 @@
-.section-profile-detail {
+.profile {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -8,7 +8,7 @@
     border-bottom: var(--border-1-color-primary);
 }
 
-.section-post-list {
+.posts {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;

@@ -24,13 +24,13 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/misc/header-main_icon-title.html' with title=tag icon="hash" %}
+        {% include 'app/includes/misc/main__header-title.html' with title=tag icon="hash" %}
 
     {% endblock main_header %}
 
     {% block main_content %}
 
-        <section class="section-post-list">
+        <section class="posts">
     
             {% include 'app/includes/member/post/post_list.html' %}
 

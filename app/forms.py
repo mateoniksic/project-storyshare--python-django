@@ -43,3 +43,6 @@ class CreateUserForm(UserCreationForm):
 
     password2 = forms.CharField(label=_('Password confirmation'), widget=forms.PasswordInput(attrs={'class': 'form__input'}),
                                 help_text=_('Repeat the password for confirmation'))
+
+class CreatePostForm(forms.Form):
+    pass

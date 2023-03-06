@@ -1,85 +1,101 @@
 {% load static %}
-<header class="container-header">
-    <div class="header__wrapper-list">
-        <ul class="link-list">
-            <li class="link-list__item">
-                <div class="container__brand">
+<header class="header">
+
+    <div class="header__container">
+        <nav class="nav">
+            <ul class="nav__list">
+
+                <li class="nav__item">
+                    <div class="brand">
+                        <a
+                            href="{% url 'app:for-you-post-list-view' %}"
+                            class="brand__link mb-24 link">
+                            StoryShare
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav__item">
                     <a
-                        href="{% url 'app:home-post-list-view' %}"
-                        class="brand__link mb-24 link">
-                        StoryShare
+                        href="{% url 'app:for-you-post-list-view' %}"
+                        class="link">
+                        <svg class="icon icon-24 icon-text-right">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-home"></use>
+                        </svg>
+                        <span>For You</span>
                     </a>
-                </div>
-            </li>
-            <li class="link-list__item">
-                <a
-                    href="{% url 'app:home-post-list-view' %}"
-                    class="link-list__link link">
-                    <svg class="icon icon-24 icon-text-right">
-                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-home"></use>
-                    </svg>
-                    <span>Following</span>
-                </a>
-            </li>
-            <li class="link-list__item">
-                <a
-                href="{% url 'app:explore-post-list-view' %}"
-                class="link-list__link link">
-                <svg class="icon icon-24 icon-text-right">
-                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-compass"></use>
-                </svg>
-                <span>For you</span>
-            </a>
-            </li>
-            <li class="link-list__item">
-                <a
-                    href="/"
-                    class="link-list__link link">
-                    <svg class="icon icon-24 icon-text-right">
-                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-search"></use>
-                    </svg>
-                    <span>Search</span>
-                </a>
-            </li>
-            <li class="link-list__item">
-                <a
-                    href="/"
-                    class="link-list__link link">
-                    <svg class="icon icon-24 icon-text-right">
-                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-plus-circle"></use>
-                    </svg>
-                    <span>Create</span>
-                </a>
-            </li>
-        </ul>
+                </li>
+
+                <li class="nav__item">
+                    <a
+                    href="{% url 'app:following-post-list-view' %}"
+                    class="link">
+                        <svg class="icon icon-24 icon-text-right">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-heart"></use>
+                        </svg>
+                        <span>Following</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a
+                        href="/"
+                        class="link">
+                        <svg class="icon icon-24 icon-text-right">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-search"></use>
+                        </svg>
+                        <span>Search</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a
+                        href="{% url 'app:post-create-view' %}"
+                        class="link">
+                        <svg class="icon icon-24 icon-text-right">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-plus-circle"></use>
+                        </svg>
+                        <span>Create</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
     </div>
 
-    <div class="header__wrapper-list">
-        <ul class="link-list">
-            <li class="link-list__item link-list__item--profile link">
-                {% include 'app/includes/member/profile/misc/card_member.html' with member=user%}
-            </li>
-            <li class="link-list__item">
-                <a
-                    href="{% url 'app:profile-update-view' slug=request.user.profile.slug %}"
-                    class="link-list__link link">
-                    <svg class="icon icon-24 icon-text-right">
-                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-settings"></use>
-                    </svg>
-                    <span>Settings</span>
-                </a>
-            </li>
+    <div class="header__container">
 
-            <li class="link-list__item">
-                <a
-                    href="{% url 'app:sign-out' %}"
-                    class="link-list__link link">
-                    <svg class="icon icon-24 icon-text-right">
-                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-sign-out"></use>
-                    </svg>
-                    <span>Sign out</span>
-                </a>
-            </li>
-        </ul>
+        <nav class="nav">
+            <ul class="nav__list">
+    
+                <li class="nav__item nav__item--profile link">
+                    {% include 'app/includes/member/profile/misc/card_member.html' with member=user%}
+                </li>
+
+                <li class="nav__item">
+                    <a
+                        href="{% url 'app:profile-update-view' slug=request.user.profile.slug %}"
+                        class="link">
+                        <svg class="icon icon-24 icon-text-right">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-settings"></use>
+                        </svg>
+                        <span>Settings</span>
+                    </a>
+                </li>
+    
+                <li class="nav__item">
+                    <a
+                        href="{% url 'app:sign-out' %}"
+                        class="link">
+                        <svg class="icon icon-24 icon-text-right">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-sign-out"></use>
+                        </svg>
+                        <span>Sign out</span>
+                    </a>
+                </li>
+    
+            </ul>
+        </nav>
     </div>
+
 </header>

@@ -24,7 +24,7 @@ POST LIST
     overflow: hidden;
 }
 
-.card-post__container-featured-image {
+.card-post__featured-image {
     flex: 1;
 
     min-width: 30rem;
@@ -56,7 +56,7 @@ POST LIST
     text-overflow: ellipsis;
 }
 
-.card-post__user-actions {
+.card-post__context-menu {
     text-align: right;
     margin-bottom: 1.6rem;
 

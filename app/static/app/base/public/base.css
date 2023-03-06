@@ -10,6 +10,21 @@
     outline: 0.2rem solid var(--color-primary);
 }
 
+/* SCROLLBAR */
+*::-webkit-scrollbar {
+    width: 0.8rem;
+    background-color: var(--color-light-a-75);
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 0.1rem;
+    background: var(--color-dark-a-75);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark);
+}
+
 html {
     font-size: 62.5%;
     scroll-behavior: smooth;

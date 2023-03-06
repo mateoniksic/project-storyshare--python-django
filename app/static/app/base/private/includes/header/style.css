@@ -3,7 +3,7 @@
 SECTION HEADER
 ************************************
 */
-.container-header {
+.header {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -23,25 +23,7 @@ SECTION HEADER
     color: var(--color-light);
 }
 
-.container-header::-webkit-scrollbar {
-    width: 0.6rem;
-}
-
-.container-header::-webkit-scrollbar-track {
-    background: var(--color-light);
-    border-radius: 3.6rem;
-}
-
-.container-header::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
-    border-radius: 3.6rem;
-}
-
-.container-header::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary-lighten-5);
-}
-
-.header__wrapper-list {
+.header__container {
     width: 100%;
 }
 
@@ -50,28 +32,27 @@ SECTION HEADER
 LINK LIST
 ************************************
 */
-.link-list {
+.nav {
+    width: 100%;
+}
+
+.nav__list {
     list-style: none;
 
     width: 100%;
 }
 
-.link-list__item {
+.nav__item {
     width: 100%;
 
     margin-bottom: 0.4rem;
-}
-
-.link-list__item {
-    width: 100%;
-
     padding: 1.2rem 0.8rem;
 
     border: 0.1rem solid transparent;
     border-radius: var(--border-radius);
 }
 
-.link-list__item--active {
+.nav__item--isActive {
     color: var(--color-light);
 
     background-color: var(--color-primary-lighten-5);
@@ -79,7 +60,7 @@ LINK LIST
     border: 0.1rem solid transparent;
 }
 
-.link-list__item:hover:not(:has(.container__brand)) {
+.nav__item:hover:not(:has(.brand)) {
     color: var(--color-light);
 
     background-color: var(--color-primary-lighten-5);
@@ -87,12 +68,6 @@ LINK LIST
     border: 0.1rem solid var(--color-light);
 }
 
-a:is(:link, :visited).link-list__link {
+.nav__item a.link {
     width: 100%;
-
-    border: 0.1rem solid transparent;
-}
-
-a:is(:hover, :active, :focus).link-list__link {
-    background-color: transparent;
 }

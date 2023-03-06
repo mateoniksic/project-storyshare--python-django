@@ -4,7 +4,7 @@
 
 <article class="card-post" id="#card-post-{{ post.id }}">
     
-    <figure class="card-post__container-featured-image">
+    <figure class="card-post__featured-image">
         <div class="card-post__wrapper-featured-image">
             <img
                 class="img"
@@ -17,29 +17,40 @@
 
         {% if user == post.user_profile.user and isProfileDetailView %}
 
-            <div class="card-post__user-actions">
+            <div class="card-post__context-menu">
 
-                <button type="button" class="button button--small button--invisible" data-modal-actions-target="#modal-actions-{{ post.id }}">
+                <button type="button" class="button button--small button--invisible" data-modal-actions-target="#context-menu-for-post-{{ post.id }}">
                     <svg class="icon icon-24">
                         <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-dots-vertical-rounded"></use>
                     </svg>
                 </button>
 
-                <div class="modal-actions" id="modal-actions-{{ post.id }}">
+                <div class="context-menu" id="context-menu-for-post-{{ post.id }}">
 
-                    <button type="button" class="button button--small button--neutral">
-                        <svg class="icon icon-24">
-                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-edit"></use>
-                        </svg>
-                        <span>Edit</span>
-                    </button>
+                    <ul class="context-menu__list">
 
-                    <button type="button" class="button button--small button--danger">
-                        <svg class="icon icon-24">
-                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-trash"></use>
-                        </svg>
-                        <span>Delete</span>
-                    </button>
+                        <li class="context-menu__item">
+                            <button type="button" class="button button--small button--invisible">
+                                <svg class="icon icon-24">
+                                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-edit"></use>
+                                </svg>
+                                <span>Edit</span>
+                            </button>
+                        </li>
+
+                        <li class="context-menu__item">
+                            <form action="{% url 'app:post-delete-view' slug=post.slug %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="button button--small button--invisible-danger">
+                                    <svg class="icon icon-24">
+                                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-trash"></use>
+                                    </svg>
+                                    <span>Delete</span>
+                                </form>
+                            </button>
+                        </li>
+
+                    </ul>
         
                 </div>
 

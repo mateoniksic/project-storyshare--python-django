@@ -1,0 +1,23 @@
+<div class="member-follow">
+
+    {% include 'app/includes/member/profile/misc/card_member.html' %}
+
+    {% if member.profile in user.profile.following.all %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="member" value={{ member.profile.pk }}>
+            <button type="submit" name="action" value="unfollow" class="button button--accent-inverted button--small" {% if user == member %}disabled{% endif %}>
+                Unfollow
+            </button>
+        </form>
+        {% else %}
+        <form method="POST">
+            {% csrf_token %}    
+            <input type="hidden" name="member" value={{ member.profile.pk }}>
+            <button type="submit" name="action" value="follow" class="button button--accent button--small" {% if user == member %}disabled{% endif %}>
+                Follow
+            </button>
+        </form>
+    {% endif %}
+
+</div>

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Explore
+    Home
 {% endblock title %}
 
 {% block head %}
@@ -10,7 +10,7 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/ExplorePostListView/style.css' %}" />
+        href="{% static 'app/pages/private/FollowingPostListView/style.css' %}" />
 
     <link
         rel="stylesheet"
@@ -23,13 +23,13 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/misc/header-main_icon-title.html' with icon="compass" title="For you" %}
+        {% include 'app/includes/misc/main__header-title.html' with icon="heart" title="Following" %}
 
     {% endblock main_header %}
 
     {% block main_content %}
 
-        <section class="section-post-list">
+        <section class="posts">
             {% include 'app/includes/member/post/post_list.html' %}
         </section>
 

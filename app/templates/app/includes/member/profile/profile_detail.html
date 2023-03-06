@@ -1,19 +1,19 @@
 {% load static %}
 
-<div class="container-profile-detail">
+<div class="profile-detail">
 
-    <figure class="profile-detail__image-wrapper">
+    <div class="profile-detail__profile-image">
 
         <img
             class="img"
             src="{{ member.profile.profile_image }}"
             alt="{{ member.first_name }} {{ member.last_name }}" />
 
-    </figure>
+    </div>
 
-    <div class="profile-detail__container">
+    <div class="profile-detail__profile-details">
     
-        <div class="profile-detail__container-member-name">
+        <div class="profile-detail__member-name">
 
             <a
                 href="{{ member.profile.get_absolute_url }}" 
@@ -25,11 +25,11 @@
 
             {% if user == member %}
     
-                <a
-                    href="{% url 'app:profile-update-view' slug=request.user.profile.slug %}" 
-                    class="link link--small link--button-primary">
+                <button
+                    data-modal-window-target="#profile-edit"
+                    class="button button--small button--primary">
                     Edit
-                </a>
+                </button>
 
             {% endif %}
 
@@ -40,7 +40,7 @@
         </p>
 
 
-        <div class="profile-detail__member-details">
+        <div class="profile-detail__member-stats">
 
             <span class="text-chip">
                 {{ member.profile.posts.all | length }} Posts
@@ -64,19 +64,13 @@
 
     </div>
 
-
-
-
-
-
-
             <div class="modal-window" id="followers">
 
                 <div class="modal-window__header">
 
                     <span class="heading-3">Followers</span>
 
-                    <button type="button" class="button button--small button--invisible" data-button-close>
+                    <button type="button" class="button button--small button--invisible-danger" data-button-close>
                         <svg class="icon icon-24">
                             <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
                         </svg>
@@ -84,19 +78,17 @@
 
                 </div>
                 
-                <div class="container-list-member-follow">
+                <div class="member-follow-list">
 
                     {% for follower in member.profile.followers.all %}
 
-                        {% include 'app/includes/member/profile/misc/container_member_follow.html' with member=follower.user %}
+                        {% include 'app/includes/member/profile/misc/member_follow.html' with member=follower.user %}
 
                     {% endfor %}
                     
                 </div>
 
             </div>
-
-    
 
             <div class="modal-window" id="following">
 
@@ -104,7 +96,7 @@
 
                     <span class="heading-3">Following</span>
 
-                    <button type="button" class="button button--small button--invisible" data-button-close>
+                    <button type="button" class="button button--small button--invisible-danger" data-button-close>
                         <svg class="icon icon-24">
                             <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
                         </svg>
@@ -112,27 +104,38 @@
 
                 </div>
                 
-                <div class="container-list-member-follow">
+                <div class="member-follow-list">
 
                     {% for following in member.profile.following.all %}
 
-                        {% include 'app/includes/member/profile/misc/container_member_follow.html' with member=following.user %}
+                        {% include 'app/includes/member/profile/misc/member_follow.html' with member=following.user %}
 
                     {% endfor %}
                     
                 </div>
 
             </div>
-    
+
+            <div class="modal-window" id="profile-edit">
+                <div class="modal-window__header">
+                    <span class="heading-3">Edit profile</span>
+                    <button type="button" class="button button--small button--invisible-danger" data-button-close>
+                        <svg class="icon icon-24">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="container-profile-edit">
+                    <form action="{% url 'app:profile-update-view' slug=user.profile.slug %}" method="POST">
+                        <input type="text" name="description">
+                        <button type="submit" class="button button--small button--primary">
+                            Update profile
+                        </button>
+                    </form>
+                </div>
+            </div>
 
             <div id="modal-overlay" class="modal-overlay"></div>
-
-
-
-
-
-
-
-
 
 </div>

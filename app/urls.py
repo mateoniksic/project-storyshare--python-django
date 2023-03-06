@@ -10,13 +10,15 @@ urlpatterns = [
     path('sign-in/', views.sign_in, name='sign-in'),
     path('sign-out/', views.sign_out, name='sign-out'),
 
-    path('home/', views.HomePostListView.as_view(), name='home-post-list-view'),
-    path('explore/', views.ExplorePostListView.as_view(), name='explore-post-list-view'),
+    path('for-you/', views.ForYouPostListView.as_view(), name='for-you-post-list-view'),
+    path('following/', views.FollowingPostListView.as_view(), name='following-post-list-view'),
 
+    path('post/create', views.PostCreateView.as_view(), name='post-create-view'),
     path('post/<slug:slug>/', views.PostDetailView.as_view(), name='post-detail-view'),
+    path('post/<slug:slug>/delete', views.PostDeleteView.as_view(), name='post-delete-view'),
 
-    path('<slug:slug>/', views.ProfileDetailView.as_view(), name='profile-detail-view'),
-    path('<slug:slug>/update/profile/', views.ProfileUpdateView.as_view(), name='profile-update-view'),
+    path('profile/<slug:slug>/', views.ProfileDetailView.as_view(), name='profile-detail-view'),
+    path('profile/<slug:slug>/update/', views.ProfileUpdateView.as_view(), name='profile-update-view'),
 
     path('tag/<slug:slug>/', views.TagDetailView.as_view(), name='tag-detail-view'),
 ]
