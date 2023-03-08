@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Story • 
-    Tag {{ tag }}
+    Tag (#{{ tag }})
 {% endblock title %}
 
 {% block head %}
@@ -24,7 +23,7 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/misc/main__header-title.html' with title=tag icon="hash" %}
+        {% include 'app/includes/misc/header_title.html' with title=tag icon="hash" %}
 
     {% endblock main_header %}
 

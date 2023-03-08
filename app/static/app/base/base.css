@@ -1,8 +1,126 @@
-/*
-************************************
-HEADINGS 
-************************************
-*/
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+:root {
+    /* Colors */
+    --color-primary: #0f1825;
+    --color-primary-lighten-5: #162335;
+    --color-primary-lighten-25: #304d76;
+
+    --color-accent: #befa2e;
+    --color-accent-lighten-40: #d8fc82;
+
+    --color-dark: #000;
+    --color-dark-a-75: rgba(0, 0, 0, 0.75);
+    --color-dark-a-25: rgba(0, 0, 0, 0.25);
+    --color-dark-a-10: rgba(0, 0, 0, 0.1);
+
+    --color-light: #fff;
+    --color-light-a-25: rgba(255, 255, 255, 0.25);
+    --color-light-a-75: rgba(255, 255, 255, 0.75);
+
+    --color-red: #f05423;
+    --color-red-lighten-85: #fde5de;
+
+    --color-green: #76874d;
+    --color-green-lighten-85: #f1f3eb;
+
+    --color-blue: #354588;
+    --color-blue-lighten-85: #dce0f1;
+
+    --color-yellow: #a48303;
+    --color-yellow-lighten-85: #fbfbd9;
+
+    /* Gradients */
+    --color-radial-gradient: radial-gradient(circle at top left, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+
+    /* Border */
+    --border-radius: 0.8rem;
+    --border-1-color-transparent: 0.1rem solid transparent;
+    --border-1-color-primary: 0.1rem solid var(--color-primary);
+    --border-1-color-light: 0.1rem solid var(--color-light);
+    --border-1-color-red: 0.1rem solid var(--color-red);
+
+    /* Width */
+    --max-content-width: 96rem;
+    --max-width: 120rem;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+*:focus-visible {
+    outline: 0.2rem solid var(--color-primary);
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    box-sizing: border-box;
+
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+/* Scrollbar
+   ========================================================================== */
+
+*::-webkit-scrollbar {
+    width: 0.8rem;
+    background-color: var(--color-light-a-75);
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 0.1rem;
+    background: var(--color-dark-a-75);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark);
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/* Brand
+   ========================================================================== */
+
+.brand {
+    font-family: 'Space Grotesk', serif;
+    font-weight: 700;
+    font-size: 2.369rem;
+    line-height: 1.25em;
+}
+
+a:is(:link, :visited).brand__link {
+    color: inherit;
+    border-bottom: 0.1rem solid transparent;
+}
+
+a:is(:hover, :active, :focus).brand__link {
+    color: inherit;
+    border-bottom: 0.1rem solid var(--color-primary);
+}
+
+/* Headings
+   ========================================================================== */
+
 .heading-1 {
     font-family: 'Space Grotesk', serif;
     font-weight: 700;
@@ -45,11 +163,9 @@ HEADINGS
     line-height: 1.5em;
 }
 
-/*
-************************************
-BODY TEXT
-************************************
-*/
+/* Text
+   ========================================================================== */
+
 .text-large {
     font-size: 1.8rem;
     line-height: 1.75;
@@ -65,11 +181,21 @@ BODY TEXT
     line-height: 1.5;
 }
 
-/*
-************************************
-LINKS
-************************************
-*/
+/* Text special
+   ========================================================================== */
+
+.text-chip {
+    padding: 0.8rem 1.2rem;
+
+    background-color: var(--color-dark-a-10);
+
+    border: 0.1rem solid var(--color-dark);
+    border-radius: var(--border-radius);
+}
+
+/* Links
+   ========================================================================== */
+
 a:is(:link, :visited).link {
     display: inline-block;
 
@@ -82,7 +208,7 @@ a:is(:link, :visited).link {
     cursor: pointer;
 }
 
-/* LINK SIZE */
+/* Link size */
 a:is(:link, :visited).link--small {
     font-size: 1.6rem;
 
@@ -95,7 +221,7 @@ a:is(:link, :visited).link--large {
     padding: 1.6rem 2.4rem;
 }
 
-/* LINK TEXT */
+/* Link text */
 a:is(:link, :visited).link--text {
     border-bottom: 0.1rem solid var(--color-primary);
     padding: 0.4rem;
@@ -105,7 +231,7 @@ a:is(:hover, :active, :focus).link--text {
     background-color: var(--color-accent-lighten-40);
 }
 
-/* LINK BUTTON PRIMARY */
+/* Link button primary */
 a:is(:link, :visited).link--button-primary {
     border: 0.1rem solid var(--color-primary);
     border-radius: var(--border-radius);
@@ -118,7 +244,7 @@ a:is(:hover, :active, :focus).link--button-primary {
     background-color: var(--color-primary-lighten-5);
 }
 
-/* LINK BUTTON ACCENT */
+/* Link button accent */
 a:is(:link, :visited).link--button-accent {
     border: 0.1rem solid var(--color-accent);
     border-radius: var(--border-radius);
@@ -131,7 +257,7 @@ a:is(:hover, :active, :focus).link--button-accent {
     background-color: var(--color-accent-lighten-40);
 }
 
-/* LINK BUTTON ACCENT INVERTED */
+/* Link button accent inverted */
 a:is(:link, :visited).link--button--accent-inverted {
     border: 0.1rem solid var(--color-accent);
     border-radius: var(--border-radius);
@@ -144,11 +270,9 @@ a:is(:hover, :active, :focus).link--button--accent-inverted {
     background-color: var(--color-accent);
 }
 
-/*
-************************************
-BUTTONS
-************************************
-*/
+/* Buttons
+   ========================================================================== */
+
 button.button {
     font-family: inherit;
     font-size: 1.6rem;
@@ -165,7 +289,7 @@ button:disabled:is(:hover, :active, :focus).button {
     cursor: not-allowed;
 }
 
-/* BUTTON SIZE */
+/* Button size */
 button.button--large {
     padding: 1.6rem 2.4rem;
 }
@@ -174,7 +298,7 @@ button.button--small {
     padding: 0.8rem 1.6rem;
 }
 
-/* BUTTON INVISIBLE */
+/* Button invisible */
 button.button--invisible {
     border: none;
     border-radius: var(--border-radius);
@@ -187,7 +311,7 @@ button:is(:hover, :active, :focus).button--invisible {
     background-color: var(--color-dark-a-25);
 }
 
-/* BUTTON INVISIBLE DANGER */
+/* Button invisible danger */
 button.button--invisible-danger {
     border: none;
     border-radius: var(--border-radius);
@@ -201,7 +325,7 @@ button:is(:hover, :active, :focus).button--invisible-danger {
     background-color: var(--color-red);
 }
 
-/* BUTTON NEUTRAL */
+/* Button neutral */
 button.button--neutral {
     border: 0.1rem solid var(--color-primary);
     border-radius: var(--border-radius);
@@ -214,7 +338,7 @@ button:is(:hover, :active, :focus).button--neutral {
     background-color: var(--color-dark-a-25);
 }
 
-/* BUTTON DANGER */
+/* Button danger */
 button.button--danger {
     border: var(--border-1-color-red);
     border-radius: var(--border-radius);
@@ -228,7 +352,7 @@ button:is(:hover, :active, :focus).button--danger {
     background-color: var(--color-red);
 }
 
-/* BUTTON PRIMARY */
+/* Button primary */
 button.button--primary {
     border: 0.1rem solid var(--color-primary);
     border-radius: var(--border-radius);
@@ -241,7 +365,7 @@ button:is(:hover, :active, :focus).button--primary {
     background-color: var(--color-primary-lighten-5);
 }
 
-/* BUTTON ACCENT */
+/* Button accent */
 button.button--accent {
     border: 0.1rem solid var(--color-accent);
     border-radius: var(--border-radius);
@@ -254,7 +378,7 @@ button:is(:hover, :active, :focus).button--accent {
     background-color: var(--color-accent-lighten-40);
 }
 
-/* BUTTON ACCENT INVERTED */
+/* Button accent inverted */
 button.button--accent-inverted {
     border: 0.1rem solid var(--color-accent);
     border-radius: var(--border-radius);
@@ -267,48 +391,9 @@ button:is(:hover, :active, :focus).button--accent-inverted {
     background-color: var(--color-accent);
 }
 
-/*
-************************************
-TEXT CHIP
-************************************
-*/
+/* Icons
+   ========================================================================== */
 
-.text-chip {
-    padding: 0.8rem 1.2rem;
-
-    background-color: var(--color-dark-a-10);
-
-    border: 0.1rem solid var(--color-dark);
-    border-radius: var(--border-radius);
-}
-
-/*
-************************************
-BRAND
-************************************
-*/
-.brand {
-    font-family: 'Space Grotesk', serif;
-    font-weight: 700;
-    font-size: 2.369rem;
-    line-height: 1.25em;
-}
-
-a:is(:link, :visited).brand__link {
-    color: inherit;
-    border-bottom: 0.1rem solid transparent;
-}
-
-a:is(:hover, :active, :focus).brand__link {
-    color: inherit;
-    border-bottom: 0.1rem solid var(--color-primary);
-}
-
-/*
-************************************
-ICONS
-************************************
-*/
 .icon {
     display: inline-block;
 
@@ -329,4 +414,65 @@ ICONS
 
 .icon-text-right {
     margin-right: 0.8rem;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+/* Margins
+   ========================================================================== */
+
+.my-32 {
+    margin: 3.2rem 0;
+}
+
+/* Margin bottom */
+.mb-64 {
+    margin-bottom: 6.4rem;
+}
+
+.mb-32 {
+    margin-bottom: 3.2rem;
+}
+
+.mb-24 {
+    margin-bottom: 2.4rem;
+}
+
+.mb-16 {
+    margin-bottom: 1.6rem;
+}
+
+.mb-8 {
+    margin-bottom: 0.8rem;
+}
+
+/* Image
+   ========================================================================== */
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Borders
+   ========================================================================== */
+
+.border-b1 {
+    border-bottom: var(--border-1-color-primary);
+}
+
+.border-t1 {
+    border-top: var(--border-1-color-primary);
+}
+
+.border-r1 {
+    border-right: var(--border-1-color-primary);
+}
+
+.border-l1 {
+    border-left: var(--border-1-color-primary);
 }
