@@ -24,12 +24,19 @@
     border-bottom: var(--border-1-color-primary);
 }
 
-.context-menu__item button {
+.context-menu__item button,
+.context-menu__item a {
     width: 100%;
 
     padding: 1.2rem 3.2rem;
 
     border-radius: 0;
+
+    text-align: center;
+}
+
+.context-menu__item a:is(:hover, :active, :focus) {
+    background-color: var(--color-dark-a-25);
 }
 
 .context-menu--isActive {

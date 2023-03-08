@@ -23,7 +23,7 @@
 
             </a>
 
-            {% if user == member %}
+            {% if has_perms %}
     
                 <button
                     data-modal-window-target="#profile-edit"
@@ -135,7 +135,5 @@
                     </form>
                 </div>
             </div>
-
-            <div id="modal-overlay" class="modal-overlay"></div>
 
 </div>

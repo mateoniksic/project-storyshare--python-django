@@ -55,7 +55,7 @@ LINK LIST
 .nav__item--isActive {
     color: var(--color-light);
 
-    background-color: var(--color-primary-lighten-5);
+    background-color: var(--color-primary-lighten-25);
 
     border: 0.1rem solid transparent;
 }
@@ -70,4 +70,23 @@ LINK LIST
 
 .nav__item a.link {
     width: 100%;
+}
+
+.nav__item > button.button {
+    width: 100%;
+
+    color: #fff;
+
+    background: transparent;
+
+    text-align: left;
+}
+
+#modal-window-search {
+    height: min-content;
+}
+
+.search-container {
+    padding: 2.4rem 3.2rem;
+    width: 40rem;
 }

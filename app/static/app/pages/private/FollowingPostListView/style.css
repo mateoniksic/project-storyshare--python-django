@@ -1,4 +1,4 @@
-.posts {
+.section-post-list {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Explore
+    For you
 {% endblock title %}
 
 {% block head %}
@@ -23,13 +23,13 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/misc/main__header-title.html' with icon="home" title="For you" %}
+        {% include 'app/includes/misc/main__header-title.html' with icon='home' title='For you' %}
 
     {% endblock main_header %}
 
     {% block main_content %}
 
-        <section class="posts">
+        <section class="section-post-list">
             {% include 'app/includes/member/post/post_list.html' %}
         </section>
 

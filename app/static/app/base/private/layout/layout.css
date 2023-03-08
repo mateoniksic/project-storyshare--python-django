@@ -57,8 +57,6 @@ SECTION MAIN
     background-color: var(--color-light);
 
     border-radius: var(--border-radius);
-
-    isolation: isolate;
 }
 
 .main__header {

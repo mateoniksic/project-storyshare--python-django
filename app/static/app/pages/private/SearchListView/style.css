@@ -1,0 +1,13 @@
+.search-results-container {
+    padding-bottom: 0.8rem;
+}
+
+.search-results-container .card-member a {
+    padding: 1.6rem 3.2rem;
+
+    border-bottom: var(--border-1-color-primary);
+}
+
+.search-results-container .card-member:is(:hover) {
+    background-color: var(--color-accent);
+}

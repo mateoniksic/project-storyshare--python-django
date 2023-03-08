@@ -5,16 +5,16 @@
     {% if member.profile in user.profile.following.all %}
         <form method="POST">
             {% csrf_token %}
-            <input type="hidden" name="member" value={{ member.profile.pk }}>
-            <button type="submit" name="action" value="unfollow" class="button button--accent-inverted button--small" {% if user == member %}disabled{% endif %}>
+            <input type="hidden" name="formMemberFollow-member_profile_ID" value={{ member.profile.pk }}>
+            <button type="submit" name="formMemberFollow-submit" value="unfollow" class="button button--small button--neutral" {% if user == member %}disabled{% endif %}>
                 Unfollow
             </button>
         </form>
         {% else %}
         <form method="POST">
             {% csrf_token %}    
-            <input type="hidden" name="member" value={{ member.profile.pk }}>
-            <button type="submit" name="action" value="follow" class="button button--accent button--small" {% if user == member %}disabled{% endif %}>
+            <input type="hidden" name="formMemberFollow-member_profile_ID" value={{ member.profile.pk }}>
+            <button type="submit" name="formMemberFollow-submit" value="follow" class="button button--small button--accent" {% if user == member %}disabled{% endif %}>
                 Follow
             </button>
         </form>

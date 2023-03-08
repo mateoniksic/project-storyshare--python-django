@@ -1,0 +1,37 @@
+{% extends 'app/base/private/base.html' %}
+{% load static %}
+
+{% block title %}
+
+    {{ form_submit_value }}
+
+{% endblock title %}
+
+{% block head %}
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/pages/private/PostSubmitView/style.css' %}" />
+
+{% endblock head %}
+
+{% block body %}
+
+    {% block main_header %}
+
+        {% include 'app/includes/misc/main__header-title.html' with icon=icon title=form_submit_value %}
+
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        <div class="form-wrapper">
+
+            {% include 'app/includes/member/form/form_post.html' %}
+
+        </div>
+
+    {% endblock main_content %}
+
+{% endblock body %}

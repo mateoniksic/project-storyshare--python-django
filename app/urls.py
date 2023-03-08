@@ -14,6 +14,7 @@ urlpatterns = [
     path('following/', views.FollowingPostListView.as_view(), name='following-post-list-view'),
 
     path('post/create', views.PostCreateView.as_view(), name='post-create-view'),
+    path('post/<slug:slug>/update', views.PostUpdateView.as_view(), name='post-update-view'),
     path('post/<slug:slug>/', views.PostDetailView.as_view(), name='post-detail-view'),
     path('post/<slug:slug>/delete', views.PostDeleteView.as_view(), name='post-delete-view'),
 
@@ -21,4 +22,6 @@ urlpatterns = [
     path('profile/<slug:slug>/update/', views.ProfileUpdateView.as_view(), name='profile-update-view'),
 
     path('tag/<slug:slug>/', views.TagDetailView.as_view(), name='tag-detail-view'),
+
+    path('search/member/', views.SearchMemberListView.as_view(), name='search-member-list-view'),
 ]

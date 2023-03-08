@@ -38,14 +38,38 @@
                 </li>
 
                 <li class="nav__item">
-                    <a
-                        href="/"
-                        class="link">
+                    <button
+                        type="button"
+                        class="button"
+                        data-modal-window-target="#modal-window-search">
                         <svg class="icon icon-24 icon-text-right">
                             <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-search"></use>
                         </svg>
                         <span>Search</span>
-                    </a>
+                    </button>
+
+                    <div class="modal-window" id="modal-window-search">
+                        <div class="modal-window__header">
+                            <span class="heading-3">Search members</span>
+
+                            <button type="button" class="button button--small button--invisible-danger" data-button-close>
+                                <svg class="icon icon-24">
+                                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="search-container">
+                            <form action="{% url 'app:search-member-list-view' %}" method="GET">
+                                {% csrf_token %}
+                                <div class="form__field">
+                                    <input type="search" name="search-query" class="form__input" id="search-query">
+                                </div>
+                                <div class="form__field">
+                                    <input type="submit" value="Search..." class="form__button">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </li>
 
                 <li class="nav__item">

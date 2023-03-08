@@ -1,18 +1,20 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
 
 from django.views import generic
+
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
-
 from django.contrib.auth.models import User
 from .models import *
+
 from .forms import *
+from django.contrib import messages
+
+from .contrib.mixins import *
 
 
 class IndexTemplateView(generic.TemplateView):
@@ -36,10 +38,10 @@ def sign_up(request):
         return redirect(reverse('app:for-you-post-list-view'))
 
     else:
-        form = CreateUserForm()
+        form = UserForm()
 
         if request.method == 'POST':
-            form = CreateUserForm(request.POST)
+            form = UserForm(request.POST)
 
             if form.is_valid():
                 form.save()
@@ -119,7 +121,7 @@ class ForYouPostListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-class PostDetailView(LoginRequiredMixin, generic.DetailView):
+class PostDetailView(LoginRequiredMixin, FollowMemberMixin, generic.DetailView):
     model = Post
     context_object_name = 'post'
 
@@ -131,48 +133,71 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
         member = self.object.user_profile.user
         context['member'] = member
 
+        if (member == self.request.user):
+            context['has_perms'] = True
+
         return context
-
-    def post(self, request, slug):
-        self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
-
-        user = request.user
-        user_profile = UserProfile.objects.filter(pk=user.id).get()
-
-        member_id = request.POST.get('member')
-        member_profile = UserProfile.objects.filter(pk=member_id).get()
-
-        action = request.POST.get('action')
-
-        if (action == 'follow'):
-            user_profile.following.add(member_profile)
-
-        elif (action == 'unfollow'):
-            user_profile.following.remove(member_profile)
-
-        return render(request, self.template_name, context=context)
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
+    form_class = PostForm
 
-    fields = ['user_profile', 'featured_image',
-              'title', 'content', 'excerpt', 'tags']
-    template_name = 'app/pages/private/PostCreateView.html'
+    template_name = 'app/pages/private/PostForm.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['form_submit_value'] = 'Create a new story'
+        context['icon'] = 'plus-circle'
+
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+
+class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Post
+    form_class = PostForm
+
+    template_name = 'app/pages/private/PostForm.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['form_submit_value'] = 'Update story'
+        context['icon'] = 'edit'
+
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def get_initial(self):
+        tag_list = list(self.object.tags.all().values_list('name', flat=True))
+        tag_list = ' '.join(tag_list)
+        initial = {
+            'tag_list': tag_list
+        }
+        return initial
 
     def get_success_url(self):
-        return reverse('app:post-detail-view', kwargs={'slug': self.object.slug})
+        return reverse_lazy('app:post-detail-view', kwargs={'slug': self.object.slug})
 
 
 class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Post
 
     def get_success_url(self):
-        return reverse('app:profile-detail-view', kwargs={'slug': self.request.user.profile.slug})
+        return reverse_lazy('app:profile-detail-view', kwargs={'slug': self.request.user.profile.slug})
 
 
-class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
+class ProfileDetailView(LoginRequiredMixin, FollowMemberMixin, generic.DetailView):
     model = UserProfile
     context_object_name = 'user_profile'
 
@@ -184,42 +209,23 @@ class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
         member = self.object.user
         context['member'] = member
 
-        posts = member.profile.posts.order_by(
+        context['posts'] = member.profile.posts.order_by(
             '-date_created').all()
-        context['posts'] = posts
 
-        context['isProfileDetailView'] = True
+        if (member == self.request.user):
+            context['has_perms'] = True
 
         return context
 
-    def post(self, request, slug):
-        self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
-
-        user = request.user
-        user_profile = UserProfile.objects.filter(pk=user.id).get()
-
-        member_id = request.POST.get('member')
-        member_profile = UserProfile.objects.filter(pk=member_id).get()
-
-        action = request.POST.get('action')
-
-        if (action == 'follow'):
-            user_profile.following.add(member_profile)
-
-        elif (action == 'unfollow'):
-            user_profile.following.remove(member_profile)
-
-        return render(request, self.template_name, context=context)
-
 
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
+    # TODO
     model = UserProfile
     fields = ['profile_image', 'description']
     template_name = 'app/includes/member/profile/profile_update.html'
 
     def get_success_url(self):
-        return reverse('app:profile-detail-view', kwargs={'slug': self.object.slug})
+        return reverse_lazy('app:profile-detail-view', kwargs={'slug': self.object.slug})
 
 
 class TagDetailView(LoginRequiredMixin, generic.DetailView):
@@ -231,7 +237,33 @@ class TagDetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        posts = self.object.posts.all()
-        context['posts'] = posts
+        context['posts'] = self.object.posts.all()
+
+        return context
+
+
+class SearchMemberListView(LoginRequiredMixin, generic.ListView):
+    model = User
+    template_name = 'app/pages/private/SearchListView.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        query = self.request.GET.get('search-query')
+
+        if query:
+            queryset = User.objects.filter(
+                username__icontains=query).all()
+        else:
+            queryset = User.objects.none()
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        members = self.object_list
+        context['members'] = members
+
+        context['title'] = f'Search results ({len(members)})'
 
         return context

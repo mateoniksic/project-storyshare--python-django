@@ -2,10 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Story • 
-    {{ member.first_name }} 
-    {{ member.last_name }} 
-    (@{{ member.username }})
+    (@{{ member.username }}) • {{ post.title }}
 {% endblock title %}
 
 {% block head %}
@@ -23,6 +20,11 @@
     <link
         rel="stylesheet"
         type="text/css"
+        href="{% static 'app/includes/misc/modal/context_menu/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
         href="{% static 'app/includes/member/profile/profile_detail/style.css' %}" />
 
     <link
@@ -33,12 +35,7 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/misc/modal/modal_actions/style.css' %}" />
-
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="{% static 'app/includes/misc/modal/modal_window/style.css' %}" />
+        href="{% static 'app/includes/misc/modal/context_menu/style.css' %}" />
 
 {% endblock head %}
 
@@ -61,8 +58,7 @@
     {% endblock main_content %}
 
     {% block script %}
-        <script src="{% static 'app/includes/misc/modal/modal_actions/index.js' %}"></script>
-        <script src="{% static 'app/includes/misc/modal/modal_window/index.js' %}"></script>
+        <script src="{% static 'app/includes/misc/modal/context_menu/index.js' %}"></script>
     {% endblock script %}
 
 {% endblock body %}

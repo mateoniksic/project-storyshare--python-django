@@ -13,6 +13,10 @@ FORM
     width: 100%;
 }
 
+.form {
+    width: 100%;
+}
+
 .form__heading {
     font-family: 'Space Grotesk', serif;
     font-weight: 700;

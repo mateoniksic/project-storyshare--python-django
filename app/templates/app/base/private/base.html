@@ -72,6 +72,16 @@
             type="text/css"
             href="{% static 'app/includes/member/profile/misc/card_member/style.css' %}" />
 
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{% static 'app/includes/misc/modal/modal_window/style.css' %}" />
+
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{% static 'app/includes/member/form/style.css' %}" />
+
         <!-- EXTRA HEAD -->
         {% block head %}{% endblock head %}
 
@@ -106,8 +116,10 @@
 
         </div>
 
+        <div id="modal-overlay" class="modal-overlay"></div>
         <!-- JAVASCRIPT -->
         <script src="{% static 'app/base/private/includes/header/index.js' %}"></script>
+        <script src="{% static 'app/includes/misc/modal/modal_window/index.js' %}"></script>
 
         <!-- EXTRA JAVASCRIPT -->
         {% block script %}{% endblock script %}

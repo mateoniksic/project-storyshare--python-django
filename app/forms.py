@@ -1,3 +1,6 @@
+from .models import Tag
+import re
+from .models import Post
 from django import forms
 from django.forms import ModelForm
 
@@ -11,7 +14,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 username_validator = UnicodeUsernameValidator()
 
 
-class CreateUserForm(UserCreationForm):
+class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username',
@@ -44,5 +47,60 @@ class CreateUserForm(UserCreationForm):
     password2 = forms.CharField(label=_('Password confirmation'), widget=forms.PasswordInput(attrs={'class': 'form__input'}),
                                 help_text=_('Repeat the password for confirmation'))
 
-class CreatePostForm(forms.Form):
-    pass
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        exclude = ['user_profile', 'slug',
+                   'tags', 'date_created']
+
+    title = forms.CharField(label='Title', max_length=148, required=True, widget=forms.TextInput(
+        attrs={'class': 'form__input'}))
+
+    content = forms.CharField(label='Content', max_length=64000, required=True, widget=forms.Textarea(
+        attrs={'id': 'textarea', 'class': 'form__input', 'rows': 32, 'style': 'resize:none;'}))
+
+    excerpt = forms.CharField(
+        label='Excerpt', max_length=480, required=True, widget=forms.Textarea(
+            attrs={'class': 'form__input', 'rows': 5, 'style': 'resize:none;'}))
+
+    tag_list = forms.CharField(label='Tags', max_length=148, required=True, widget=forms.TextInput(
+        attrs={'class': 'form__input'}))
+
+    featured_image = forms.URLField(label='Featured image (URL)', widget=forms.URLInput(
+        attrs={'class': 'form__input'}))
+    
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        self.prefix = 'formPost'
+        super(PostForm, self).__init__(*args, **kwargs)
+
+    def clean_tag_list(self):
+        tag_list = self.cleaned_data['tag_list'].split(' ')
+        cleaned_tags = []
+
+        for tag in tag_list:
+            tag = tag.lower()
+            tag = re.sub('[^a-zA-Z]+', '', tag)
+
+            tag_exists = Tag.objects.filter(name=tag).exists()
+            if tag_exists:
+                tag = Tag.objects.filter(name=tag).get()
+            else:
+                tag = Tag(name=tag, slug=tag)
+                tag.save()
+            cleaned_tags.append(tag)
+
+        return cleaned_tags
+
+    def save(self, commit=True):
+        instance = super(PostForm, self).save(commit=False)
+        instance.user_profile = self.request.user.profile
+
+        if commit:
+            instance.save()
+
+        tag_list = self.cleaned_data.get('tag_list')
+        instance.tags.set(tag_list)
+
+        return instance

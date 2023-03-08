@@ -1,0 +1,35 @@
+{% load static %}
+<div class="form__container" id="form-post">
+
+    <form method="POST" class="form">
+        {% csrf_token %}
+
+        {% for field in form %}
+        
+            <div class="form__field">
+
+                <label
+                    for="{{field.auto_id}}"
+                    class="form__label">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% include 'app/includes/member/form/form_feedback/form_field_errors.html' %}
+
+            </div>
+        
+        {% endfor %}
+
+        <div class="form__field">
+            <input
+                type="submit"
+                value="{{ form_submit_value }}"
+                name="formPost-submit"
+                class="form__button" />
+        </div>
+
+    </form>
+
+</div>
