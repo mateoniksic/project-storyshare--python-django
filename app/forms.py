@@ -1,15 +1,13 @@
-from .models import Tag
 import re
-from .models import Post
+from django.utils.text import slugify
+from .models import Tag, Post
 from django import forms
 from django.forms import ModelForm
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import password_validation
-
 from django.contrib.auth.validators import UnicodeUsernameValidator
 username_validator = UnicodeUsernameValidator()
 
@@ -55,20 +53,20 @@ class PostForm(ModelForm):
                    'tags', 'date_created']
 
     title = forms.CharField(label='Title', max_length=148, required=True, widget=forms.TextInput(
-        attrs={'class': 'form__input'}))
+        attrs={'class': 'form__input', 'placeholder': 'Enter your attention grabbing title'}))
 
     content = forms.CharField(label='Content', max_length=64000, required=True, widget=forms.Textarea(
-        attrs={'id': 'textarea', 'class': 'form__input', 'rows': 32, 'style': 'resize:none;'}))
+        attrs={'id': 'textarea', 'class': 'form__input', 'rows': 32, 'style': 'resize:none;', 'placeholder': 'Enter high value content'}))
 
     excerpt = forms.CharField(
         label='Excerpt', max_length=480, required=True, widget=forms.Textarea(
-            attrs={'class': 'form__input', 'rows': 5, 'style': 'resize:none;'}))
+            attrs={'class': 'form__input', 'rows': 5, 'style': 'resize:none;', 'placeholder': 'Enter short summary of your high value content'}))
 
     tag_list = forms.CharField(label='Tags', max_length=148, required=True, widget=forms.TextInput(
-        attrs={'class': 'form__input'}))
+        attrs={'class': 'form__input', 'placeholder': 'mytag1 mytag2'}))
 
     featured_image = forms.URLField(label='Featured image (URL)', widget=forms.URLInput(
-        attrs={'class': 'form__input'}))
+        attrs={'class': 'form__input', 'placeholder': 'https://www.example.com/my-featured-image'}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -77,25 +75,26 @@ class PostForm(ModelForm):
 
     def clean_tag_list(self):
         tag_list = self.cleaned_data['tag_list'].split(' ')
-        cleaned_tags = []
+        cleaned_tag_list = []
 
         for tag in tag_list:
-            tag = re.sub('[^a-zA-Z0-9]+', '', tag).strip()
+            tag = slugify(re.sub('[^a-zA-Z0-9]+', '', tag))
 
             if tag:
-                tag, created = Tag.objects.get_or_create(slug=tag)
-                cleaned_tags.append(tag)
+                tag, created = Tag.objects.get_or_create(name=tag, slug=tag)
+                cleaned_tag_list.append(tag)
 
-        return cleaned_tags
+        return cleaned_tag_list
 
     def save(self, commit=True):
         instance = super(PostForm, self).save(commit=False)
+
         instance.user_profile = self.request.user.profile
 
         if commit:
             instance.save()
 
-        tag_list = self.cleaned_data.get('tag_list')
-        instance.tags.set(tag_list)
+        cleaned_tag_list = self.cleaned_data.get('tag_list')
+        instance.tags.set(cleaned_tag_list)
 
         return instance

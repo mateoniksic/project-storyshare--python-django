@@ -1,7 +1,8 @@
-import random
+import requests
+import factory
+
 from .. import models
 from django.contrib.auth.models import User
-import factory
 
 from faker import Faker
 fake = Faker()
@@ -25,7 +26,8 @@ class UserProfileFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory(UserFactory)
     slug = factory.LazyAttribute(lambda o: fake.unique.slug())
-    profile_image = factory.LazyAttribute(lambda o: fake.image_url(170,170))
+    profile_image = factory.LazyAttribute(
+        lambda o: generate_profile_image())
     description = factory.LazyAttribute(lambda o: fake.text())
     date_created = factory.LazyAttribute(lambda o: fake.date_time())
 
@@ -46,6 +48,24 @@ class PostFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda o: fake.unique.sentence())
     slug = factory.LazyAttribute(lambda o: fake.slug())
     featured_image = factory.LazyAttribute(
-        lambda o: fake.image_url(1920, 1080))
+        lambda o: generate_post_featured_image())
     content = factory.LazyAttribute(lambda o: fake.paragraph(nb_sentences=120))
     excerpt = factory.LazyAttribute(lambda o: fake.text())
+
+
+def generate_profile_image():
+    response = requests.get('https://api.lorem.space/image/face', params={
+        'w': 170,
+        'h': 170
+    })
+    response.raise_for_status()
+    return response.url
+
+
+def generate_post_featured_image():
+    response = requests.get('https://api.lorem.space/image', params={
+        'w': 1920,
+        'h': 1080
+    })
+    response.raise_for_status()
+    return response.url
