@@ -69,7 +69,7 @@ class PostForm(ModelForm):
 
     featured_image = forms.URLField(label='Featured image (URL)', widget=forms.URLInput(
         attrs={'class': 'form__input'}))
-    
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         self.prefix = 'formPost'
@@ -80,16 +80,11 @@ class PostForm(ModelForm):
         cleaned_tags = []
 
         for tag in tag_list:
-            tag = tag.lower()
-            tag = re.sub('[^a-zA-Z]+', '', tag)
+            tag = re.sub('[^a-zA-Z0-9]+', '', tag).strip()
 
-            tag_exists = Tag.objects.filter(name=tag).exists()
-            if tag_exists:
-                tag = Tag.objects.filter(name=tag).get()
-            else:
-                tag = Tag(name=tag, slug=tag)
-                tag.save()
-            cleaned_tags.append(tag)
+            if tag:
+                tag, created = Tag.objects.get_or_create(slug=tag)
+                cleaned_tags.append(tag)
 
         return cleaned_tags
 
