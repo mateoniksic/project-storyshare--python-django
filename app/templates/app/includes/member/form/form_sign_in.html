@@ -33,6 +33,7 @@
         <div class="form__field">
             {% include 'app/includes/member/form/form_feedback/form_messages.html' %}
         </div>
+        <input type="hidden" name="next" value="{{ next }}" />
         <div class="form__field">
             <input
                 type="submit"

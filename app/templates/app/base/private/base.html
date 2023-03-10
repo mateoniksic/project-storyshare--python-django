@@ -1,23 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-
         <meta charset="UTF-8" />
-        
+
         <meta
             http-equiv="X-UA-Compatible"
             content="IE=edge" />
-        
-            <meta
+
+        <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0" />
-        
-            <title>
-                StoryShare • 
-                {% block title %}{% endblock title %}
-            </title>
+
+        <title>StoryShare • {% block title %}{% endblock title %}</title>
 
         <!-- FONTS -->
         <link
@@ -69,45 +64,31 @@
 
         <!-- EXTRA HEAD -->
         {% block head %}{% endblock head %}
-
     </head>
 
     <body>
         <div class="app">
-
             {% include 'app/base/private/includes/header.html' %}
 
             <div class="app__container">
-
                 <main class="main">
+                    <header class="main__header">{% block main_header %}{% endblock main_header %}</header>
 
-                    <header class="main__header">
-
-                        {% block main_header %}{% endblock main_header %}
-
-                    </header>
-
-                    <div class="main__content">
-
-                        {% block main_content %}{% endblock main_content %}
-
-                    </div>
-                    
+                    <div class="main__content">{% block main_content %}{% endblock main_content %}</div>
                 </main>
 
                 {% include 'app/base/private/includes/footer.html' %}
-
             </div>
-
         </div>
 
-        <div id="modal-overlay" class="modal-overlay"></div>
+        <div
+            id="modal-overlay"
+            class="modal-overlay"></div>
         <!-- JAVASCRIPT -->
         <script src="{% static 'app/base/includes/header/index.js' %}"></script>
         <script src="{% static 'app/includes/misc/modal/modal_window/index.js' %}"></script>
 
         <!-- EXTRA JAVASCRIPT -->
         {% block script %}{% endblock script %}
-
     </body>
 </html>

@@ -1,12 +1,11 @@
 from urllib.parse import urlencode
 from django.views import generic
 
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.models import User
 from .models import *
@@ -14,7 +13,7 @@ from .models import *
 from .forms import *
 from django.contrib import messages
 
-from .contrib.mixins import *
+from .utils.mixins import *
 from django.core.paginator import Paginator
 
 
@@ -23,8 +22,14 @@ class IndexTemplateView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.all().order_by('-date_created')[:6]
-        context['posts_total'] = len(Post.objects.all())
+        posts = Post.objects.all().order_by('-date_created')[:18]
+        context['posts_total'] = Post.objects.all().count()
+
+        page: int = self.request.GET.get('page', 1)
+        p = Paginator(posts, 6)
+
+        context['posts'] = p.get_page(page)
+
         return context
 
     def dispatch(self, *args, **kwargs):
@@ -34,58 +39,39 @@ class IndexTemplateView(generic.TemplateView):
         return super().dispatch(*args, **kwargs)
 
 
-def sign_up(request):
-    if request.user.is_authenticated:
-        return redirect(reverse('app:for-you-post-list-view'))
+class UserSignUpView(generic.CreateView):
+    model = User
+    form_class = UserForm
 
-    else:
-        form = UserForm()
+    template_name = 'app/pages/public/member/sign_up.html'
 
-        if request.method == 'POST':
-            form = UserForm(request.POST)
+    success_url = reverse_lazy('app:sign-in')
 
-            if form.is_valid():
-                form.save()
-                return redirect(reverse('app:sign-in'))
-
-        context = {'form': form}
-        return render(request, 'app/pages/public/member/sign_up.html', context=context)
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect(reverse('app:for-you-post-list-view'))
+        return super().get(request, *args, **kwargs)
 
 
-def sign_in(request):
-    if request.user.is_authenticated:
-        return redirect(reverse('app:for-you-post-list-view'))
+class UserSignInView(LoginView):
+    template_name = 'app/pages/public/member/sign_in.html'
+    redirect_authenticated_user = True
 
-    elif request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            next = request.GET.get('next')
-
-            if next:
-                return redirect(next)
-            else:
-                return redirect(reverse('app:for-you-post-list-view'))
-
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
         else:
-            message = 'Your username or password was incorrect. Please, try again.'
-            messages.error(request, message)
-            return render(request, 'app/pages/public/member/sign_in.html')
+            return reverse_lazy('app:for-you-post-list-view')
 
-    else:
-        return render(request, 'app/pages/public/member/sign_in.html')
+    def form_invalid(self, form):
+        messages.error(
+            self.request, 'Your username or password was incorrect. Please, try again.')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
-def sign_out(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect(reverse('app:sign-in'))
-
-    else:
-        return redirect(reverse('app:sign-in'))
+class UserSignOutView(LogoutView):
+    next_page = reverse_lazy('app:sign-in')
 
 
 class FollowingPostListView(LoginRequiredMixin, generic.ListView):

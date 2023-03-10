@@ -6,9 +6,9 @@ app_name = 'app'
 urlpatterns = [
     path('', views.IndexTemplateView.as_view(), name='index-template-view'),
 
-    path('sign-up/', views.sign_up, name='sign-up'),
-    path('sign-in/', views.sign_in, name='sign-in'),
-    path('sign-out/', views.sign_out, name='sign-out'),
+    path('sign-up/', views.UserSignUpView.as_view(), name='sign-up'),
+    path('sign-in/', views.UserSignInView.as_view(), name='sign-in'),
+    path('sign-out/', views.UserSignOutView.as_view(), name='sign-out'),
 
     path('for-you/', views.ForYouPostListView.as_view(), name='for-you-post-list-view'),
     path('following/', views.FollowingPostListView.as_view(), name='following-post-list-view'),

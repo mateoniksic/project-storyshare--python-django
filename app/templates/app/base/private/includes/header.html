@@ -1,10 +1,8 @@
 {% load static %}
 <header class="header">
-
     <div class="header__container">
         <nav class="nav">
             <ul class="nav__list">
-
                 <li class="nav__item">
                     <div class="brand">
                         <a
@@ -28,8 +26,8 @@
 
                 <li class="nav__item">
                     <a
-                    href="{% url 'app:following-post-list-view' %}"
-                    class="link">
+                        href="{% url 'app:following-post-list-view' %}"
+                        class="link">
                         <svg class="icon icon-24 icon-text-right">
                             <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-heart"></use>
                         </svg>
@@ -48,20 +46,31 @@
                         <span>Search</span>
                     </button>
 
-                    <div class="modal-window" id="modal-window-search">
+                    <div
+                        class="modal-window"
+                        id="modal-window-search">
                         <div class="modal-window__header">
                             <span class="heading-3">Search members</span>
 
-                            <button type="button" class="button button--small button--invisible-danger" data-button-close>
+                            <button
+                                type="button"
+                                class="button button--small button--invisible-danger"
+                                data-button-close>
                                 <svg class="icon icon-24">
                                     <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
                                 </svg>
                             </button>
                         </div>
                         <div class="search-container">
-                            <form action="{% url 'app:search-member-list-view' %}" method="GET" class="form">
+                            <form
+                                action="{% url 'app:search-member-list-view' %}"
+                                method="GET"
+                                class="form">
                                 <div class="form__field">
-                                    <input type="search" name="q" class="form__input">
+                                    <input
+                                        type="search"
+                                        name="q"
+                                        class="form__input" />
                                 </div>
                                 <div class="form__field">
                                     <button
@@ -88,19 +97,14 @@
                         <span>Create</span>
                     </a>
                 </li>
-
             </ul>
         </nav>
     </div>
 
     <div class="header__container">
-
         <nav class="nav">
             <ul class="nav__list">
-    
-                <li class="nav__item nav__item--profile link">
-                    {% include 'app/includes/member/profile/misc/card_member.html' with member=user%}
-                </li>
+                <li class="nav__item nav__item--profile link">{% include 'app/includes/member/profile/misc/card_member.html' with member=user%}</li>
 
                 <li class="nav__item">
                     <a
@@ -112,7 +116,7 @@
                         <span>Settings</span>
                     </a>
                 </li>
-    
+
                 <li class="nav__item">
                     <a
                         href="{% url 'app:sign-out' %}"
@@ -123,9 +127,7 @@
                         <span>Sign out</span>
                     </a>
                 </li>
-    
             </ul>
         </nav>
     </div>
-
 </header>

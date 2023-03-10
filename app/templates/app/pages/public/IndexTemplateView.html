@@ -47,7 +47,7 @@
     <section class="section">
         <div class="container">
             <h2 class="heading-2 my-32">{{ posts_total }}+ personal success stories to get inspired.</h2>
-            {% include 'app/includes/member/post/post_list.html' %}
+            {% include 'app/includes/member/post/post_list.html' with page_obj=posts %}
         </div>
     </section>
 

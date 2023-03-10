@@ -1,14 +1,13 @@
-{% load static %}
-{% if field.errors %}
-    <ul class="messages">
-        {% for field_error in field.errors %}
-            <li class="error">
-                <svg class="icon icon-24"> 
-                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle-filled"></use>
-                </svg>
-                <b>ERROR:</b>
-                {{ field_error | striptags }}
-            </li>
-        {% endfor %}
-    </ul>
+{% load static %} {% if field.errors %}
+<ul class="messages">
+    {% for field_error in field.errors %}
+    <li class="error">
+        <svg class="icon icon-24">
+            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle-filled"></use>
+        </svg>
+        <b>ERROR:</b>
+        {{ field_error | striptags }}
+    </li>
+    {% endfor %}
+</ul>
 {% endif %}
