@@ -2,7 +2,7 @@ const openContextMenuButton = document.querySelectorAll('[data-modal-actions-tar
 
 function openContextMenu(contextMenu) {
     if (contextMenu == null) return;
-    contextMenu.classList.toggle('context-menu--isActive');
+    contextMenu.classList.toggle('context-menu--is-active');
 }
 
 openContextMenuButton.forEach((button) => {

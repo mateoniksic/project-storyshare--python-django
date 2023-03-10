@@ -90,3 +90,39 @@ LINK LIST
     padding: 2.4rem 3.2rem;
     width: 40rem;
 }
+
+.search-container .form {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search-container .form__field {
+    margin: 0;
+}
+
+.search-container .form__field:first-child {
+    width: 100%;
+}
+
+.search-container .form__input:is(:focus-visible) {
+    outline: none;
+}
+
+.search-container .form__input {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.search-container .button {
+    padding: 1.43rem;
+
+    border-top: var(--border-1-color-primary);
+    border-right: var(--border-1-color-primary);
+    border-bottom: var(--border-1-color-primary);
+    border-left: none;
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

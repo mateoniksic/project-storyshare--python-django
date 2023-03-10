@@ -58,7 +58,7 @@
 
         {% endif %}
         
-        {% if not isProfileDetailView %}
+        {% if not isHidden %}
             
             {% include 'app/includes/member/profile/misc/card_member.html' with member=post.user_profile.user %}
             

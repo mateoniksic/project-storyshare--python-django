@@ -1,5 +1,14 @@
 .search-results-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
     padding-bottom: 0.8rem;
+}
+
+.search-results-container .pagination {
+    align-self: center;
+
+    margin: 2.4rem 0;
 }
 
 .search-results-container .card-member a {

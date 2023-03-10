@@ -4,8 +4,8 @@ const modalOverlayEl = document.getElementById('modal-overlay');
 
 function openModalWindow(modal) {
     if (modal == null) return;
-    modal.classList.add('modal-window--isActive');
-    modalOverlayEl.classList.add('modal-overlay--isActive');
+    modal.classList.add('modal-window--is-active');
+    modalOverlayEl.classList.add('modal-overlay--is-active');
 }
 
 openModalWindowButton.forEach((button) => {
@@ -18,8 +18,8 @@ openModalWindowButton.forEach((button) => {
 
 function closeModalWindow(modal) {
     if (modal == null) return;
-    modal.classList.remove('modal-window--isActive');
-    modalOverlayEl.classList.remove('modal-overlay--isActive');
+    modal.classList.remove('modal-window--is-active');
+    modalOverlayEl.classList.remove('modal-overlay--is-active');
 }
 
 closeModalWindowButton.forEach((button) => {
@@ -29,3 +29,9 @@ closeModalWindowButton.forEach((button) => {
         closeModalWindow(modal);
     });
 });
+
+modalOverlayEl.addEventListener('click', () => {
+    const modal = document.querySelector('.modal-window--is-active');
+
+    closeModalWindow(modal)
+})

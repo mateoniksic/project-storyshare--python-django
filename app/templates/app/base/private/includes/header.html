@@ -59,13 +59,19 @@
                             </button>
                         </div>
                         <div class="search-container">
-                            <form action="{% url 'app:search-member-list-view' %}" method="GET">
-                                {% csrf_token %}
+                            <form action="{% url 'app:search-member-list-view' %}" method="GET" class="form">
                                 <div class="form__field">
-                                    <input type="search" name="search-query" class="form__input" id="search-query">
+                                    <input type="search" name="q" class="form__input">
                                 </div>
                                 <div class="form__field">
-                                    <input type="submit" value="Search..." class="form__button">
+                                    <button
+                                        type="submit"
+                                        class="button button--accent"
+                                        data-modal-window-target="#modal-window-search">
+                                        <svg class="icon icon-32">
+                                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-search"></use>
+                                        </svg>
+                                    </button>
                                 </div>
                             </form>
                         </div>

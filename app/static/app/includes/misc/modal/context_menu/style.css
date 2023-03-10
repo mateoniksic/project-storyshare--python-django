@@ -1,6 +1,5 @@
 .context-menu {
-    background-color: var(--color-light-a-75);
-    backdrop-filter: blur(2rem);
+    background-color: var(--color-light);
 
     border: var(--border-1-color-primary);
     border-radius: var(--border-radius);
@@ -25,11 +24,10 @@
 }
 
 .context-menu__item button,
-.context-menu__item a {
+.context-menu__item a:is(:link, :visited) {
     width: 100%;
 
     padding: 1.2rem 3.2rem;
-
     border-radius: 0;
 
     text-align: center;
@@ -39,7 +37,7 @@
     background-color: var(--color-dark-a-25);
 }
 
-.context-menu--isActive {
+.context-menu--is-active {
     transform: translateY(0%) scale(1);
 }
 

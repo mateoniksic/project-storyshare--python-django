@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 from django.views import generic
 
 from django.shortcuts import render, redirect
@@ -14,6 +15,7 @@ from .forms import *
 from django.contrib import messages
 
 from .contrib.mixins import *
+from django.core.paginator import Paginator
 
 
 class IndexTemplateView(generic.TemplateView):
@@ -208,11 +210,18 @@ class ProfileDetailView(LoginRequiredMixin, FollowMemberMixin, generic.DetailVie
         member = self.object.user
         context['member'] = member
 
-        context['posts'] = member.profile.posts.order_by(
+        posts = member.profile.posts.order_by(
             '-date_created').all()
+
+        page: int = self.request.GET.get('page', 1)
+        p = Paginator(posts, 6)
+
+        context['posts'] = p.get_page(page)
 
         if (member == self.request.user):
             context['has_perms'] = True
+
+        context['isHidden'] = True
 
         return context
 
@@ -236,18 +245,26 @@ class TagDetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['posts'] = self.object.posts.all()
+        posts = self.object.posts.order_by(
+            '-date_created').all()
+
+        page: int = self.request.GET.get('page', 1)
+        p = Paginator(posts, 6)
+
+        context['posts'] = p.get_page(page)
 
         return context
 
 
 class SearchMemberListView(LoginRequiredMixin, generic.ListView):
     model = User
+    context_object_name = 'members'
+
     template_name = 'app/pages/private/SearchListView.html'
-    paginate_by = 6
+    paginate_by = 10
 
     def get_queryset(self):
-        query = self.request.GET.get('search-query')
+        query = self.request.GET.get('q')
 
         if query:
             queryset = User.objects.filter(
@@ -261,8 +278,14 @@ class SearchMemberListView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
 
         members = self.object_list
-        context['members'] = members
-
         context['title'] = f'Search results ({len(members)})'
+
+        params_get = self.request.GET.dict()
+        params = {
+            'q': params_get['q']
+        }
+        encoded_params = urlencode(params, safe='&')
+
+        context['params'] = encoded_params + '&'
 
         return context

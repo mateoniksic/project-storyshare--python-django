@@ -18,7 +18,7 @@
     transition: transform 200ms ease-in-out;
 }
 
-.modal-window--isActive {
+.modal-window--is-active {
     transform: translate(-50%, -50%) scale(1);
 }
 
@@ -50,7 +50,7 @@
     pointer-events: none;
 }
 
-.modal-overlay--isActive {
+.modal-overlay--is-active {
     opacity: 1;
     pointer-events: all;
 }

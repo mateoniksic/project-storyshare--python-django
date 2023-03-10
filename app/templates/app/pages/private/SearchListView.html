@@ -31,7 +31,7 @@
             {% for member in members.all %}
                 {% include 'app/includes/member/profile/misc/card_member.html' %}
             {% endfor %}
-
+            {% include 'app/includes/misc/pagination.html' %}
         </div>
 
     {% endblock main_content %}

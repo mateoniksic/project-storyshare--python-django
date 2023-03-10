@@ -1,16 +1,18 @@
 <div class="pagination">
-    {% if page_obj.has_previous %} {% if page_obj.previous_page_number is not 1 %}
+    {% if page_obj.has_previous %} 
+    
+        {% if page_obj.previous_page_number is not 1 %}
+
+        <a
+            href="?{{ params }}page=1"
+            class="pagination__page-link link link--text">
+            First
+        </a>
+
+        {% endif %}
 
     <a
-        href="?page=1"
-        class="pagination__page-link link link--text">
-        First
-    </a>
-
-    {% endif %}
-
-    <a
-        href="?page{{ page_obj.previous_page_number }}"
+        href="?{{ params }}page{{ page_obj.previous_page_number }}"
         class="pagination__page-link link link--text">
         {{ page_obj.previous_page_number }}
     </a>
@@ -22,15 +24,20 @@
     {% if page_obj.has_next %}
 
     <a
-        href="?page={{ page_obj.next_page_number }}"
+        href="?{{ params }}page={{ page_obj.next_page_number }}"
         class="pagination__page-link link link--text">
         {{ page_obj.next_page_number }}
     </a>
-    <a
-        href="?page={{ page_obj.paginator.num_pages }}"
-        class="pagination__page-link link link--text">
-        Last
-    </a>
+
+        {% if page_obj.paginator.num_pages > 2 %}
+        
+            <a
+                href="?{{ params }}page={{ page_obj.paginator.num_pages }}"
+                class="pagination__page-link link link--text">
+                Last
+            </a>
+        
+        {% endif %}
 
     {% endif %}
 </div>
