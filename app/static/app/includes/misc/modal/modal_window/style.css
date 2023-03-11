@@ -8,8 +8,8 @@
     border: var(--border-1-color-primary);
     border-radius: var(--border-radius);
 
-    width: min-content;
-    height: 80rem;
+    width: fit-content;
+    height: fit-content;
 
     transform: translate(-50%, -50%) scale(0);
 

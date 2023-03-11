@@ -1,10 +1,10 @@
 import re
 from django.utils.text import slugify
-from .models import Tag, Post
+from .models import *
 from django import forms
 from django.forms import ModelForm
 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import password_validation
@@ -12,65 +12,76 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 username_validator = UnicodeUsernameValidator()
 
 
-class UserForm(UserCreationForm):
+class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username',
                   'password1', 'password2']
 
-    first_name = forms.CharField(max_length=12, min_length=4, required=True,
-                                 widget=forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'John'}))
-    last_name = forms.CharField(max_length=12, min_length=4, required=True,
-                                widget=(forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'Doe'})))
-    username = forms.CharField(
-        label=_('Username'),
-        max_length=150,
-        help_text=_(
-            '150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-        validators=[username_validator],
-        error_messages={'unique': _(
-            "Username is already taken by another user.")},
-        widget=forms.TextInput(
-            attrs={'class': 'form__input', 'placeholder': 'john.doe'})
-    )
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'John'}),
+            'last_name': forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'Doe'}),
+            'username': forms.TextInput(
+                attrs={'class': 'form__input', 'placeholder': 'john.doe'}),
+            'email': forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'john.doe@example.com'}),
+        }
 
-    email = forms.EmailField(max_length=50, help_text='Required. Inform a valid email address.',
-                             widget=(forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'john.doe@example.com'})))
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        self.prefix = 'CustomUserCreationForm'
+        self.fields['password1'].widget = forms.PasswordInput(
+            attrs={'class': 'form__input'})
+        self.fields['password2'].widget = forms.PasswordInput(
+            attrs={'class': 'form__input'})
 
-    password1 = forms.CharField(label=_('Password'),
-                                widget=(forms.PasswordInput(
-                                    attrs={'class': 'form__input'})),
-                                help_text=password_validation.password_validators_help_text_html())
 
-    password2 = forms.CharField(label=_('Password confirmation'), widget=forms.PasswordInput(attrs={'class': 'form__input'}),
-                                help_text=_('Repeat the password for confirmation'))
+class CustomAuthenticationForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.prefix = 'CustomAuthenticationForm'
+        self.fields['username'].widget = forms.TextInput(
+            attrs={'class': 'form__input'})
+        self.fields['password'].widget = forms.PasswordInput(
+            attrs={'class': 'form__input'})
 
 
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        exclude = ['user_profile', 'slug',
-                   'tags', 'date_created']
+        fields = ['title', 'content', 'excerpt', 'featured_image']
 
-    title = forms.CharField(label='Title', max_length=148, required=True, widget=forms.TextInput(
-        attrs={'class': 'form__input', 'placeholder': 'Enter your attention grabbing title'}))
+        labels = {
+            'title': 'Story title',
+            'content': 'Story content',
+            'excerpt': 'Story summary',
+            'featured_image': 'Featured image (URL)'
+        }
 
-    content = forms.CharField(label='Content', max_length=64000, required=True, widget=forms.Textarea(
-        attrs={'id': 'textarea', 'class': 'form__input', 'rows': 32, 'style': 'resize:none;', 'placeholder': 'Enter high value content'}))
+        widgets = {
+            'title': forms.TextInput(
+                attrs={'class': 'form__input', 'placeholder': 'Enter your attention grabbing title'}),
+            'content': forms.Textarea(
+                attrs={'id': 'textarea', 'class': 'form__input', 'rows': 32, 'style': 'resize:none;', 'placeholder': 'Enter high value content'}),
+            'excerpt': forms.Textarea(
+                attrs={'class': 'form__input', 'rows': 5, 'style': 'resize:none;', 'placeholder': 'Enter short summary of your high value content'}),
+            'featured_image': forms.URLInput(
+                attrs={'class': 'form__input', 'placeholder': 'https://www.example.com/my-featured-image'})
+        }
 
-    excerpt = forms.CharField(
-        label='Excerpt', max_length=480, required=True, widget=forms.Textarea(
-            attrs={'class': 'form__input', 'rows': 5, 'style': 'resize:none;', 'placeholder': 'Enter short summary of your high value content'}))
+        required = {
+            'title': True,
+            'content': True,
+            'excerpt': True,
+            'featured_image': True
+        }
 
     tag_list = forms.CharField(label='Tags', max_length=148, required=True, widget=forms.TextInput(
         attrs={'class': 'form__input', 'placeholder': 'mytag1 mytag2'}))
 
-    featured_image = forms.URLField(label='Featured image (URL)', widget=forms.URLInput(
-        attrs={'class': 'form__input', 'placeholder': 'https://www.example.com/my-featured-image'}))
-
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
-        self.prefix = 'formPost'
+        self.prefix = 'PostForm'
         super(PostForm, self).__init__(*args, **kwargs)
 
     def clean_tag_list(self):
@@ -98,3 +109,27 @@ class PostForm(ModelForm):
         instance.tags.set(cleaned_tag_list)
 
         return instance
+
+
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['profile_image', 'description']
+
+        labels = {
+            'profile_image': 'Profile image (URL)',
+            'description': 'Profile description'
+        }
+
+        widgets = {
+            'profile_image': forms.URLInput(
+                attrs={'class': 'form__input', 'placeholder': 'https://www.example.com/my-profile-image'}),
+            'description': forms.Textarea(
+                attrs={'class': 'form__input', 'rows': 4, 'style': 'resize:none;', 'placeholder': 'Describe yourself shortly.'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.prefix = 'UserProfileForm'
+
+

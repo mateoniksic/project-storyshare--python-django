@@ -2,22 +2,26 @@
 
     {% include 'app/includes/member/profile/misc/card_member.html' %}
 
-    {% if member.profile in user.profile.following.all %}
-        <form method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="formMemberFollow-member_profile_ID" value={{ member.profile.pk }}>
-            <button type="submit" name="formMemberFollow-submit" value="unfollow" class="button button--small button--neutral" {% if user == member %}disabled{% endif %}>
-                Unfollow
-            </button>
-        </form>
-        {% else %}
-        <form method="POST">
-            {% csrf_token %}    
-            <input type="hidden" name="formMemberFollow-member_profile_ID" value={{ member.profile.pk }}>
-            <button type="submit" name="formMemberFollow-submit" value="follow" class="button button--small button--accent" {% if user == member %}disabled{% endif %}>
-                Follow
-            </button>
-        </form>
-    {% endif %}
+    {% with prefix='MemberFollowForm' %}
+        {% if member.profile in user.profile.following.all %}
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="form_id" value="{{ prefix }}">
+                <input type="hidden" name="{{ prefix }}-member_id" value={{ member.pk }}>
+                <button type="submit" name="{{ prefix }}-submit" value="unfollow" class="button button--small button--neutral" {% if user == member %}disabled{% endif %}>
+                    Unfollow
+                </button>
+            </form>
+            {% else %}
+            <form method="POST">
+                {% csrf_token %}    
+                <input type="hidden" name="form_id" value="{{ prefix }}">
+                <input type="hidden" name="{{ prefix }}-member_id" value={{ member.pk }}>
+                <button type="submit" name="{{ prefix }}-submit" value="follow" class="button button--small button--accent" {% if user == member %}disabled{% endif %}>
+                    Follow
+                </button>
+            </form>
+        {% endif %}
+    {% endwith %}
 
 </div>

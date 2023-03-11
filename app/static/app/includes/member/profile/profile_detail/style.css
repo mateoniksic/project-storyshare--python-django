@@ -36,8 +36,6 @@
     margin-bottom: 0.8rem;
 }
 
-
-
 .profile-detail__member-description {
     width: 100%;
     max-width: 52ch;
@@ -54,9 +52,13 @@
     gap: 0.8rem;
 }
 
+#modal-window-following,
+#modal-window-followers {
+    height: 80rem;
+}
 
-
-.member-follow-list {
+#modal-window-following .modal-window__content,
+#modal-window-followers .modal-window__content {
     width: 48rem;
 
     min-height: max-content;
@@ -66,7 +68,12 @@
     overflow-y: auto;
 }
 
-.member-follow-list .member-follow {
+#modal-window-following .member-follow,
+#modal-window-followers .member-follow {
     padding: 1.6rem;
     border-bottom: var(--border-1-color-primary);
+}
+
+#modal-window-user-profile-form .modal-window__content {
+    padding: 3.2rem;
 }

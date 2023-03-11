@@ -1,7 +1,7 @@
 from urllib.parse import urlencode
 from django.views import generic
 
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 
 from django.contrib.auth.views import LoginView, LogoutView
@@ -13,7 +13,7 @@ from .models import *
 from .forms import *
 from django.contrib import messages
 
-from .utils.mixins import *
+from .utils.functions import *
 from django.core.paginator import Paginator
 
 
@@ -41,11 +41,20 @@ class IndexTemplateView(generic.TemplateView):
 
 class UserSignUpView(generic.CreateView):
     model = User
-    form_class = UserForm
+    form_class = CustomUserCreationForm
 
-    template_name = 'app/pages/public/member/sign_up.html'
+    template_name = 'app/pages/public/member/UserSignUpView.html'
 
     success_url = reverse_lazy('app:sign-in')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['form_title'] = 'Sign up'
+        context['form_submit_value'] = 'Sign up'
+        context['form_data_before_submit'] = 'By signing up, you agree to our <a href="" class="link link--text">Terms</a> . Learn how we collect, use and share your data in our <a href="" class="link link--text">Privacy Policy</a> and how we use cookies and similar technology in our <a href="" class="link link--text">Cookies Policy</a>.'
+
+        return context
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
@@ -54,8 +63,19 @@ class UserSignUpView(generic.CreateView):
 
 
 class UserSignInView(LoginView):
-    template_name = 'app/pages/public/member/sign_in.html'
+    template_name = 'app/pages/public/member/UserSignInView.html'
+    form_class = CustomAuthenticationForm
+
     redirect_authenticated_user = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['form_title'] = 'Sign in'
+        context['form_submit_value'] = 'Sign in'
+        context['form_data_extra'] = 'Don\'t remember password? <a href="#" id="js-btn-forgot-password" class="link link--text"> Reset password </a>'
+
+        return context
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -108,7 +128,7 @@ class ForYouPostListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-class PostDetailView(LoginRequiredMixin, FollowMemberMixin, generic.DetailView):
+class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
     context_object_name = 'post'
 
@@ -117,13 +137,46 @@ class PostDetailView(LoginRequiredMixin, FollowMemberMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        user = self.request.user
+
         member = self.object.user_profile.user
         context['member'] = member
 
         if (member == self.request.user):
             context['has_perms'] = True
 
+            initial = {
+                'profile_image': user.profile.profile_image,
+                'description': user.profile.description
+            }
+            context['UserProfileForm'] = UserProfileForm(initial=initial)
+
         return context
+
+    def post(self, request, slug):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+
+        form_id = self.request.POST.get('form_id')
+
+        member_follow_form_id = 'MemberFollowForm'
+        if form_id == member_follow_form_id:
+            action = request.POST.get(f'{member_follow_form_id}-submit')
+            user_id = request.user.id
+            member_id = request.POST.get(
+                f'{member_follow_form_id}-member_id')
+            member_follow_or_unfollow(action, user_id, member_id)
+
+        elif form_id == UserProfileForm().prefix:
+            user_profile_form = UserProfileForm(
+                request.POST, instance=self.request.user.profile)
+            if user_profile_form.is_valid():
+                user_profile_form.save()
+                context['UserProfileForm'] = UserProfileForm(
+                    instance=self.request.user.profile)
+                context['member'] = self.request.user
+
+        return render(request, self.template_name, context=context)
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
@@ -166,8 +219,8 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
         return kwargs
 
     def get_initial(self):
-        tag_list = list(self.object.tags.all().values_list('name', flat=True))
-        tag_list = ' '.join(tag_list)
+        tag_list = ' '.join(
+            list(self.object.tags.all().values_list('name', flat=True)))
         initial = {
             'tag_list': tag_list
         }
@@ -184,7 +237,7 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
         return reverse_lazy('app:profile-detail-view', kwargs={'slug': self.request.user.profile.slug})
 
 
-class ProfileDetailView(LoginRequiredMixin, FollowMemberMixin, generic.DetailView):
+class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
     model = UserProfile
     context_object_name = 'user_profile'
 
@@ -193,8 +246,20 @@ class ProfileDetailView(LoginRequiredMixin, FollowMemberMixin, generic.DetailVie
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        user = self.request.user
+
         member = self.object.user
         context['member'] = member
+
+        if (member == user):
+            context['has_perms'] = True
+            context['isHidden'] = True
+
+            initial = {
+                'profile_image': user.profile.profile_image,
+                'description': user.profile.description
+            }
+            context['UserProfileForm'] = UserProfileForm(initial=initial)
 
         posts = member.profile.posts.order_by(
             '-date_created').all()
@@ -204,22 +269,32 @@ class ProfileDetailView(LoginRequiredMixin, FollowMemberMixin, generic.DetailVie
 
         context['posts'] = p.get_page(page)
 
-        if (member == self.request.user):
-            context['has_perms'] = True
-
-        context['isHidden'] = True
-
         return context
 
+    def post(self, request, slug):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
 
-class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
-    # TODO
-    model = UserProfile
-    fields = ['profile_image', 'description']
-    template_name = 'app/includes/member/profile/profile_update.html'
+        form_id = self.request.POST.get('form_id')
 
-    def get_success_url(self):
-        return reverse_lazy('app:profile-detail-view', kwargs={'slug': self.object.slug})
+        member_follow_form_id = 'MemberFollowForm'
+        if form_id == member_follow_form_id:
+            action = request.POST.get(f'{member_follow_form_id}-submit')
+            user_id = request.user.id
+            member_id = request.POST.get(
+                f'{member_follow_form_id}-member_id')
+            member_follow_or_unfollow(action, user_id, member_id)
+
+        elif form_id == UserProfileForm().prefix:
+            user_profile_form = UserProfileForm(
+                request.POST, instance=self.object)
+            if user_profile_form.is_valid():
+                user_profile_form.save()
+                context['UserProfileForm'] = UserProfileForm(
+                    instance=self.object)
+                context['user'] = self.object.user
+
+        return render(request, self.template_name, context=context)
 
 
 class TagDetailView(LoginRequiredMixin, generic.DetailView):
@@ -271,7 +346,6 @@ class SearchMemberListView(LoginRequiredMixin, generic.ListView):
             'q': params_get['q']
         }
         encoded_params = urlencode(params, safe='&')
-
         context['params'] = encoded_params + '&'
 
         return context

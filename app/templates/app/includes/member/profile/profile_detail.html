@@ -26,7 +26,7 @@
             {% if has_perms %}
     
                 <button
-                    data-modal-window-target="#profile-edit"
+                    data-modal-window-target="#modal-window-user-profile-form"
                     class="button button--small button--primary">
                     Edit
                 </button>
@@ -49,14 +49,14 @@
             <button
                 type="button"
                 class="button button--neutral button--small"
-                data-modal-window-target="#followers">
+                data-modal-window-target="#modal-window-followers">
                 {{ member.profile.followers.all | length }} Followers
             </button>
 
             <button
                 type="button"
                 class="button button--neutral button--small"
-                data-modal-window-target="#following">
+                data-modal-window-target="#modal-window-following">
                 {{ member.profile.following.all | length }} Following
             </button>
 
@@ -64,7 +64,7 @@
 
     </div>
 
-            <div class="modal-window" id="followers">
+            <div class="modal-window" id="modal-window-followers">
 
                 <div class="modal-window__header">
 
@@ -78,7 +78,7 @@
 
                 </div>
                 
-                <div class="member-follow-list">
+                <div class="modal-window__content">
 
                     {% for follower in member.profile.followers.all %}
 
@@ -90,7 +90,7 @@
 
             </div>
 
-            <div class="modal-window" id="following">
+            <div class="modal-window" id="modal-window-following">
 
                 <div class="modal-window__header">
 
@@ -104,7 +104,7 @@
 
                 </div>
                 
-                <div class="member-follow-list">
+                <div class="modal-window__content">
 
                     {% for following in member.profile.following.all %}
 
@@ -116,7 +116,7 @@
 
             </div>
 
-            <div class="modal-window" id="profile-edit">
+            <div class="modal-window" id="modal-window-user-profile-form">
                 <div class="modal-window__header">
                     <span class="heading-3">Edit profile</span>
                     <button type="button" class="button button--small button--invisible-danger" data-button-close>
@@ -126,13 +126,10 @@
                     </button>
                 </div>
 
-                <div class="container-profile-edit">
-                    <form action="{% url 'app:profile-update-view' slug=user.profile.slug %}" method="POST">
-                        <input type="text" name="description">
-                        <button type="submit" class="button button--small button--primary">
-                            Update profile
-                        </button>
-                    </form>
+                <div class="modal-window__content">
+                    {% with form=UserProfileForm form_submit_value='Update profile' %}
+                        {% include 'app/includes/member/form/form.html' %}
+                    {% endwith %}
                 </div>
             </div>
 

@@ -24,14 +24,7 @@
                 </div>
                 <p class="text-l">Sign up to share your words of wisdom, lessons learned and advice with people around the world.</p>
                 <hr>
-                {% include 'app/includes/member/form/form_sign_up.html' %}
-                {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                {% include 'app/includes/member/form/form.html' %}
             </div>
             <div class="container__form__box bg--flash">
                 <span>
