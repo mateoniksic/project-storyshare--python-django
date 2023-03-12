@@ -1,0 +1,37 @@
+{% extends 'app/pages/private/base/base.html' %}
+{% load static %}
+
+{% block title %}
+
+    {{ form_submit_value }}
+
+{% endblock title %}
+
+{% block head %}
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/pages/private/PostFormView/style.css' %}" />
+
+{% endblock head %}
+
+{% block body %}
+
+    {% block main_header %}
+
+        {% include 'app/includes/layout/_header_title.html' with icon='plus-circle' title='Create a new story' %}
+
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        <div class="form-wrapper">
+            {% with form_submit_value='Create a new story'  %}
+                {% include 'app/includes/forms/_post_form.html' %}
+            {% endwith %}
+        </div>
+
+    {% endblock main_content %}
+
+{% endblock body %}

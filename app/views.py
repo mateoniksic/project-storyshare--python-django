@@ -18,7 +18,7 @@ from django.core.paginator import Paginator
 
 
 class IndexTemplateView(generic.TemplateView):
-    template_name = 'app/pages/public/IndexTemplateView.html'
+    template_name = 'app/pages/public/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,18 +43,9 @@ class UserSignUpView(generic.CreateView):
     model = User
     form_class = CustomUserCreationForm
 
-    template_name = 'app/pages/public/member/UserSignUpView.html'
+    template_name = 'app/pages/public/member/sign_up.html'
 
     success_url = reverse_lazy('app:sign-in')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['form_title'] = 'Sign up'
-        context['form_submit_value'] = 'Sign up'
-        context['form_data_before_submit'] = 'By signing up, you agree to our <a href="" class="link link--text">Terms</a> . Learn how we collect, use and share your data in our <a href="" class="link link--text">Privacy Policy</a> and how we use cookies and similar technology in our <a href="" class="link link--text">Cookies Policy</a>.'
-
-        return context
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
@@ -63,19 +54,10 @@ class UserSignUpView(generic.CreateView):
 
 
 class UserSignInView(LoginView):
-    template_name = 'app/pages/public/member/UserSignInView.html'
+    template_name = 'app/pages/public/member/sign_in.html'
     form_class = CustomAuthenticationForm
 
     redirect_authenticated_user = True
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['form_title'] = 'Sign in'
-        context['form_submit_value'] = 'Sign in'
-        context['form_data_extra'] = 'Don\'t remember password? <a href="#" id="js-btn-forgot-password" class="link link--text"> Reset password </a>'
-
-        return context
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -98,7 +80,7 @@ class FollowingPostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     context_object_name = 'posts'
 
-    template_name = 'app/pages/private/FollowingPostListView.html'
+    template_name = 'app/pages/private/post/post_list/following.html'
     paginate_by = 6
 
     def get_queryset(self):
@@ -115,7 +97,7 @@ class ForYouPostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     context_object_name = 'posts'
 
-    template_name = 'app/pages/private/ForYouPostListView.html'
+    template_name = 'app/pages/private/post/post_list/for_you.html'
     paginate_by = 6
 
     def get_queryset(self):
@@ -132,24 +114,21 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
     context_object_name = 'post'
 
-    template_name = 'app/pages/private/PostDetailView.html'
+    template_name = 'app/pages/private/post/post_detail/single_post.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         user = self.request.user
-
         member = self.object.user_profile.user
+
+        if (member == user):
+            member = user
+            context['is_user'] = True
+            context['user_profile_form'] = UserProfileForm(
+                instance=user.profile)
+
         context['member'] = member
-
-        if (member == self.request.user):
-            context['has_perms'] = True
-
-            initial = {
-                'profile_image': user.profile.profile_image,
-                'description': user.profile.description
-            }
-            context['UserProfileForm'] = UserProfileForm(initial=initial)
 
         return context
 
@@ -157,24 +136,26 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
 
-        form_id = self.request.POST.get('form_id')
+        request_data = self.request.POST
+        user = self.request.user
+
+        form_id = request_data['form_id']
 
         member_follow_form_id = 'MemberFollowForm'
         if form_id == member_follow_form_id:
-            action = request.POST.get(f'{member_follow_form_id}-submit')
-            user_id = request.user.id
-            member_id = request.POST.get(
-                f'{member_follow_form_id}-member_id')
-            member_follow_or_unfollow(action, user_id, member_id)
+            user_action = request_data[f'{member_follow_form_id}-submit']
+            user_id = user.id
+            member_id = request_data[f'{member_follow_form_id}-member_id']
+            member_follow_or_unfollow(user_action, user_id, member_id)
 
         elif form_id == UserProfileForm().prefix:
-            user_profile_form = UserProfileForm(
-                request.POST, instance=self.request.user.profile)
-            if user_profile_form.is_valid():
-                user_profile_form.save()
-                context['UserProfileForm'] = UserProfileForm(
-                    instance=self.request.user.profile)
-                context['member'] = self.request.user
+            form = UserProfileForm(
+                request_data, instance=user.profile)
+            if form.is_valid():
+                form.save()
+                context['user_profile_form'] = UserProfileForm(
+                    instance=user.profile)
+                context['user'] = user
 
         return render(request, self.template_name, context=context)
 
@@ -183,15 +164,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
     form_class = PostForm
 
-    template_name = 'app/pages/private/PostForm.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['form_submit_value'] = 'Create a new story'
-        context['icon'] = 'plus-circle'
-
-        return context
+    template_name = 'app/pages/private/post/post_form/post_create_form.html'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -203,15 +176,7 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Post
     form_class = PostForm
 
-    template_name = 'app/pages/private/PostForm.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['form_submit_value'] = 'Update story'
-        context['icon'] = 'edit'
-
-        return context
+    template_name = 'app/pages/private/post/post_form/post_update_form.html'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -241,32 +206,26 @@ class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
     model = UserProfile
     context_object_name = 'user_profile'
 
-    template_name = 'app/pages/private/ProfileDetailView.html'
+    template_name = 'app/pages/private/profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         user = self.request.user
-
         member = self.object.user
-        context['member'] = member
 
         if (member == user):
-            context['has_perms'] = True
-            context['isHidden'] = True
+            member = user
+            context['is_user'] = True
+            context['user_profile_form'] = UserProfileForm(
+                instance=self.object)
 
-            initial = {
-                'profile_image': user.profile.profile_image,
-                'description': user.profile.description
-            }
-            context['UserProfileForm'] = UserProfileForm(initial=initial)
+        context['member'] = member
 
         posts = member.profile.posts.order_by(
             '-date_created').all()
-
         page: int = self.request.GET.get('page', 1)
         p = Paginator(posts, 6)
-
         context['posts'] = p.get_page(page)
 
         return context
@@ -275,24 +234,26 @@ class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
 
-        form_id = self.request.POST.get('form_id')
+        request_data = self.request.POST
+        user = self.request.user
+
+        form_id = request_data['form_id']
 
         member_follow_form_id = 'MemberFollowForm'
         if form_id == member_follow_form_id:
-            action = request.POST.get(f'{member_follow_form_id}-submit')
-            user_id = request.user.id
-            member_id = request.POST.get(
-                f'{member_follow_form_id}-member_id')
-            member_follow_or_unfollow(action, user_id, member_id)
+            user_action = request_data[f'{member_follow_form_id}-submit']
+            user_id = user.id
+            member_id = request_data[f'{member_follow_form_id}-member_id']
+            member_follow_or_unfollow(user_action, user_id, member_id)
 
         elif form_id == UserProfileForm().prefix:
-            user_profile_form = UserProfileForm(
-                request.POST, instance=self.object)
-            if user_profile_form.is_valid():
-                user_profile_form.save()
-                context['UserProfileForm'] = UserProfileForm(
-                    instance=self.object)
-                context['user'] = self.object.user
+            form = UserProfileForm(
+                request_data, instance=user.profile)
+            if form.is_valid():
+                form.save()
+                context['user_profile_form'] = UserProfileForm(
+                    instance=user.profile)
+                context['user'] = user
 
         return render(request, self.template_name, context=context)
 
@@ -301,7 +262,7 @@ class TagDetailView(LoginRequiredMixin, generic.DetailView):
     model = Tag
     context_object_name = 'tag'
 
-    template_name = 'app/pages/private/TagDetailView.html'
+    template_name = 'app/pages/private/tag.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -321,15 +282,14 @@ class SearchMemberListView(LoginRequiredMixin, generic.ListView):
     model = User
     context_object_name = 'members'
 
-    template_name = 'app/pages/private/SearchListView.html'
+    template_name = 'app/pages/private/search.html'
     paginate_by = 10
 
     def get_queryset(self):
         query = self.request.GET.get('q')
 
         if query:
-            queryset = User.objects.filter(
-                username__icontains=query).all()
+            queryset = User.objects.filter(username__icontains=query).all()
         else:
             queryset = User.objects.none()
 
@@ -342,10 +302,9 @@ class SearchMemberListView(LoginRequiredMixin, generic.ListView):
         context['title'] = f'Search results ({len(members)})'
 
         params_get = self.request.GET.dict()
-        params = {
-            'q': params_get['q']
-        }
-        encoded_params = urlencode(params, safe='&')
+        filtered_params = {key: value for key,
+                           value in params_get.items() if key != 'page'}
+        encoded_params = urlencode(filtered_params, safe='&')
         context['params'] = encoded_params + '&'
 
         return context

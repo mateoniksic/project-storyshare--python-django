@@ -1,0 +1,40 @@
+{% extends 'app/pages/private/base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Tag (#{{ tag }})
+{% endblock title %}
+
+{% block head %}
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/pages/private/TagDetailView/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/includes/member/post/post_list/style.css' %}" />
+
+{% endblock head %}
+
+{% block body %}
+
+    {% block main_header %}
+
+        {% include 'app/includes/layout/_header_title.html' with title=tag icon="hash" %}
+
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        <section class="posts">
+    
+            {% include 'app/includes/post/_post_list.html' with page_obj=posts %}
+
+        </section>
+
+    {% endblock main_content %}
+
+{% endblock body %}

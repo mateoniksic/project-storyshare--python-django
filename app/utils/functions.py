@@ -6,7 +6,6 @@ from ..models import UserProfile
 def member_follow_or_unfollow(user_action, user_id, member_id):
     user_profile = get_object_or_404(
         UserProfile, pk=user_id)
-
     member_profile = get_object_or_404(
         UserProfile, pk=member_id)
 

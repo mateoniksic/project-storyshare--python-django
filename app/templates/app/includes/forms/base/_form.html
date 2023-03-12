@@ -1,0 +1,42 @@
+{% load static %}
+<div class="form__container">
+    {% block form_title %}{% endblock form_title %}
+
+    <form
+        method="POST"
+        class="form">
+        {% csrf_token %}
+        <input
+            type="hidden"
+            name="form_id"
+            value="{{ form.prefix }}" />
+
+        {% for field in form %}
+
+        <div class="form__field">
+            <label
+                for="{{field.auto_id}}"
+                class="form__label">
+                {{ field.label }}
+            </label>
+
+            {{ field }} {% include 'app/includes/forms/base/partials/form_feedback/_form_field_errors.html' %}
+        </div>
+
+        {% endfor %}
+
+        <div class="form__field">{% include 'app/includes/forms/base/partials/form_feedback/_form_messages.html' %}</div>
+
+        {% block form_text_before_submit %} {% endblock %}
+
+        <div class="form__field">
+            <input
+                type="submit"
+                value="{% block form_submit_value %}{% endblock form_submit_value %}"
+                name="{{ form.prefix }}-submit"
+                class="form__button" />
+        </div>
+    </form>
+
+    {% block form_text_bottom %}{% endblock form_text_bottom %}
+</div>

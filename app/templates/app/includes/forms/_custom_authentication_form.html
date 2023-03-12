@@ -1,0 +1,15 @@
+{% extends 'app/includes/forms/base/_form.html' %} 
+
+{% block form_title %}
+    {% with form_title='Sign in'  %}
+        {% include 'app/includes/forms/base/partials/_form_title.html' %}
+    {% endwith %}
+{% endblock form_title %}
+
+{% block form_submit_value %}Sign in{% endblock form_submit_value %}
+
+{% block form_text_bottom %}
+    {% with form_text="Don't remember password? <a href=\"#\" id=\"js-btn-forgot-password\" class=\"link link--text\"> Reset password </a>" %}
+        {% include 'app/includes/forms/base/partials/_form_text.html' %}
+    {% endwith %}
+{% endblock form_text_bottom %}

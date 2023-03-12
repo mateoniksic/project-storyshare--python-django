@@ -1,0 +1,15 @@
+{% extends 'app/includes/forms/base/_form.html' %} 
+
+{% block form_title %}
+    {% with form_title='Sign up'  %}
+        {% include 'app/includes/forms/base/partials/_form_title.html' %}
+    {% endwith %}
+{% endblock form_title %}
+
+{% block form_submit_value %}Sign up{% endblock form_submit_value %}
+
+{% block form_text_before_submit %}
+    {% with form_text="By signing up, you agree to our <a href=\"\" class=\"link link--text\">Terms</a> . Learn how we collect, use and share your data in our <a href=\"\" class=\"link link--text\">Privacy Policy</a> and how we use cookies and similar technology in our <a href=\"\" class=\"link link--text\">Cookies Policy</a>." %}
+        {% include 'app/includes/forms/base/partials/_form_text.html' %}
+    {% endwith %}
+{% endblock form_text_before_submit %}

@@ -1,0 +1,36 @@
+{% extends 'app/pages/private/base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Search Results
+{% endblock title %}
+
+{% block head %}
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/pages/private/SearchListView/style.css' %}" />
+
+{% endblock head %}
+
+{% block body %}
+
+    {% block main_header %}
+
+        {% include 'app/includes/layout/_header_title.html' with icon='search' title=title %}
+
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        <div class="search-results-container">
+            {% for member in members.all %}
+                {% include 'app/includes/member_profile/_card_member.html' %}
+            {% endfor %}
+            {% include 'app/includes/layout/_pagination.html' %}
+        </div>
+
+    {% endblock main_content %}
+
+{% endblock body %}
