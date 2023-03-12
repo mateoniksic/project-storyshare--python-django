@@ -1,4 +1,4 @@
-a:is(:link, :visited).card-member__link {
+a:is(:link, :visited).card-user__link {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -6,7 +6,7 @@ a:is(:link, :visited).card-member__link {
     gap: 0.8rem;
 }
 
-.card-member__image-wrapper {
+.card-user__image-wrapper {
     width: 3.2rem;
     height: 3.2rem;
 
@@ -18,6 +18,6 @@ a:is(:link, :visited).card-member__link {
     transition: border-radius 200ms ease-in-out;
 }
 
-a:is(:hover, :active, :focus).card-member__link .card-member__image-wrapper {
+a:is(:hover, :active, :focus).card-user__link .card-user__image-wrapper {
     border-radius: var(--border-radius);
 }

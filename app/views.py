@@ -43,7 +43,7 @@ class UserSignUpView(generic.CreateView):
     model = User
     form_class = CustomUserCreationForm
 
-    template_name = 'app/pages/public/member/sign_up.html'
+    template_name = 'app/pages/public/user_auth/sign_up.html'
 
     success_url = reverse_lazy('app:sign-in')
 
@@ -54,7 +54,7 @@ class UserSignUpView(generic.CreateView):
 
 
 class UserSignInView(LoginView):
-    template_name = 'app/pages/public/member/sign_in.html'
+    template_name = 'app/pages/public/user_auth/sign_in.html'
     form_class = CustomAuthenticationForm
 
     redirect_authenticated_user = True
@@ -114,7 +114,7 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
     context_object_name = 'post'
 
-    template_name = 'app/pages/private/post/post_detail/single_post.html'
+    template_name = 'app/pages/private/post/post_detail/post_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -206,7 +206,7 @@ class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
     model = UserProfile
     context_object_name = 'user_profile'
 
-    template_name = 'app/pages/private/profile.html'
+    template_name = 'app/pages/private/user_profile/user_profile_detail/profile_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -262,7 +262,7 @@ class TagDetailView(LoginRequiredMixin, generic.DetailView):
     model = Tag
     context_object_name = 'tag'
 
-    template_name = 'app/pages/private/tag.html'
+    template_name = 'app/pages/private/tag/tag_detail/tag_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -282,7 +282,7 @@ class SearchMemberListView(LoginRequiredMixin, generic.ListView):
     model = User
     context_object_name = 'members'
 
-    template_name = 'app/pages/private/search.html'
+    template_name = 'app/pages/private/user_profile/user_profile_list/search.html'
     paginate_by = 10
 
     def get_queryset(self):

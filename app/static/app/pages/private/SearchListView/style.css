@@ -11,12 +11,12 @@
     margin: 2.4rem 0;
 }
 
-.search-results-container .card-member a {
+.search-results-container .card-user a {
     padding: 1.6rem 3.2rem;
 
     border-bottom: var(--border-1-color-primary);
 }
 
-.search-results-container .card-member:is(:hover) {
+.search-results-container .card-user:is(:hover) {
     background-color: var(--color-accent);
 }

@@ -80,7 +80,7 @@
 
                     {% for follower in member.profile.followers.all %}
                         {% with member=follower.user %}
-                            {% include 'app/includes/forms/_member_follow_or_unfollow_form.html' with member=follower.user %}
+                            {% include 'app/includes/forms/_user_follow_or_unfollow_form.html' with member=follower.user %}
                         {% endwith %}
                     {% endfor %}
                     
@@ -106,7 +106,7 @@
 
                     {% for following in member.profile.following.all %}
                         {% with  member=following.user  %}
-                            {% include 'app/includes/forms/_member_follow_or_unfollow_form.html' %}
+                            {% include 'app/includes/forms/_user_follow_or_unfollow_form.html' %}
                         {% endwith %}
                     {% endfor %}
                     

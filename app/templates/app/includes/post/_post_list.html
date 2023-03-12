@@ -60,7 +60,7 @@
         
         {% if not is_user %}
             {% with member=post.user_profile.user %}
-                {% include 'app/includes/member_profile/_card_member.html' %}
+                {% include 'app/includes/user_profile/_card_user.html' %}
             {% endwith %}
         {% endif %}
 

@@ -1,0 +1,15 @@
+<div class="card-user">
+    <a
+        class="card-user__link link"
+        href="{{ member.profile.get_absolute_url }}">
+        {% if member.profile.profile_image %}
+        <div class="card-user__image-wrapper">
+            <img
+                class="img"
+                src="{{ member.profile.profile_image }}"
+                alt="{{ member.first_name }} {{ member.last_name }}" />
+        </div>
+        {% endif %}
+        <span class="card-user__username">@{{ member.username}}</span>
+    </a>
+</div>

@@ -2,7 +2,12 @@
 {% load static %}
 
 {% block title %}
-    (@{{ member.username }}) • {{ post.title }}
+
+    Profile • 
+    {{ member.first_name }} 
+    {{ member.last_name }} 
+    (@{{ member.username }})
+
 {% endblock title %}
 
 {% block head %}
@@ -10,17 +15,7 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/PostDetailView/style.css' %}" />
-
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="{% static 'app/includes/member/post/post_detail/style.css' %}" />
-
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="{% static 'app/includes/misc/modal/context_menu/style.css' %}" />
+        href="{% static 'app/pages/private/ProfileDetailView/style.css' %}" />
 
     <link
         rel="stylesheet"
@@ -35,6 +30,11 @@
     <link
         rel="stylesheet"
         type="text/css"
+        href="{% static 'app/includes/member/post/post_list/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
         href="{% static 'app/includes/misc/modal/context_menu/style.css' %}" />
 
 {% endblock head %}
@@ -43,22 +43,32 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/forms/_member_follow_or_unfollow_form.html' %}
+        {% include 'app/includes/forms/_user_follow_or_unfollow_form.html' %}
 
     {% endblock main_header %}
 
     {% block main_content %}
 
-        <section class="section-profile-detail">
-            {% include 'app/includes/member_profile/_profile_detail.html' %}
+        <section class="profile">
+
+            {% include 'app/includes/user_profile/_user_profile_detail.html' %}
+
         </section>
 
-        {% include 'app/includes/post/_post_detail.html' %}
+        <section class="posts">
+
+            {% if request.GET.status %}Post deleted.{% endif %}
+
+            {% include 'app/includes/post/_post_list.html' with page_obj=posts %}
+
+        </section>
 
     {% endblock main_content %}
 
     {% block script %}
+
         <script src="{% static 'app/includes/misc/modal/context_menu/index.js' %}"></script>
+
     {% endblock script %}
 
 {% endblock body %}
