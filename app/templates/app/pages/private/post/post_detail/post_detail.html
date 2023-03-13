@@ -14,28 +14,22 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/member/post/post_detail/style.css' %}" />
+        href="{% static 'app/includes/post/post_detail/style.css' %}" />
 
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/misc/modal/context_menu/style.css' %}" />
+        href="{% static 'app/includes/layout/modal/modal_context/style.css' %}" />
 
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/member/profile/profile_detail/style.css' %}" />
+        href="{% static 'app/includes/user_profile/user_profile_detail/style.css' %}" />
 
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/member/profile/misc/member_follow/style.css' %}" />
-
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="{% static 'app/includes/misc/modal/context_menu/style.css' %}" />
-
+        href="{% static 'app/includes/forms/user_follow_or_unfollow_form/style.css' %}" />
 {% endblock head %}
 
 {% block body %}
@@ -57,7 +51,7 @@
     {% endblock main_content %}
 
     {% block script %}
-        <script src="{% static 'app/includes/misc/modal/context_menu/index.js' %}"></script>
+        <script src="{% static 'app/includes/layout/modal/modal_context/index.js' %}"></script>
     {% endblock script %}
 
 {% endblock body %}

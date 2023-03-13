@@ -35,33 +35,27 @@
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/includes/layout/styles.css' %}" />
+            href="{% static 'app/includes/layout/header/style.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/includes/header/style.css' %}" />
+            href="{% static 'app/includes/layout/footer/style.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/base/includes/footer/style.css' %}" />
+            href="{% static 'app/includes/layout/modal/modal_window/style.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/includes/member/profile/misc/card_member/style.css' %}" />
+            href="{% static 'app/includes/forms/base/style.css' %}" />
 
         <link
             rel="stylesheet"
             type="text/css"
-            href="{% static 'app/includes/misc/modal/modal_window/style.css' %}" />
-
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="{% static 'app/includes/member/form/style.css' %}" />
-
+            href="{% static 'app/includes/user_profile/card_user/style.css' %}" />
         <!-- EXTRA HEAD -->
         {% block head %}{% endblock head %}
     </head>
@@ -85,8 +79,8 @@
             id="modal-overlay"
             class="modal-overlay"></div>
         <!-- JAVASCRIPT -->
-        <script src="{% static 'app/base/includes/header/index.js' %}"></script>
-        <script src="{% static 'app/includes/misc/modal/modal_window/index.js' %}"></script>
+        <script src="{% static 'app/includes/layout/header/index.js' %}"></script>
+        <script src="{% static 'app/includes/layout/modal/modal_window/index.js' %}"></script>
 
         <!-- EXTRA JAVASCRIPT -->
         {% block script %}{% endblock script %}

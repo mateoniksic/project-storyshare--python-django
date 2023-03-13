@@ -1,0 +1,6 @@
+.main__content .form__container {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 48rem;
+    padding: 4.8rem 3.2rem;
+}

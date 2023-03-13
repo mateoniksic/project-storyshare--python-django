@@ -9,7 +9,7 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/PostFormView/style.css' %}" />
+        href="{% static 'app/pages/private/user/user_form/user_update_form/style.css' %}" />
 
     <!-- INCLUDES CSS -->
 {% endblock head %}
@@ -24,11 +24,9 @@
 
     {% block main_content %}
 
-        <div class="form-wrapper">
-            {% with form_submit_value='Update story'  %}
-                {% include 'app/includes/forms/_user_update_form.html' %}
-            {% endwith %}
-        </div>
+        {% with form_submit_value='Update story'  %}
+            {% include 'app/includes/forms/_user_update_form.html' %}
+        {% endwith %}
 
     {% endblock main_content %}
 
