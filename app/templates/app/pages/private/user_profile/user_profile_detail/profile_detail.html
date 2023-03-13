@@ -2,21 +2,20 @@
 {% load static %}
 
 {% block title %}
-
     Profile • 
     {{ member.first_name }} 
     {{ member.last_name }} 
     (@{{ member.username }})
-
 {% endblock title %}
 
 {% block head %}
-
+    <!-- PAGE CSS -->
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/ProfileDetailView/style.css' %}" />
+        href="{% static 'app/pages/private/user_profile/user_profile_detail/style.css' %}" />
 
+    <!-- INCLUDES CSS -->
     <link
         rel="stylesheet"
         type="text/css"

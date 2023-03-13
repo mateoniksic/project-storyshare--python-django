@@ -1,19 +1,16 @@
 {% extends 'app/pages/private/base/base.html' %}
 {% load static %}
 
-{% block title %}
-
-    Create a new story
-
-{% endblock title %}
+{% block title %}Create a new story{% endblock title %}
 
 {% block head %}
-
+    <!-- PAGE CSS -->
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/PostFormView/style.css' %}" />
-
+        href="{% static 'app/pages/private/post/post_form/post_create_form/style.css' %}" />
+    
+    <!-- INCLUDES CSS -->
 {% endblock head %}
 
 {% block body %}

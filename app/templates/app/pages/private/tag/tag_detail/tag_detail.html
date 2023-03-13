@@ -1,17 +1,16 @@
 {% extends 'app/pages/private/base/base.html' %}
 {% load static %}
 
-{% block title %}
-    Tag (#{{ tag }})
-{% endblock title %}
+{% block title %}Tag (#{{ tag }}){% endblock title %}
 
 {% block head %}
-
+    <!-- PAGE CSS -->
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/TagDetailView/style.css' %}" />
-
+        href="{% static 'app/pages/private/tag/tag_detail/style.css' %}" />
+    
+    <!-- INCLUDES CSS -->
     <link
         rel="stylesheet"
         type="text/css"

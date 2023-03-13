@@ -1,17 +1,16 @@
 {% extends 'app/pages/private/base/base.html' %}
 {% load static %}
 
-{% block title %}
-    For you
-{% endblock title %}
+{% block title %}For you{% endblock title %}
 
 {% block head %}
-
+    <!-- PAGE CSS -->
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/ForYouPostListView/style.css' %}" />
+        href="{% static 'app/pages/private/post/post_list/for_you/style.css' %}" />
 
+    <!-- INCLUDES CSS -->
     <link
         rel="stylesheet"
         type="text/css"

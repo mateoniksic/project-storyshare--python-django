@@ -1,22 +1,20 @@
-from urllib.parse import urlencode
-from django.views import generic
-
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 
+from django.views import generic
 from django.contrib.auth.views import LoginView, LogoutView
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.contrib.auth.models import User
 from .models import *
+from django.contrib.auth.models import User
 
 from .forms import *
 from django.contrib import messages
 
 from .utils.functions import *
+from urllib.parse import urlencode
 from django.core.paginator import Paginator
-
-import time
 
 
 class IndexTemplateView(generic.TemplateView):
@@ -24,21 +22,21 @@ class IndexTemplateView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         posts = Post.objects.all().order_by('-date_created')[:18]
-        context['posts_total'] = Post.objects.all().count()
 
         page: int = self.request.GET.get('page', 1)
         p = Paginator(posts, 6)
-
         context['posts'] = p.get_page(page)
+
+        context['posts_count'] = Post.objects.all().count()
 
         return context
 
-    def dispatch(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
             return redirect(reverse('app:for-you-post-list-view'))
-
-        return super().dispatch(*args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 
 class UserSignUpView(generic.CreateView):
@@ -56,10 +54,15 @@ class UserSignUpView(generic.CreateView):
 
 
 class UserSignInView(LoginView):
-    template_name = 'app/pages/public/user_auth/sign_in.html'
     form_class = CustomAuthenticationForm
 
+    template_name = 'app/pages/public/user_auth/sign_in.html'
     redirect_authenticated_user = True
+
+    def form_invalid(self, form):
+        messages.error(
+            self.request, 'Your username or password was incorrect. Please, try again.')
+        return self.render_to_response(self.get_context_data(form=form))
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -67,11 +70,6 @@ class UserSignInView(LoginView):
             return next_url
         else:
             return reverse_lazy('app:for-you-post-list-view')
-
-    def form_invalid(self, form):
-        messages.error(
-            self.request, 'Your username or password was incorrect. Please, try again.')
-        return self.render_to_response(self.get_context_data(form=form))
 
 
 class UserSignOutView(LogoutView):
@@ -92,11 +90,11 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse_lazy('app:user-update-view', kwargs={'pk': self.object.pk})
 
 
-class SearchUserProfileListView(LoginRequiredMixin, generic.ListView):
+class SearchResultsUserListView(LoginRequiredMixin, generic.ListView):
     model = User
-    context_object_name = 'members'
+    context_object_name = 'users'
 
-    template_name = 'app/pages/private/user_profile/user_profile_list/search.html'
+    template_name = 'app/pages/private/user/user_list/user_search_results.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -111,9 +109,6 @@ class SearchUserProfileListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        members = self.object_list
-        context['title'] = f'Search results ({len(members)})'
 
         params_get = self.request.GET.dict()
         filtered_params = {key: value for key,
@@ -283,11 +278,9 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'app/pages/private/post/post_form/post_update_form.html'
 
     def get_initial(self):
-        tag_list = ' '.join(
-            list(self.object.tags.all().values_list('name', flat=True)))
-        initial = {
-            'tag_list': tag_list
-        }
+        tags = self.object.tags.all().values_list('name', flat=True)
+        tag_list = ' '.join(tags)
+        initial = {'tag_list': tag_list}
         return initial
 
     def get_form_kwargs(self):

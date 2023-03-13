@@ -1,0 +1,40 @@
+{% extends 'app/pages/private/base/base.html' %}
+{% load static %}
+
+{% block title %}Search Results{% endblock title %}
+
+{% block head %}
+
+    <!-- PAGE CSS -->
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'app/pages/private/user/user_list/user_search_results/style.css' %}" />
+    
+    <!-- INCLUDES CSS -->
+{% endblock head %}
+
+{% block body %}
+
+    {% block main_header %}
+        {% with users|length|stringformat:'s' as count %}
+            {% with icon='search' title='Search results ('|add:count|add:')' %}
+                {% include 'app/includes/layout/_page_title.html' %}
+            {% endwith %}
+        {% endwith %}
+    {% endblock main_header %}
+
+    {% block main_content %}
+
+        <div class="search-results-container">
+            {% for user in users.all %}
+                {% with user as member %}
+                    {% include 'app/includes/user_profile/_card_user.html' %}
+                {% endwith %}
+            {% endfor %}
+            {% include 'app/includes/layout/_pagination.html' %}
+        </div>
+
+    {% endblock main_content %}
+
+{% endblock body %}

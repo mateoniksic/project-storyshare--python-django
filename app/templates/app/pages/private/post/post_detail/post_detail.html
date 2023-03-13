@@ -1,17 +1,16 @@
 {% extends 'app/pages/private/base/base.html' %}
 {% load static %}
 
-{% block title %}
-    (@{{ member.username }}) • {{ post.title }}
-{% endblock title %}
+{% block title %}(@{{ member.username }}) • {{ post.title }}{% endblock title %}
 
 {% block head %}
-
+    <!-- PAGE CSS -->
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/private/PostDetailView/style.css' %}" />
+        href="{% static 'app/pages/private/post/post_detail/style.css' %}" />
 
+    <!-- INCLUDES CSS -->
     <link
         rel="stylesheet"
         type="text/css"

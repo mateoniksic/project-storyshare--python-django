@@ -1,14 +1,16 @@
 {% extends 'app/pages/public/base/base.html' %}
 {% load static %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}Welcome{% endblock title %}
 
 {% block head %}
+    <!-- PAGE CSS -->
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/pages/public/IndexTemplateView/style.css' %}" />
+        href="{% static 'app/pages/public/index/style.css' %}" />
 
+    <!-- INCLUDES CSS -->
     <link
         rel="stylesheet"
         type="text/css"
@@ -46,7 +48,7 @@
     <!--    SECTION ARTICLES    -->
     <section class="section">
         <div class="container">
-            <h2 class="heading-2 my-32">{{ posts_total }}+ personal success stories to get inspired.</h2>
+            <h2 class="heading-2 my-32">{{ posts_count }}+ personal success stories to get inspired.</h2>
             {% include 'app/includes/post/_post_list.html' with page_obj=posts %}
         </div>
     </section>

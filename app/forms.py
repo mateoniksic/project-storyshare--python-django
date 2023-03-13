@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm
-from .models import *
-
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+
+from .models import *
 from django.contrib.auth.models import User
 
 from django.utils.text import slugify
@@ -10,6 +10,11 @@ import re
 
 
 class CustomUserCreationForm(UserCreationForm):
+    password1 = forms.CharField(label='New password', required=True,
+                                widget=forms.PasswordInput(attrs={'class': 'form__input'}))
+    password2 = forms.CharField(label='Confirm password', required=True,
+                                widget=forms.PasswordInput(attrs={'class': 'form__input'}))
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username',
@@ -23,11 +28,6 @@ class CustomUserCreationForm(UserCreationForm):
             'email': forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'john.doe@example.com'}),
 
         }
-
-    password1 = forms.CharField(label='New password', required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'form__input'}))
-    password2 = forms.CharField(label='Confirm password', required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'form__input'}))
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
@@ -63,7 +63,6 @@ class UserUpdateForm(ModelForm):
         self.prefix = 'user_update_form'
 
 
-
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
@@ -83,10 +82,13 @@ class UserProfileForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.prefix = 'UserProfileForm'
+        self.prefix = 'user_profile_form'
 
 
 class PostForm(ModelForm):
+    tag_list = forms.CharField(label='Tags', max_length=148, required=True, widget=forms.TextInput(
+        attrs={'class': 'form__input', 'placeholder': 'mytag1 mytag2'}))
+
     class Meta:
         model = Post
         fields = ['title', 'content', 'excerpt', 'featured_image']
@@ -115,9 +117,6 @@ class PostForm(ModelForm):
             'excerpt': True,
             'featured_image': True
         }
-
-    tag_list = forms.CharField(label='Tags', max_length=148, required=True, widget=forms.TextInput(
-        attrs={'class': 'form__input', 'placeholder': 'mytag1 mytag2'}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
