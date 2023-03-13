@@ -3,19 +3,19 @@
 
     {% if is_user %}
 
-        <div class="post__context-menu">
+        <div class="post__modal-context">
 
-            <button type="button" class="button button--small button--invisible" data-modal-actions-target="#context-menu-for-post-{{ post.id }}">
+            <button type="button" class="button button--small button--invisible" data-modal-actions-target="#modal-context-for-post-{{ post.id }}">
                 <svg class="icon icon-24">
                     <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-dots-vertical-rounded"></use>
                 </svg>
             </button>
 
-            <div class="context-menu" id="context-menu-for-post-{{ post.id }}">
+            <div class="modal-context" id="modal-context-for-post-{{ post.id }}">
 
-                <ul class="context-menu__list">
+                <ul class="modal-context__list">
 
-                    <li class="context-menu__item">
+                    <li class="modal-context__item">
                         <a href="{% url 'app:post-update-view' slug=post.slug %}" class="link link--small">
                             <svg class="icon icon-24">
                                 <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-edit"></use>
@@ -24,7 +24,7 @@
                         </a>
                     </li>
 
-                    <li class="context-menu__item">
+                    <li class="modal-context__item">
                         <form action="{% url 'app:post-delete-view' slug=post.slug %}" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="button button--small button--invisible-danger">

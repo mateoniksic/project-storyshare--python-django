@@ -3,14 +3,14 @@
     width: 100%;
 }
 
-.post__context-menu {
+.post__modal-context {
     text-align: right;
     padding: 2rem 3.2rem;
 
     position: relative;
 }
 
-.post__context-menu .context-menu {
+.post__modal-context .modal-context {
     inset: 6.8rem 3rem auto auto;
 }
 

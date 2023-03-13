@@ -39,7 +39,7 @@ POST LIST
     overflow: hidden;
 }
 
-.card-post__featured-image {
+.card-post__figure {
     flex: 1;
 
     min-width: 30rem;
@@ -48,19 +48,24 @@ POST LIST
     overflow: hidden;
 }
 
-.card-post__wrapper-featured-image {
+.card-post__image-wrapper {
     height: 100%;
 }
 
-.card-post__wrapper-featured-image .img {
+.card-post__image {
+        width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     transition: filter 200ms ease-in-out;
 }
 
-.card-post:hover .card-post__wrapper-featured-image .img {
+
+.card-post:hover .card-post__image {
     filter: brightness(120%);
 }
 
-.card-post__content {
+.card-post__content-container {
     flex: 1;
 
     min-width: 30rem;
@@ -71,7 +76,7 @@ POST LIST
     text-overflow: ellipsis;
 }
 
-.card-post__context-menu {
+.card-post__modal-context {
     text-align: right;
     margin-bottom: 1.6rem;
 
@@ -94,6 +99,6 @@ POST LIST
     margin-bottom: 1.6rem;
 }
 
-.card-post__container-tags {
+.card-post__tags-container {
     margin-bottom: 3.2rem;
 }
