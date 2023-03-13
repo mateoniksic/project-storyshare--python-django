@@ -19,7 +19,7 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/layout/modal/modal_context/style.css' %}" />
+        href="{% static 'app/includes/layout/modals/modal_context/style.css' %}" />
 
     <link
         rel="stylesheet"
@@ -42,16 +42,14 @@
 
     {% block main_content %}
 
-        <section class="section-profile-detail">
-            {% include 'app/includes/user_profile/_user_profile_detail.html' %}
-        </section>
+        {% include 'app/includes/user_profile/_user_profile_detail.html' %}
 
         {% include 'app/includes/post/_post_detail.html' %}
 
     {% endblock main_content %}
 
     {% block script %}
-        <script src="{% static 'app/includes/layout/modal/modal_context/index.js' %}"></script>
+        <script src="{% static 'app/includes/layout/modals/modal_context/index.js' %}"></script>
     {% endblock script %}
 
 {% endblock body %}

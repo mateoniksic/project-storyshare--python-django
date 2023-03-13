@@ -22,17 +22,17 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/layout/_page_title.html' with title=tag icon="hash" %}
+        {% with title=tag icon='hash'  %}
+            {% include 'app/includes/layout/_page_title.html' %}
+        {% endwith %}
 
     {% endblock main_header %}
 
     {% block main_content %}
 
-        <section class="posts">
-    
-            {% include 'app/includes/post/_post_list.html' with page_obj=posts %}
-
-        </section>
+        {% with page_obj=posts %}
+            {% include 'app/includes/post/_post_list.html' %}
+        {% endwith %}
 
     {% endblock main_content %}
 

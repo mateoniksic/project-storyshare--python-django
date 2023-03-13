@@ -34,7 +34,7 @@
     <link
         rel="stylesheet"
         type="text/css"
-        href="{% static 'app/includes/layout/modal/modal_context/style.css' %}" />
+        href="{% static 'app/includes/layout/modals/modal_context/style.css' %}" />
 
 {% endblock head %}
 
@@ -48,25 +48,15 @@
 
     {% block main_content %}
 
-        <section class="profile">
+        {% include 'app/includes/user_profile/_user_profile_detail.html' %}
 
-            {% include 'app/includes/user_profile/_user_profile_detail.html' %}
-
-        </section>
-
-        <section class="posts">
-
-            {% if request.GET.status %}Post deleted.{% endif %}
-
-            {% include 'app/includes/post/_post_list.html' with page_obj=posts %}
-
-        </section>
+        {% include 'app/includes/post/_post_list.html' with page_obj=posts %}
 
     {% endblock main_content %}
 
     {% block script %}
 
-        <script src="{% static 'app/includes/layout/modal/modal_context/index.js' %}"></script>
+        <script src="{% static 'app/includes/layout/modals/modal_context/index.js' %}"></script>
 
     {% endblock script %}
 

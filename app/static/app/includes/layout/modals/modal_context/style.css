@@ -37,10 +37,12 @@
     background-color: var(--color-dark-a-25);
 }
 
-.context-menu--is-active {
+.context-menu.is-active {
     transform: translateY(0%) scale(1);
 }
 
 .context-menu button {
     text-align: left;
 }
+
+

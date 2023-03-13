@@ -24,15 +24,15 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/layout/_page_title.html' with icon='heart' title='Following' %}
+        {% with title='Following' icon='heart'  %}
+            {% include 'app/includes/layout/_page_title.html' %}
+        {% endwith %}
 
     {% endblock main_header %}
 
     {% block main_content %}
 
-        <section class="section-post-list">
-            {% include 'app/includes/post/_post_list.html' %}
-        </section>
+        {% include 'app/includes/post/_post_list.html' %}
 
     {% endblock main_content %}
 

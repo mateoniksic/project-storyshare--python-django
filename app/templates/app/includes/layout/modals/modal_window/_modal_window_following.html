@@ -1,0 +1,15 @@
+{% extends 'app/includes/layout/modals/modal_window/base/_modal_window.html' %}
+
+{% block modal_window_id %}modal-window-following{% endblock modal_window_id %}
+{% block modal_window_classes %}modal-window--founf{% endblock modal_window_classes %}
+{% block modal_window_content_classes %}modal-window__content--founf{% endblock modal_window_content_classes %}
+
+{% block title %}Following{% endblock title %}
+
+{% block content %}
+    {% for following in member.profile.following.all %}
+        {% with member=following.user  %}
+            {% include 'app/includes/forms/_user_follow_or_unfollow_form.html' %}
+        {% endwith %}
+    {% endfor %}
+{% endblock content %}

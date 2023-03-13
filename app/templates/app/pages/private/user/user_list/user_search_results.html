@@ -26,14 +26,14 @@
 
     {% block main_content %}
 
-        <div class="search-results-container">
+        <section class="search-results">
             {% for user in users.all %}
                 {% with user as member %}
                     {% include 'app/includes/user_profile/_card_user.html' %}
                 {% endwith %}
             {% endfor %}
             {% include 'app/includes/layout/_pagination.html' %}
-        </div>
+        </section>
 
     {% endblock main_content %}
 

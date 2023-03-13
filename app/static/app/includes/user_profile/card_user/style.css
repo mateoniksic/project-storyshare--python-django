@@ -1,23 +1,38 @@
-a:is(:link, :visited).card-user__link {
+.card-user__link {
+    color: inherit;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.card-user__content-container {
+    align-items: center;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
     gap: 0.8rem;
+    justify-content: flex-start;
 }
 
 .card-user__image-wrapper {
-    width: 3.2rem;
-    height: 3.2rem;
-
-    border: var(--border-1-color-primary);
     border-radius: 100%;
-
+    border: var(--border-1-color-primary);
+    height: 3.2rem;
     overflow: hidden;
-
     transition: border-radius 200ms ease-in-out;
+    width: 3.2rem;
 }
 
-a:is(:hover, :active, :focus).card-user__link .card-user__image-wrapper {
+.card-user:is(:hover) .card-user__image-wrapper {
     border-radius: var(--border-radius);
+}
+
+.card-user__image {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
 }

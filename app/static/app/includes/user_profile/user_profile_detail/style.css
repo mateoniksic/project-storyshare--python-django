@@ -1,4 +1,14 @@
-.profile-detail {
+.user-profile-detail {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-content: center;
+
+    padding: 4.8rem 3.2rem;
+    border-bottom: var(--border-1-color-primary);
+}
+
+.user-profile-detail__section-container {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -8,7 +18,7 @@
     max-width: var(--max-content-width);
 }
 
-.profile-detail__profile-image {
+.user-profile-detail__profile-image {
     flex-shrink: 0 17rem 0;
     width: 17rem;
     height: 17rem;
@@ -19,13 +29,13 @@
     overflow: hidden;
 }
 
-.profile-detail__profile-details {
+.user-profile-detail__content-container {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
 }
 
-.profile-detail__member-name {
+.user-profile-detail__user-name {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -36,44 +46,18 @@
     margin-bottom: 0.8rem;
 }
 
-.profile-detail__member-description {
+.user-profile-detail__user-description {
     width: 100%;
     max-width: 52ch;
 
     margin-bottom: 2.4rem;
 }
 
-.profile-detail__member-stats {
+.user-profile-detail__user-statistics {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-content: center;
     align-items: center;
     gap: 0.8rem;
-}
-
-#modal-window-following,
-#modal-window-followers {
-    height: 80rem;
-}
-
-#modal-window-following .modal-window__content,
-#modal-window-followers .modal-window__content {
-    width: 48rem;
-
-    min-height: max-content;
-    height: 100%;
-    max-height: 70rem;
-
-    overflow-y: auto;
-}
-
-#modal-window-following .member-follow,
-#modal-window-followers .member-follow {
-    padding: 1.6rem;
-    border-bottom: var(--border-1-color-primary);
-}
-
-#modal-window-user-profile-form .modal-window__content {
-    padding: 3.2rem;
 }

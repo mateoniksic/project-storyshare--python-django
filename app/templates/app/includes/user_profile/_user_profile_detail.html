@@ -1,134 +1,74 @@
 {% load static %}
+<section class="user-profile-detail">
+    <div class="user-profile-detail__section-container">
+            
+            <div class="user-profile-detail__profile-image">
 
-<div class="profile-detail">
-
-    <div class="profile-detail__profile-image">
-
-        <img
-            class="img"
-            src="{{ member.profile.profile_image }}"
-            alt="{{ member.first_name }} {{ member.last_name }}" />
-
-    </div>
-
-    <div class="profile-detail__profile-details">
-    
-        <div class="profile-detail__member-name">
-
-            <a
-                href="{{ member.profile.get_absolute_url }}" 
-                class="profile-detail__member-name__link link link--text">
-        
-                <span class="heading-3">{{ member.first_name }} {{ member.last_name }}</span>
-
-            </a>
-
-            {% if is_user %}
-                <button
-                    data-modal-window-target="#modal-window-user-profile-form"
-                    class="button button--small button--primary">
-                    Edit
-                </button>
-            {% endif %}
+                <img
+                class="img"
+                src="{{ member.profile.profile_image }}"
+                alt="{{ member.first_name }} {{ member.last_name }}" />
 
         </div>
+        
+        <div class="user-profile-detail__content-container">
+            
+            <div class="user-profile-detail__user-name">
 
-        <p class="profile-detail__member-description text-large">
-            {{ member.profile.description }}
-        </p>
-
-
-        <div class="profile-detail__member-stats">
-
-            <span class="text-chip">
-                {{ member.profile.posts.all | length }} Posts
-            </span>
-
-            <button
-                type="button"
-                class="button button--neutral button--small"
-                data-modal-window-target="#modal-window-followers">
-                {{ member.profile.followers.all | length }} Followers
+                <a
+                href="{{ member.profile.get_absolute_url }}" 
+                class="link link--text">
+                
+                    <span class="heading-3">{{ member.first_name }} {{ member.last_name }}</span>
+                    
+                </a>
+                
+                {% if is_user %}
+                <button
+                data-modal-window-target="#modal-window-user-profile-form"
+                class="button button--small button--primary">
+                Edit
             </button>
+            {% endif %}
+            
+        </div>
 
-            <button
+        <p class="user-profile-detail__user-description text-large">
+            {{ member.profile.description }}
+            </p>
+            
+            
+            <div class="user-profile-detail__user-statistics">
+                
+                <span class="text-chip">
+                    {{ member.profile.posts.all | length }} Posts
+                </span>
+                
+                <button
+                    type="button"
+                    class="button button--neutral button--small"
+                    data-modal-window-target="#modal-window-followers">
+                    {{ member.profile.followers.all | length }} Followers
+                </button>
+                
+                <button
                 type="button"
                 class="button button--neutral button--small"
                 data-modal-window-target="#modal-window-following">
                 {{ member.profile.following.all | length }} Following
-            </button>
+                </button>
+
+            </div>
 
         </div>
 
+    {% include 'app/includes/layout/modals/modal_window/_modal_window_followers.html' %}
+
+    {% include 'app/includes/layout/modals/modal_window/_modal_window_following.html' %}
+
+    {% with form=user_profile_form %}
+        {% include 'app/includes/layout/modals/modal_window/_modal_window_user_profile_form.html' %}
+    {% endwith %}
+
     </div>
-
-            <div class="modal-window" id="modal-window-followers">
-
-                <div class="modal-window__header">
-
-                    <span class="heading-3">Followers</span>
-
-                    <button type="button" class="button button--small button--invisible-danger" data-button-close>
-                        <svg class="icon icon-24">
-                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
-                        </svg>
-                    </button>
-
-                </div>
-                
-                <div class="modal-window__content">
-
-                    {% for follower in member.profile.followers.all %}
-                        {% with member=follower.user %}
-                            {% include 'app/includes/forms/_user_follow_or_unfollow_form.html' with member=follower.user %}
-                        {% endwith %}
-                    {% endfor %}
-                    
-                </div>
-
-            </div>
-
-            <div class="modal-window" id="modal-window-following">
-
-                <div class="modal-window__header">
-
-                    <span class="heading-3">Following</span>
-
-                    <button type="button" class="button button--small button--invisible-danger" data-button-close>
-                        <svg class="icon icon-24">
-                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
-                        </svg>
-                    </button>
-
-                </div>
-                
-                <div class="modal-window__content">
-
-                    {% for following in member.profile.following.all %}
-                        {% with  member=following.user  %}
-                            {% include 'app/includes/forms/_user_follow_or_unfollow_form.html' %}
-                        {% endwith %}
-                    {% endfor %}
-                    
-                </div>
-
-            </div>
-
-            <div class="modal-window" id="modal-window-user-profile-form">
-                <div class="modal-window__header">
-                    <span class="heading-3">Edit profile</span>
-                    <button type="button" class="button button--small button--invisible-danger" data-button-close>
-                        <svg class="icon icon-24">
-                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-x-circle"></use>
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="modal-window__content">
-                    {% with form=user_profile_form form_submit_value='Update profile' %}
-                        {% include 'app/includes/forms/_user_profile_form.html' %}
-                    {% endwith %}
-                </div>
-            </div>
-
-</div>
+</section>

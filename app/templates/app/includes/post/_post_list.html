@@ -1,97 +1,101 @@
 {% load static %}
 
-{% for post in posts %}
+<section class="post-list">
 
-<article class="card-post" id="#card-post-{{ post.id }}">
+    {% for post in posts %}
     
-    <figure class="card-post__featured-image">
-        <div class="card-post__wrapper-featured-image">
-            <img
-                class="img"
-                src="{{ post.featured_image }}"
-                alt="{{ post.title }}" />
-        </div>
-    </figure>
-    
-    <div class="card-post__content">
-
-        {% if is_user %}
-
-            <div class="card-post__context-menu">
-
-                <button type="button" class="button button--small button--invisible" data-modal-actions-target="#context-menu-for-post-{{ post.id }}">
-                    <svg class="icon icon-24">
-                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-dots-vertical-rounded"></use>
-                    </svg>
-                </button>
-
-                <div class="context-menu" id="context-menu-for-post-{{ post.id }}">
-
-                    <ul class="context-menu__list">
-
-                        <li class="context-menu__item">
-                            <a href="{% url 'app:post-update-view' slug=post.slug %}" class="link link--small">
-                                <svg class="icon icon-24">
-                                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-edit"></use>
-                                </svg>
-                                <span>Update</span>
-                            </a>
-                        </li>
-
-                        <li class="context-menu__item">
-                            <form action="{% url 'app:post-delete-view' slug=post.slug %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="button button--small button--invisible-danger">
-                                    <svg class="icon icon-24">
-                                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-trash"></use>
-                                    </svg>
-                                    <span>Delete</span>
-                                </form>
-                            </button>
-                        </li>
-
-                    </ul>
+    <article class="card-post" id="#card-post-{{ post.id }}">
         
-                </div>
-
+        <figure class="card-post__featured-image">
+            <div class="card-post__wrapper-featured-image">
+                <img
+                    class="img"
+                    src="{{ post.featured_image }}"
+                    alt="{{ post.title }}" />
             </div>
-
-        {% endif %}
+        </figure>
         
-        {% if not is_user %}
-            {% with member=post.user_profile.user %}
-                {% include 'app/includes/user_profile/_card_user.html' %}
-            {% endwith %}
-        {% endif %}
-
-        <h3 class="card-post__title heading-2">{{ post.title }}</h3>
-
-        <span class="card-post__date-created text-small">{{ post.date_created | date }}</span>
-
-        <p class="card-post__excerpt text-large">{{ post.excerpt }}</p>
-
-        <div class="card-post__container-tags">
-
-            {% for tag in post.tags.all %}
-                <a
-                    href="{{ tag.get_absolute_url }}"
-                    class="card-post__tag link link--text">
-                    #{{ tag }}
-                </a>
-            {% endfor %}
-
+        <div class="card-post__content">
+    
+            {% if is_user %}
+    
+                <div class="card-post__context-menu">
+    
+                    <button type="button" class="button button--small button--invisible" data-modal-actions-target="#context-menu-for-post-{{ post.id }}">
+                        <svg class="icon icon-24">
+                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-dots-vertical-rounded"></use>
+                        </svg>
+                    </button>
+    
+                    <div class="context-menu" id="context-menu-for-post-{{ post.id }}">
+    
+                        <ul class="context-menu__list">
+    
+                            <li class="context-menu__item">
+                                <a href="{% url 'app:post-update-view' slug=post.slug %}" class="link link--small">
+                                    <svg class="icon icon-24">
+                                        <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-edit"></use>
+                                    </svg>
+                                    <span>Update</span>
+                                </a>
+                            </li>
+    
+                            <li class="context-menu__item">
+                                <form action="{% url 'app:post-delete-view' slug=post.slug %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="button button--small button--invisible-danger">
+                                        <svg class="icon icon-24">
+                                            <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-trash"></use>
+                                        </svg>
+                                        <span>Delete</span>
+                                    </form>
+                                </button>
+                            </li>
+    
+                        </ul>
+            
+                    </div>
+    
+                </div>
+    
+            {% endif %}
+            
+            {% if not is_user %}
+                {% with member=post.user_profile.user %}
+                    {% include 'app/includes/user_profile/_card_user.html' %}
+                {% endwith %}
+            {% endif %}
+    
+            <h3 class="card-post__title heading-2">{{ post.title }}</h3>
+    
+            <span class="card-post__date-created text-small">{{ post.date_created | date }}</span>
+    
+            <p class="card-post__excerpt text-large">{{ post.excerpt }}</p>
+    
+            <div class="card-post__container-tags">
+    
+                {% for tag in post.tags.all %}
+                    <a
+                        href="{{ tag.get_absolute_url }}"
+                        class="card-post__tag link link--text">
+                        #{{ tag }}
+                    </a>
+                {% endfor %}
+    
+            </div>
+    
+            <a
+                href="{{ post.get_absolute_url }}"
+                class="link link--large link--button-primary">
+                Start reading
+            </a>
+    
         </div>
+    
+    </article>
+    
+    {% endfor %}
+    
+    {% include 'app/includes/layout/_pagination.html' %}
 
-        <a
-            href="{{ post.get_absolute_url }}"
-            class="link link--large link--button-primary">
-            Start reading
-        </a>
-
-    </div>
-
-</article>
-
-{% endfor %}
-
-{% include 'app/includes/layout/_pagination.html' %}
+</section>

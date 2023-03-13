@@ -18,7 +18,7 @@
     transition: transform 200ms ease-in-out;
 }
 
-.modal-window--is-active {
+.modal-window.is-active {
     transform: translate(-50%, -50%) scale(1);
 }
 
@@ -50,7 +50,31 @@
     pointer-events: none;
 }
 
-.modal-overlay--is-active {
+.modal-overlay.is-active {
     opacity: 1;
     pointer-events: all;
+}
+
+
+.modal-window--founf {
+    height: 80rem;
+}
+
+.modal-window__content--founf {
+    width: 48rem;
+
+    min-height: max-content;
+    height: 100%;
+    max-height: 70rem;
+
+    overflow-y: auto;
+}
+
+.modal-window__content--user-profile-form {
+    padding: 3.2rem;
+}
+
+.modal-window__content > .user-follow-or-unfollow-form {
+    padding: 1.6rem;
+    border-bottom: var(--border-1-color-primary);
 }

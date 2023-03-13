@@ -1,0 +1,10 @@
+{% extends 'app/includes/layout/modals/modal_window/base/_modal_window.html' %}
+
+{% block modal_window_id %}modal-window-user-profile-form{% endblock modal_window_id %}
+{% block modal_window_content_classes %}modal-window__content--user-profile-form{% endblock modal_window_content_classes %}
+
+{% block title %}Edit profile{% endblock title %}
+
+{% block content %}
+    {% include 'app/includes/forms/_user_profile_form.html' %}
+{% endblock content %}

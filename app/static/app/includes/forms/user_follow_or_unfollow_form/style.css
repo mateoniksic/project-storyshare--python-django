@@ -1,4 +1,4 @@
-.member-follow {
+.user-follow-or-unfollow-form {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -6,3 +6,4 @@
 
     width: 100%;
 }
+
