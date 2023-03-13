@@ -18,10 +18,12 @@ urlpatterns = [
     path('post/<slug:slug>/update', views.PostUpdateView.as_view(), name='post-update-view'),
     path('post/<slug:slug>/delete', views.PostDeleteView.as_view(), name='post-delete-view'),
 
-    path('profile/<slug:slug>/', views.ProfileDetailView.as_view(), name='profile-detail-view'),
+    path('user/<int:pk>/update', views.UserUpdateView.as_view(), name='user-update-view'),
+
+    path('profile/<slug:slug>/', views.UserProfileDetailView.as_view(), name='profile-detail-view'),
 
 
     path('tag/<slug:slug>/', views.TagDetailView.as_view(), name='tag-detail-view'),
 
-    path('search/member/', views.SearchMemberListView.as_view(), name='search-member-list-view'),
+    path('search/member/', views.SearchUserProfileListView.as_view(), name='search-member-list-view'),
 ]

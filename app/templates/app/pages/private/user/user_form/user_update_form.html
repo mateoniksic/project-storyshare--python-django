@@ -3,7 +3,7 @@
 
 {% block title %}
 
-    Update story
+    Update user
 
 {% endblock title %}
 
@@ -20,7 +20,7 @@
 
     {% block main_header %}
 
-        {% include 'app/includes/layout/_page_title.html' with icon='edit' title='Update story' %}
+        {% include 'app/includes/layout/_page_title.html' with icon='settings' title='Settings' %}
 
     {% endblock main_header %}
 
@@ -28,7 +28,7 @@
 
         <div class="form-wrapper">
             {% with form_submit_value='Update story'  %}
-                {% include 'app/includes/forms/_post_form.html' %}
+                {% include 'app/includes/forms/_user_update_form.html' %}
             {% endwith %}
         </div>
 

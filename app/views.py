@@ -16,6 +16,8 @@ from django.contrib import messages
 from .utils.functions import *
 from django.core.paginator import Paginator
 
+import time
+
 
 class IndexTemplateView(generic.TemplateView):
     template_name = 'app/pages/public/index.html'
@@ -74,6 +76,108 @@ class UserSignInView(LoginView):
 
 class UserSignOutView(LogoutView):
     next_page = reverse_lazy('app:sign-in')
+
+
+class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name = 'app/pages/private/user/user_form/user_update_form.html'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Your user settings have been updated.')
+        return response
+
+    def get_success_url(self):
+        return reverse_lazy('app:user-update-view', kwargs={'pk': self.object.pk})
+
+
+class SearchUserProfileListView(LoginRequiredMixin, generic.ListView):
+    model = User
+    context_object_name = 'members'
+
+    template_name = 'app/pages/private/user_profile/user_profile_list/search.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+
+        if query:
+            queryset = User.objects.filter(username__icontains=query).all()
+        else:
+            queryset = User.objects.none()
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        members = self.object_list
+        context['title'] = f'Search results ({len(members)})'
+
+        params_get = self.request.GET.dict()
+        filtered_params = {key: value for key,
+                           value in params_get.items() if key != 'page'}
+        encoded_params = urlencode(filtered_params, safe='&')
+        context['params'] = encoded_params + '&'
+
+        return context
+
+
+class UserProfileDetailView(LoginRequiredMixin, generic.DetailView):
+    model = UserProfile
+    context_object_name = 'user_profile'
+
+    template_name = 'app/pages/private/user_profile/user_profile_detail/profile_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+        member = self.object.user
+
+        if (member == user):
+            member = user
+            context['is_user'] = True
+            context['user_profile_form'] = UserProfileForm(
+                instance=self.object)
+
+        context['member'] = member
+
+        posts = member.profile.posts.order_by(
+            '-date_created').all()
+        page: int = self.request.GET.get('page', 1)
+        p = Paginator(posts, 6)
+        context['posts'] = p.get_page(page)
+
+        return context
+
+    def post(self, request, slug):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+
+        request_data = self.request.POST
+        user = self.request.user
+
+        form_id = request_data['form_id']
+
+        member_follow_form_id = 'MemberFollowForm'
+        if form_id == member_follow_form_id:
+            user_action = request_data[f'{member_follow_form_id}-submit']
+            user_id = user.id
+            member_id = request_data[f'{member_follow_form_id}-member_id']
+            member_follow_or_unfollow(user_action, user_id, member_id)
+
+        elif form_id == UserProfileForm().prefix:
+            form = UserProfileForm(
+                request_data, instance=user.profile)
+            if form.is_valid():
+                form.save()
+                context['user_profile_form'] = UserProfileForm(
+                    instance=user.profile)
+                context['user'] = user
+
+        return render(request, self.template_name, context=context)
 
 
 class FollowingPostListView(LoginRequiredMixin, generic.ListView):
@@ -178,11 +282,6 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     template_name = 'app/pages/private/post/post_form/post_update_form.html'
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
-
     def get_initial(self):
         tag_list = ' '.join(
             list(self.object.tags.all().values_list('name', flat=True)))
@@ -190,6 +289,11 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
             'tag_list': tag_list
         }
         return initial
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def get_success_url(self):
         return reverse_lazy('app:post-detail-view', kwargs={'slug': self.object.slug})
@@ -200,62 +304,6 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('app:profile-detail-view', kwargs={'slug': self.request.user.profile.slug})
-
-
-class ProfileDetailView(LoginRequiredMixin, generic.DetailView):
-    model = UserProfile
-    context_object_name = 'user_profile'
-
-    template_name = 'app/pages/private/user_profile/user_profile_detail/profile_detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        user = self.request.user
-        member = self.object.user
-
-        if (member == user):
-            member = user
-            context['is_user'] = True
-            context['user_profile_form'] = UserProfileForm(
-                instance=self.object)
-
-        context['member'] = member
-
-        posts = member.profile.posts.order_by(
-            '-date_created').all()
-        page: int = self.request.GET.get('page', 1)
-        p = Paginator(posts, 6)
-        context['posts'] = p.get_page(page)
-
-        return context
-
-    def post(self, request, slug):
-        self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
-
-        request_data = self.request.POST
-        user = self.request.user
-
-        form_id = request_data['form_id']
-
-        member_follow_form_id = 'MemberFollowForm'
-        if form_id == member_follow_form_id:
-            user_action = request_data[f'{member_follow_form_id}-submit']
-            user_id = user.id
-            member_id = request_data[f'{member_follow_form_id}-member_id']
-            member_follow_or_unfollow(user_action, user_id, member_id)
-
-        elif form_id == UserProfileForm().prefix:
-            form = UserProfileForm(
-                request_data, instance=user.profile)
-            if form.is_valid():
-                form.save()
-                context['user_profile_form'] = UserProfileForm(
-                    instance=user.profile)
-                context['user'] = user
-
-        return render(request, self.template_name, context=context)
 
 
 class TagDetailView(LoginRequiredMixin, generic.DetailView):
@@ -274,37 +322,5 @@ class TagDetailView(LoginRequiredMixin, generic.DetailView):
         p = Paginator(posts, 6)
 
         context['posts'] = p.get_page(page)
-
-        return context
-
-
-class SearchMemberListView(LoginRequiredMixin, generic.ListView):
-    model = User
-    context_object_name = 'members'
-
-    template_name = 'app/pages/private/user_profile/user_profile_list/search.html'
-    paginate_by = 10
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-
-        if query:
-            queryset = User.objects.filter(username__icontains=query).all()
-        else:
-            queryset = User.objects.none()
-
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        members = self.object_list
-        context['title'] = f'Search results ({len(members)})'
-
-        params_get = self.request.GET.dict()
-        filtered_params = {key: value for key,
-                           value in params_get.items() if key != 'page'}
-        encoded_params = urlencode(filtered_params, safe='&')
-        context['params'] = encoded_params + '&'
 
         return context

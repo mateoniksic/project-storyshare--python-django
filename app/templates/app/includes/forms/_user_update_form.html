@@ -1,0 +1,10 @@
+{% extends 'app/includes/forms/base/_form.html' %} 
+
+{% block form_title %}
+    {% with form_title='Change user settings'  %}
+        {% include 'app/includes/forms/base/partials/_form_title.html' %}
+    {% endwith %}
+{% endblock form_title %}
+
+{% block form_submit_value %}Save changes{% endblock form_submit_value %}
+

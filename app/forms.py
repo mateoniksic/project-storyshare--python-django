@@ -1,15 +1,12 @@
-import re
-from django.utils.text import slugify
-from .models import *
 from django import forms
 from django.forms import ModelForm
+from .models import *
 
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import password_validation
-from django.contrib.auth.validators import UnicodeUsernameValidator
-username_validator = UnicodeUsernameValidator()
+
+from django.utils.text import slugify
+import re
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -24,15 +21,17 @@ class CustomUserCreationForm(UserCreationForm):
             'username': forms.TextInput(
                 attrs={'class': 'form__input', 'placeholder': 'john.doe'}),
             'email': forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'john.doe@example.com'}),
+
         }
+
+    password1 = forms.CharField(label='New password', required=True,
+                                widget=forms.PasswordInput(attrs={'class': 'form__input'}))
+    password2 = forms.CharField(label='Confirm password', required=True,
+                                widget=forms.PasswordInput(attrs={'class': 'form__input'}))
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
         self.prefix = 'CustomUserCreationForm'
-        self.fields['password1'].widget = forms.PasswordInput(
-            attrs={'class': 'form__input'})
-        self.fields['password2'].widget = forms.PasswordInput(
-            attrs={'class': 'form__input'})
 
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -44,6 +43,47 @@ class CustomAuthenticationForm(AuthenticationForm):
             attrs={'class': 'form__input'})
         self.fields['password'].widget = forms.PasswordInput(
             attrs={'class': 'form__input'})
+
+
+class UserUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+        widgets = {
+            'username': forms.TextInput(
+                attrs={'class': 'form__input', 'placeholder': 'john.doe'}),
+            'first_name': forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'John'}),
+            'last_name': forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'Doe'}),
+            'email': forms.TextInput(attrs={'class': 'form__input', 'placeholder': 'john.doe@example.com'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.prefix = 'user_update_form'
+
+
+
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['profile_image', 'description']
+
+        labels = {
+            'profile_image': 'Profile image (URL)',
+            'description': 'Profile description'
+        }
+
+        widgets = {
+            'profile_image': forms.URLInput(
+                attrs={'class': 'form__input', 'placeholder': 'https://www.example.com/my-profile-image'}),
+            'description': forms.Textarea(
+                attrs={'class': 'form__input', 'rows': 4, 'style': 'resize:none;', 'placeholder': 'Describe yourself shortly.'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.prefix = 'UserProfileForm'
 
 
 class PostForm(ModelForm):
@@ -109,27 +149,3 @@ class PostForm(ModelForm):
         instance.tags.set(cleaned_tag_list)
 
         return instance
-
-
-class UserProfileForm(ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ['profile_image', 'description']
-
-        labels = {
-            'profile_image': 'Profile image (URL)',
-            'description': 'Profile description'
-        }
-
-        widgets = {
-            'profile_image': forms.URLInput(
-                attrs={'class': 'form__input', 'placeholder': 'https://www.example.com/my-profile-image'}),
-            'description': forms.Textarea(
-                attrs={'class': 'form__input', 'rows': 4, 'style': 'resize:none;', 'placeholder': 'Describe yourself shortly.'})
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.prefix = 'UserProfileForm'
-
-
