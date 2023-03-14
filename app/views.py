@@ -30,6 +30,8 @@ class IndexTemplateView(generic.TemplateView):
         context['posts'] = p.get_page(page)
 
         context['posts_count'] = Post.objects.all().count()
+        context['members_count'] = User.objects.all().count()
+        context['tags_count'] = Tag.objects.all().count()
 
         return context
 

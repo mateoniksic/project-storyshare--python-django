@@ -14,13 +14,18 @@
     <link
         rel="stylesheet"
         type="text/css"
+        href="{% static 'app/includes/layout/footer/style.css' %}" />
+
+    <link
+        rel="stylesheet"
+        type="text/css"
         href="{% static 'app/includes/post/post_list/style.css' %}" />
 {% endblock head %}
 
 {% block body %}
 
     <!--    HEADER    -->
-    <header class="header">
+    <header class="header js-header">
         <div class="header__container">
             <div class="brand">
                 <a href="{% url 'app:index-template-view' %}" class="brand__link link">StoryShare</a>
@@ -39,24 +44,45 @@
     </header>
 
     <!--    SECTION HERO    -->
-    <section class="section section__hero">
-        <div class="container">
-            <h1 class="heading-1 hero-title">Share your words of wisdom, lessons learned and advice with people around the world.</h1>
+    <section class="section section--hero js-section-hero">
+        <div class="section__container">
+            <h1 class="heading-1">
+                Share your words of wisdom, lessons learned
+                <br>
+                and advice with people around the world.
+            </h1>
         </div>
     </section>
 
+    <!--    SECTION STATS    -->
+    <section class="section section--stats">
+        <div class="section__container section__container--stats">
+            <div class="card-stat">
+                <span class="heading-1">{{ posts_count }}+</span>
+                <span class="text-large">Posts</span>
+            </div>
+            <div class="card-stat">
+                <span class="heading-1">{{ members_count }}+</span>
+                <span class="text-large">Members</span>
+            </div>
+            <div class="card-stat">
+                <span class="heading-1">{{ tags_count }}+</span>
+                <span class="text-large">Tags</span>
+            </div>
+        </div>
+    </section>
+    
+
     <!--    SECTION ARTICLES    -->
     <section class="section">
-        <div class="container">
-            <h2 class="heading-2 my-32">{{ posts_count }}+ personal success stories to get inspired.</h2>
+        <div class="section__container section__container--articles">
+            <h2 class="heading-2 my-32">Get inspired. Get started.</h2>
             {% include 'app/includes/post/_post_list.html' with page_obj=posts %}
         </div>
     </section>
 
     <!--    FOOTER    -->
-    <footer class="footer">
-        <span>&copy; 2023 StoryShare. All Rights Reserved.</span>
-    </footer>
+    {% include 'app/includes/layout/_footer.html' %}
 
     <!--    SCRIPTS   -->
     <script src="{% static 'app/pages/public/index/index.js' %}"></script>

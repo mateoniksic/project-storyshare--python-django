@@ -2,46 +2,9 @@
 <section class="section-post">
 
     {% if is_user %}
-
         <div class="post__modal-context">
-
-            <button type="button" class="button button--small button--invisible" data-modal-actions-target="#modal-context-for-post-{{ post.id }}">
-                <svg class="icon icon-24">
-                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-dots-vertical-rounded"></use>
-                </svg>
-            </button>
-
-            <div class="modal-context" id="modal-context-for-post-{{ post.id }}">
-
-                <ul class="modal-context__list">
-
-                    <li class="modal-context__item">
-                        <a href="{% url 'app:post-update-view' slug=post.slug %}" class="link link--small">
-                            <svg class="icon icon-24">
-                                <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-edit"></use>
-                            </svg>
-                            <span>Update</span>
-                        </a>
-                    </li>
-
-                    <li class="modal-context__item">
-                        <form action="{% url 'app:post-delete-view' slug=post.slug %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="button button--small button--invisible-danger">
-                                <svg class="icon icon-24">
-                                    <use xlink:href="{% static 'app/assets/icons/sprite.svg' %}#icon-trash"></use>
-                                </svg>
-                                <span>Delete</span>
-                            </form>
-                        </button>
-                    </li>
-
-                </ul>
-    
-            </div>
-
+            {% include 'app/includes/layout/modals/modal_context/_modal_context.html' %}        
         </div>
-
     {% endif %}
 
     <figure class="post__featured-image">
@@ -62,13 +25,9 @@
         <div class="post__content text-large">{{ post.content }}</div>
 
         <div class="post__tags">
-            {% for tag in post.tags.all %}
-            <a
-                href="{{ tag.get_absolute_url }}"
-                class="post__tag link link--text">
-                #{{ tag }}
-            </a>
-            {% endfor %}
+            {% with class="post__tag"  %}
+                {% include 'app/includes/tag/_tag_list.html' %}  
+            {% endwith %}
         </div>
     </div>
 </section>

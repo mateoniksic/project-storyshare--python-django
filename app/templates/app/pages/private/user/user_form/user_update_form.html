@@ -24,9 +24,11 @@
 
     {% block main_content %}
 
-        {% with form_submit_value='Update story'  %}
-            {% include 'app/includes/forms/_user_update_form.html' %}
-        {% endwith %}
+        <div class="main__content-container">
+            {% with form_submit_value='Update story'  %}
+                {% include 'app/includes/forms/_user_update_form.html' %}
+            {% endwith %}
+        </div>
 
     {% endblock main_content %}
 

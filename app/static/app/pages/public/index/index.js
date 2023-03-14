@@ -1,8 +1,8 @@
-const SECTION_HERO_HEIGHT = document.body.querySelector('.section__hero').offsetHeight;
-const HEADER_HEIGHT = document.body.querySelector('.header').offsetHeight;
+const SECTION_HERO_HEIGHT = document.body.querySelector('.js-section-hero').offsetHeight;
+const HEADER_HEIGHT = document.body.querySelector('.js-header').offsetHeight;
 
 function changeHeaderStyle(css) {
-    const headerEl = document.body.querySelector('.header');
+    const headerEl = document.body.querySelector('.js-header');
     for (const [property, value] of Object.entries(css)) {
         headerEl.style[property] = value;
     }
